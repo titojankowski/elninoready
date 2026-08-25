@@ -12,5 +12,5 @@ w.writerow(['created_at', 'name', 'email', 'role', 'message'])
 for s in sorted(subs, key=lambda x: x['created_at']):
     d = s.get('data', {})
     w.writerow([s['created_at'], d.get('name',''), d.get('email',''), d.get('role',''), d.get('message','')])
-" > signups.csv
-echo "$(($(wc -l < signups.csv) - 1)) signups -> signups.csv"
+" > "$HOME/el-nino-signups.csv"
+echo "$(($(wc -l < "$HOME/el-nino-signups.csv") - 1)) signups -> ~/el-nino-signups.csv"
