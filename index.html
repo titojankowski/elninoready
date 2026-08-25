@@ -3,61 +3,378 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>El Niño Climate Week</title>
-<meta name="description" content="El Niño Climate Week — coming soon.">
+<title>El Niño Climate Week — September 20–27, 2026</title>
+<meta name="description" content="The strongest El Niño in a generation peaks in three months. El Niño Climate Week runs alongside New York Climate Week to turn the world's biggest climate gathering toward the world's biggest climate event.">
+<meta property="og:title" content="El Niño Climate Week">
+<meta property="og:description" content="September 20–27, 2026 · Parallel to New York Climate Week. Three months to prepare. One week to start.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://elninoclimateweek.com">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #06121f;
-    --fg: #eaf4fb;
-    --accent: #ffb74d;
-    --sea: #2d9cdb;
+    --ink: #0b1826;
+    --paper: #f7f4ee;
+    --paper-2: #efe9df;
+    --deep: #06121f;
+    --deep-2: #0a2238;
+    --sea: #1c7fb8;
+    --sea-bright: #35a7e0;
+    --heat: #e05a2b;
+    --heat-bright: #ff7a45;
+    --sand: #c9bda9;
+    --line: rgba(11, 24, 38, 0.14);
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    background: linear-gradient(180deg, #06121f 0%, #0a2238 60%, #0d3a54 100%);
-    color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    min-height: 100svh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 2rem;
-  }
-  main { max-width: 40rem; }
-  .mark { font-size: 3rem; }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.6rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    margin: 0.5rem 0 1rem;
-  }
-  h1 .nino { color: var(--accent); }
-  p.tag {
-    font-size: 1.15rem;
-    color: #b8d4e6;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
-  .soon {
-    display: inline-block;
-    margin-top: 2rem;
-    padding: 0.5rem 1.25rem;
-    border: 1px solid var(--sea);
-    border-radius: 999px;
-    color: var(--sea);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: 0.8rem;
+  img { max-width: 100%; }
+  a { color: inherit; }
+
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(247, 244, 238, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
   }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 1.5rem; max-width: 68rem; margin: 0 auto;
+  }
+  .brand { font-weight: 700; letter-spacing: 0.02em; font-size: 0.95rem; text-decoration: none; }
+  .brand .nino { color: var(--heat); }
+  .nav-date { font-size: 0.85rem; color: rgba(11,24,38,0.6); display: none; }
+  @media (min-width: 640px) { .nav-date { display: block; } }
+  .nav-cta {
+    font-size: 0.85rem; font-weight: 600; text-decoration: none;
+    background: var(--ink); color: var(--paper);
+    padding: 0.5rem 1rem; border-radius: 999px;
+    transition: background 0.15s;
+  }
+  .nav-cta:hover { background: var(--heat); }
+
+  /* ---------- hero ---------- */
+  header.hero {
+    background:
+      radial-gradient(120% 90% at 85% -10%, rgba(255,122,69,0.28), transparent 55%),
+      radial-gradient(100% 80% at 10% 110%, rgba(53,167,224,0.25), transparent 60%),
+      linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 70%, #0d3a54 100%);
+    color: #eaf4fb;
+    padding: 6rem 0 5rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .kicker {
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--heat-bright); margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    max-width: 18ch;
+    margin-bottom: 1.75rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--heat-bright); }
+  .hero .sub {
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: #b8d4e6; max-width: 44ch; margin-bottom: 2.5rem;
+  }
+  .hero .sub strong { color: #eaf4fb; font-weight: 600; }
+  .btn-row { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    padding: 0.85rem 1.5rem; border-radius: 999px; transition: transform 0.12s, background 0.15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-heat { background: var(--heat); color: #fff; }
+  .btn-heat:hover { background: var(--heat-bright); }
+  .btn-ghost { border: 1px solid rgba(234,244,251,0.4); color: #eaf4fb; }
+  .btn-ghost:hover { border-color: #eaf4fb; }
+
+  /* ---------- sections ---------- */
+  section { padding: 4.5rem 0; }
+  .eyebrow {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--heat); margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15;
+    letter-spacing: -0.01em; max-width: 24ch; margin-bottom: 1.25rem;
+  }
+  .lede { font-size: 1.1rem; max-width: 60ch; color: rgba(11,24,38,0.8); }
+  .lede + .lede { margin-top: 1rem; }
+
+  /* stakes cards */
+  .stakes { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .card-grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.95rem; color: rgba(11,24,38,0.75); }
+  .card .glyph { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+
+  /* pull quote */
+  .pull {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.35;
+    max-width: 34ch; margin: 2.5rem 0 0;
+    padding-left: 1.5rem; border-left: 3px solid var(--heat);
+    color: rgba(11,24,38,0.85);
+  }
+
+  /* featured event */
+  .featured { background: var(--deep); color: #eaf4fb; }
+  .featured .eyebrow { color: var(--sea-bright); }
+  .featured h2 { color: #fff; max-width: 30ch; }
+  .event-card {
+    margin-top: 2.5rem; border: 1px solid rgba(234,244,251,0.18); border-radius: 16px;
+    padding: 2rem; background: rgba(255,255,255,0.04);
+    display: grid; gap: 2rem; grid-template-columns: 1fr;
+  }
+  @media (min-width: 800px) { .event-card { grid-template-columns: 1.5fr 1fr; padding: 2.5rem; } }
+  .event-card h3 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .event-card .desc { color: #b8d4e6; font-size: 0.98rem; }
+  .event-card .desc + .desc { margin-top: 0.85rem; }
+  .event-meta { display: flex; flex-direction: column; gap: 1.1rem; align-self: start; }
+  .meta-item { border-left: 2px solid var(--sea); padding-left: 0.9rem; }
+  .meta-item .label {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--sea-bright); display: block; margin-bottom: 0.15rem;
+  }
+  .meta-item .value { font-size: 0.95rem; color: #eaf4fb; }
+  .event-card .btn-heat { justify-self: start; margin-top: 0.5rem; }
+  .host-note { font-size: 0.82rem; color: rgba(184,212,230,0.7); margin-top: 1.25rem; }
+
+  /* window / what we can do */
+  .window-list { margin-top: 2.25rem; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .window-item {
+    display: grid; gap: 0.35rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) { .window-item { grid-template-columns: 14rem 1fr; gap: 2rem; } }
+  .window-item h3 { font-size: 1rem; font-weight: 700; }
+  .window-item p { font-size: 0.97rem; color: rgba(11,24,38,0.75); max-width: 60ch; }
+
+  /* get involved */
+  .involve { background: var(--paper-2); border-top: 1px solid var(--line); }
+  .involve-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; margin-top: 1rem; }
+  @media (min-width: 820px) { .involve-grid { grid-template-columns: 1fr 1fr; } }
+  .kickoff-box {
+    background: var(--deep); color: #eaf4fb; border-radius: 16px; padding: 2rem;
+    align-self: start;
+  }
+  .kickoff-box .eyebrow { color: var(--heat-bright); }
+  .kickoff-box h3 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.2; margin-bottom: 0.75rem; }
+  .kickoff-box p { color: #b8d4e6; font-size: 0.95rem; }
+  .kickoff-when { margin: 1.25rem 0; padding: 1rem; border-radius: 10px; background: rgba(255,255,255,0.06); font-size: 0.95rem; }
+  .kickoff-when strong { display: block; font-size: 1.05rem; margin-bottom: 0.2rem; }
+
+  form { display: grid; gap: 1rem; }
+  label { font-size: 0.85rem; font-weight: 600; display: grid; gap: 0.4rem; }
+  input, select, textarea {
+    font: inherit; font-size: 0.95rem; padding: 0.75rem 0.9rem;
+    border: 1px solid rgba(11,24,38,0.25); border-radius: 8px; background: #fff;
+    width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--sea); outline-offset: 1px; border-color: var(--sea); }
+  textarea { resize: vertical; min-height: 5.5rem; }
+  button.btn { border: none; cursor: pointer; font-family: inherit; }
+  .form-note { font-size: 0.8rem; color: rgba(11,24,38,0.55); }
+
+  /* footer */
+  footer { background: var(--deep); color: rgba(184,212,230,0.75); padding: 2.5rem 0; font-size: 0.85rem; }
+  footer .wrap { display: grid; gap: 0.75rem; }
+  footer a { color: #b8d4e6; }
+  footer .fine { font-size: 0.78rem; color: rgba(184,212,230,0.5); max-width: 70ch; }
 </style>
 </head>
 <body>
-<main>
-  <div class="mark">🌊</div>
-  <h1>El <span class="nino">Niño</span> Climate&nbsp;Week</h1>
-  <p class="tag">The strongest El Niño on record is here. A week about what that means — for weather, for cities, for all of us.</p>
-  <span class="soon">Coming soon</span>
-</main>
+
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="#top">EL <span class="nino">NIÑO</span> CLIMATE WEEK</a>
+    <span class="nav-date">September 20–27, 2026 · New York + everywhere</span>
+    <a class="nav-cta" href="#involved">Get involved</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="kicker">September 20–27, 2026 · Parallel to New York Climate Week</p>
+    <h1>The biggest El&nbsp;Niño in a generation peaks in <em>three months</em>.</h1>
+    <p class="sub">Scientists can see it coming. Hundreds of millions of people will feel it — in their power, their water, their livelihoods. <strong>El Niño Climate Week</strong> points the world's largest climate gathering at the world's largest climate event, and kicks off three months of global action.</p>
+    <div class="btn-row">
+      <a class="btn btn-heat" href="#involved">Join the planning kickoff</a>
+      <a class="btn btn-ghost" href="#event">See the featured event</a>
+    </div>
+  </div>
+</header>
+
+<section class="stakes">
+  <div class="wrap">
+    <p class="eyebrow">What's at stake</p>
+    <h2>This one is different — and the next one starts from a warmer world.</h2>
+    <p class="lede">The 2026 El Niño is shaping up to be the strongest in modern records, and it's building on a baseline that gets warmer every cycle. The forecast is not the hard part. The hard part is what happens between the forecast and the flood.</p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="glyph">⚡</span>
+        <h3>Power</h3>
+        <p>Heat waves, storms, and drought-strained hydropower push grids past their limits — exactly when people need cooling, pumping, and communication most.</p>
+      </div>
+      <div class="card">
+        <span class="glyph">💧</span>
+        <h3>Water</h3>
+        <p>El Niño redraws the rain map: drought where communities expect rain, floods where they don't. Reservoirs, wells, and crops all sit downstream of that shift.</p>
+      </div>
+      <div class="card">
+        <span class="glyph">🏠</span>
+        <h3>Livelihoods</h3>
+        <p>Fisheries collapse, harvests fail, supply chains snarl. The people hit hardest are the ones who never attend a climate conference.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Why a week</p>
+    <h2>Climate Week shouldn't look like a party to the other 8 billion people.</h2>
+    <p class="lede">Every September, the climate community gathers in New York — breakfasts, run clubs, networking dinners. To the people who will actually live through this El Niño, that can look like climate isn't all that important.</p>
+    <p class="lede">Imagine instead that the week pointed at the storm on the horizon: what the science says, what's already happening, and what we can still do about power systems, water systems, and communication before the peak. A climate conversation that isn't just for climate people — one led by everyone on Earth.</p>
+    <p class="pull">Imagine we come out the other side of El Niño with something different to say about the climate — because of what we did together.</p>
+  </div>
+</section>
+
+<section class="featured" id="event">
+  <div class="wrap">
+    <p class="eyebrow">Featured · Climate Week NYC program</p>
+    <h2>One event in the official program takes on El Niño. Be in the room.</h2>
+    <div class="event-card">
+      <div>
+        <h3>Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</h3>
+        <p class="desc">Scientists can often see El Niño coming months ahead — where drought, flooding, and heat become more likely. But a forecast isn't preparedness. This conversation with Columbia Climate School's Distinguished Fellows asks what happens <em>after</em> the forecast: how leadership, institutions, culture, and human behavior turn climate knowledge into real-world decisions.</p>
+        <p class="desc">Opening remarks by Dean Alexis Abramson; scientific overview and moderation by Professor Jeffrey Shaman. Featuring Distinguished Fellows Justin Brice Guariglia, Mareva Grabowski-Mitsotakis, and Miranda Massie. Audience Q&amp;A, followed by a reception.</p>
+        <p class="host-note">Hosted by Columbia Climate School as part of the Climate Week NYC 2026 program.</p>
+      </div>
+      <div class="event-meta">
+        <div class="meta-item">
+          <span class="label">Date</span>
+          <span class="value">Thursday, September 24, 2026</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Time</span>
+          <span class="value">2:00–3:30 PM ET (reception from 3:00)</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Place</span>
+          <span class="value">The Forum at Columbia University<br>601 W 125th St, New York</span>
+        </div>
+        <a class="btn btn-heat" href="https://events.columbia.edu/cal/event/eventView.do?b=de&amp;calPath=%2Fpublic%2Fcals%2FMainCal&amp;guid=CAL-00bbdb7c-9fff55fc-01a0-0148ec69-0000452fevents%40columbia.edu&amp;recurrenceId=" target="_blank" rel="noopener">Register on CU Events →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The three-month window</p>
+    <h2>"Nothing we can do" is wrong. Here's the work.</h2>
+    <p class="lede">Between Climate Week and the El Niño peak there are roughly three months. That's not long enough to stop it — it's exactly long enough to prepare for it, and to prove that a climate event can be met with a plan instead of a shrug.</p>
+    <div class="window-list">
+      <div class="window-item">
+        <h3>Power systems</h3>
+        <p>Harden grids for heat and storms, stage backup power for critical services, and get demand-response plans in place before the stress arrives.</p>
+      </div>
+      <div class="window-item">
+        <h3>Water systems</h3>
+        <p>Pre-position storage and treatment where drought and flood risk is elevated, and get reservoir and well contingency plans out of the drawer.</p>
+      </div>
+      <div class="window-item">
+        <h3>Communication</h3>
+        <p>Forecasts only matter if they reach people in time, in their language, with something actionable attached. Build the channels now.</p>
+      </div>
+      <div class="window-item">
+        <h3>The conversation</h3>
+        <p>Use a live, global climate event to expand who talks about climate — from the people already at the conference to the people living the impacts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="involve" id="involved">
+  <div class="wrap">
+    <p class="eyebrow">Get involved</p>
+    <h2>This gets built in the next few weeks — by whoever shows up.</h2>
+    <div class="involve-grid">
+      <div class="kickoff-box">
+        <p class="eyebrow">Planning kickoff · Online</p>
+        <h3>El Niño Climate Week planning call</h3>
+        <div class="kickoff-when">
+          <strong>Friday, August 28 · 3:00 PM ET</strong>
+          Online — the call link goes out to everyone who signs up.
+        </div>
+        <p>We'll cover the structure of the week, what events and programming are needed, how you can help, and how to bring your organization or community in. It's going to be fast — come ready to build.</p>
+      </div>
+      <div>
+        <form name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+          <input type="hidden" name="form-name" value="get-involved">
+          <p style="display:none"><label>Don't fill this out: <input name="bot-field"></label></p>
+          <label>Name
+            <input type="text" name="name" required autocomplete="name">
+          </label>
+          <label>Email
+            <input type="email" name="email" required autocomplete="email">
+          </label>
+          <label>How do you want to be part of it?
+            <select name="role">
+              <option>Join the planning kickoff (Friday)</option>
+              <option>Host an event during the week</option>
+              <option>Bring expertise (science, grid, water, comms)</option>
+              <option>Spread the word</option>
+              <option>Just keep me posted</option>
+            </select>
+          </label>
+          <label>Anything else?
+            <textarea name="message" placeholder="Where you're based, what you work on, who you can bring…"></textarea>
+          </label>
+          <button class="btn btn-heat" type="submit">Count me in</button>
+          <p class="form-note">You'll get the kickoff call link and updates on the week. No spam, ever.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>🌊 <strong style="color:#eaf4fb">El Niño Climate Week</strong> · September 20–27, 2026</div>
+    <div>An open, volunteer-organized initiative. Questions or ideas: <a href="#involved">sign up above</a> and say hello.</div>
+    <p class="fine">El Niño Climate Week is an independent, grassroots effort that runs parallel to New York Climate Week. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University. "Beyond the Forecast" is hosted by Columbia Climate School; registration happens on Columbia's site.</p>
+  </div>
+</footer>
+
 </body>
 </html>
