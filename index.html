@@ -12,22 +12,22 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0b1826;
-    --paper: #f7f4ee;
-    --paper-2: #efe9df;
-    --deep: #06121f;
-    --deep-2: #0a2238;
+    --ink: #0d0d0d;
+    --paper: #ffffff;
+    --paper-2: #f4f3ee;
+    --deep: #0d0d0d;
+    --deep-2: #161616;
     --sea: #1c7fb8;
-    --sea-bright: #35a7e0;
+    --sea-bright: #ffb454;
     --heat: #e05a2b;
     --heat-bright: #ff7a45;
-    --sand: #c9bda9;
-    --line: rgba(11, 24, 38, 0.14);
-    --serif: "Newsreader", Georgia, "Times New Roman", serif;
-    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --line: rgba(13,13,13,0.85);
+    --line-soft: rgba(13,13,13,0.18);
+    --serif: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -35,238 +35,246 @@
     font-family: var(--sans);
     color: var(--ink);
     background: var(--paper);
-    line-height: 1.6;
+    line-height: 1.65;
+    font-size: 15px;
     -webkit-font-smoothing: antialiased;
   }
   img { max-width: 100%; }
   a { color: inherit; }
+  ::selection { background: var(--heat); color: #fff; }
 
-  .wrap { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+  .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* ---------- EAS ticker ---------- */
+  .topline {
+    background: var(--ink); color: #fff;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+    overflow: hidden; white-space: nowrap; padding: 0.35rem 0;
+    border-bottom: 3px double #fff;
+  }
+  .topline .reel { display: inline-block; padding-left: 0; animation: reel 45s linear infinite; }
+  @keyframes reel { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .topline .reel { animation: none; } }
 
   /* ---------- nav ---------- */
   nav {
     position: sticky; top: 0; z-index: 20;
-    background: rgba(247, 244, 238, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    border-bottom: 2px solid var(--ink);
   }
   .nav-inner {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0.8rem 1.5rem; max-width: 68rem; margin: 0 auto;
+    padding: 0.7rem 1.25rem; max-width: 62rem; margin: 0 auto;
   }
-  .brand { font-weight: 700; letter-spacing: 0.02em; font-size: 0.95rem; text-decoration: none; }
+  .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; }
   .brand .nino { color: var(--heat); }
-  .nav-date { font-size: 0.85rem; color: rgba(11,24,38,0.6); display: none; }
-  @media (min-width: 640px) { .nav-date { display: block; } }
+  .nav-date { font-size: 0.78rem; color: rgba(13,13,13,0.6); display: none; letter-spacing: 0.04em; }
+  @media (min-width: 700px) { .nav-date { display: block; } }
   .nav-cta {
-    font-size: 0.85rem; font-weight: 600; text-decoration: none;
-    background: var(--ink); color: var(--paper);
-    padding: 0.5rem 1rem; border-radius: 999px;
-    transition: background 0.15s;
+    font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
+    background: var(--heat); color: #fff; letter-spacing: 0.06em;
+    padding: 0.45rem 0.9rem; border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s;
   }
-  .nav-cta:hover { background: var(--heat); }
+  .nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
 
   /* ---------- hero ---------- */
   header.hero {
-    background:
-      radial-gradient(120% 90% at 85% -10%, rgba(255,122,69,0.28), transparent 55%),
-      radial-gradient(100% 80% at 10% 110%, rgba(53,167,224,0.25), transparent 60%),
-      linear-gradient(180deg, var(--deep) 0%, var(--deep-2) 70%, #0d3a54 100%);
-    color: #eaf4fb;
-    padding: 6rem 0 5rem;
-    overflow: hidden;
-    position: relative;
+    background: var(--ink);
+    color: #f2f2f2;
+    padding: 4.5rem 0 4rem;
+    border-bottom: 2px solid var(--ink);
   }
   .kicker {
-    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--heat-bright); margin-bottom: 1.5rem;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--sea-bright); margin-bottom: 1.5rem;
   }
+  .kicker::before { content: ">>> "; }
   .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: -0.015em;
-    max-width: 18ch;
-    margin-bottom: 1.75rem;
+    font-family: var(--sans);
+    font-size: clamp(1.5rem, 4.2vw, 2.9rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    max-width: 24ch;
+    margin-bottom: 1.5rem;
   }
-  .hero h1 em { font-style: italic; color: var(--heat-bright); }
+  .hero h1 em { font-style: normal; color: var(--heat-bright); }
   .hero .sub {
-    font-size: clamp(1.05rem, 2vw, 1.25rem);
-    color: #b8d4e6; max-width: 44ch; margin-bottom: 2.5rem;
+    font-size: clamp(0.92rem, 1.6vw, 1.05rem);
+    color: #c9c9c9; max-width: 58ch; margin-bottom: 2.25rem;
   }
-  .hero .sub strong { color: #eaf4fb; font-weight: 600; }
-  .btn-row { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+  .hero .sub strong { color: #fff; font-weight: 700; }
+  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn {
-    display: inline-block; text-decoration: none; font-weight: 600; font-size: 0.95rem;
-    padding: 0.85rem 1.5rem; border-radius: 999px; transition: transform 0.12s, background 0.15s;
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: 0.85rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.8rem 1.3rem; border: 2px solid #fff;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
   }
-  .btn:hover { transform: translateY(-1px); }
-  .btn-heat { background: var(--heat); color: #fff; }
-  .btn-heat:hover { background: var(--heat-bright); }
-  .btn-ghost { border: 1px solid rgba(234,244,251,0.4); color: #eaf4fb; }
-  .btn-ghost:hover { border-color: #eaf4fb; }
+  .btn-heat { background: var(--heat); color: #fff; border-color: #fff; box-shadow: 4px 4px 0 rgba(255,255,255,0.35); }
+  .btn-heat:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
+  .btn-ghost { border: 2px dashed rgba(255,255,255,0.6); color: #fff; }
+  .btn-ghost:hover { border-style: solid; border-color: #fff; }
 
-  /* motto band */
-  .motto { background: var(--paper-2); border-bottom: 1px solid var(--line); padding: 3rem 0; text-align: center; }
+  /* ---------- motto band ---------- */
+  .motto { background: var(--paper); border-bottom: 2px solid var(--ink); padding: 2.75rem 0; text-align: center; }
   .motto blockquote {
-    font-family: var(--serif); font-style: italic; font-weight: 500;
-    font-size: clamp(1.5rem, 3.5vw, 2.3rem); line-height: 1.3;
-    max-width: 30ch; margin: 0 auto; color: var(--ink);
+    font-family: var(--sans); font-style: normal; font-weight: 600;
+    font-size: clamp(1.05rem, 2.6vw, 1.6rem); line-height: 1.45;
+    max-width: 44ch; margin: 0 auto; color: var(--ink);
   }
   .motto cite {
-    display: block; margin-top: 1rem; font-family: var(--sans); font-style: normal;
-    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-    color: rgba(11,24,38,0.55);
+    display: block; margin-top: 1rem; font-style: normal;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(13,13,13,0.55);
   }
 
   /* ---------- sections ---------- */
-  section { padding: 4.5rem 0; }
+  section { padding: 3.75rem 0; }
   .eyebrow {
-    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--heat); margin-bottom: 1rem;
   }
+  .eyebrow::before { content: "/// "; }
   h2 {
-    font-family: var(--serif); font-weight: 500;
-    font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15;
-    letter-spacing: -0.01em; max-width: 24ch; margin-bottom: 1.25rem;
+    font-family: var(--sans); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.25rem, 2.8vw, 1.8rem); line-height: 1.3;
+    letter-spacing: 0.01em; max-width: 34ch; margin-bottom: 1.25rem;
   }
-  .lede { font-size: 1.1rem; max-width: 60ch; color: rgba(11,24,38,0.8); }
+  .lede { font-size: 0.98rem; max-width: 68ch; color: rgba(13,13,13,0.85); }
   .lede + .lede { margin-top: 1rem; }
 
   /* stakes cards */
-  .stakes { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .card-grid { display: grid; gap: 1.25rem; margin-top: 2.5rem; grid-template-columns: 1fr; }
+  .stakes { background: var(--paper-2); border-bottom: 2px solid var(--ink); }
+  .card-grid { display: grid; gap: 0; margin-top: 2.25rem; grid-template-columns: 1fr; border: 2px solid var(--ink); background: var(--ink); }
   @media (min-width: 720px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
-  .card {
-    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
-    padding: 1.5rem;
-  }
-  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .card p { font-size: 0.95rem; color: rgba(11,24,38,0.75); }
-  .card .glyph { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+  .card { background: var(--paper); padding: 1.4rem; border: 0; outline: 1px solid var(--ink); }
+  .card h3 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.88rem; color: rgba(13,13,13,0.75); }
+  .card .glyph { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
 
   /* enso chart */
-  .chart-block {
-    margin-top: 2.5rem; background: var(--paper); border: 1px solid var(--line);
-    border-radius: 12px; padding: 1.5rem;
-  }
-  .chart-title { font-weight: 700; font-size: 1.1rem; }
-  .chart-sub { font-size: 0.9rem; color: rgba(11,24,38,0.65); max-width: 72ch; margin: 0.4rem 0 1.1rem; }
-  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.8rem; font-weight: 600; color: rgba(11,24,38,0.75); margin-bottom: 0.75rem; }
-  .legend .sw { display: inline-block; width: 16px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 0.4rem; }
+  .chart-block { margin-top: 2.25rem; background: var(--paper); border: 2px solid var(--ink); padding: 1.4rem; }
+  .chart-title { font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .chart-sub { font-size: 0.85rem; color: rgba(13,13,13,0.65); max-width: 76ch; margin: 0.5rem 0 1.1rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.78rem; font-weight: 600; color: rgba(13,13,13,0.8); margin-bottom: 0.75rem; }
+  .legend .sw { display: inline-block; width: 16px; height: 3px; vertical-align: middle; margin-right: 0.4rem; }
   .legend .sw26 { background: var(--heat); height: 5px; }
   .chart-scroll { overflow-x: auto; }
   .chart-wrap { position: relative; min-width: 640px; }
   svg.enso { display: block; width: 100%; height: auto; }
-  svg.enso .grid { stroke: #ddd6c8; stroke-width: 1; }
-  svg.enso .axis0 { stroke: rgba(11,24,38,0.35); stroke-width: 1; }
-  svg.enso .tick { font: 12px var(--sans); fill: rgba(11,24,38,0.55); }
-  svg.enso .guide { stroke: rgba(11,24,38,0.3); stroke-width: 1; stroke-dasharray: 2 4; }
-  svg.enso .note { font: 600 11px var(--sans); fill: rgba(11,24,38,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .grid { stroke: #e4e4e0; stroke-width: 1; }
+  svg.enso .axis0 { stroke: rgba(13,13,13,0.4); stroke-width: 1; }
+  svg.enso .tick { font: 11px var(--sans); fill: rgba(13,13,13,0.6); }
+  svg.enso .guide { stroke: rgba(13,13,13,0.35); stroke-width: 1; stroke-dasharray: 2 4; }
+  svg.enso .note { font: 600 11px var(--sans); fill: rgba(13,13,13,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
   svg.enso .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   svg.enso .ln26 { stroke-width: 3.5; }
   svg.enso .ghost { opacity: 0.5; stroke-dasharray: 3 6; stroke-width: 2; }
-  svg.enso .leader { stroke: rgba(11,24,38,0.25); stroke-width: 1; }
-  svg.enso .dmg { font: 700 13.5px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
-  svg.enso .note2 { font: italic 500 16px var(--serif); fill: rgba(11,24,38,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
-  svg.enso .plab { font: 12px var(--sans); fill: rgba(11,24,38,0.65); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .leader { stroke: rgba(13,13,13,0.3); stroke-width: 1; }
+  svg.enso .dmg { font: 700 13px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .note2 { font: italic 500 14px var(--sans); fill: rgba(13,13,13,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
+  svg.enso .plab { font: 11.5px var(--sans); fill: rgba(13,13,13,0.7); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
   svg.enso .lab26 { font: 700 14px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
-  svg.enso .lab26b { font: 12px var(--sans); fill: rgba(11,24,38,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .lab26b { font: 11.5px var(--sans); fill: rgba(13,13,13,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
   .tip {
     position: absolute; pointer-events: none; z-index: 5;
-    background: var(--deep); color: #eaf4fb; border-radius: 8px;
-    padding: 0.5rem 0.7rem; font-size: 0.78rem; line-height: 1.5; white-space: nowrap;
-    box-shadow: 0 4px 14px rgba(6,18,31,0.25);
+    background: var(--ink); color: #fff; border: 1px solid #fff;
+    padding: 0.5rem 0.7rem; font-size: 0.74rem; line-height: 1.55; white-space: nowrap;
   }
   .tip .t-season { font-weight: 700; margin-bottom: 0.15rem; display: block; }
-  .tip .t-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.35rem; }
-  .chart-data { margin-top: 0.75rem; font-size: 0.85rem; }
-  .chart-data summary { cursor: pointer; font-weight: 600; color: rgba(11,24,38,0.6); }
+  .tip .t-dot { display: inline-block; width: 8px; height: 8px; margin-right: 0.35rem; }
+  .chart-data { margin-top: 0.75rem; font-size: 0.82rem; }
+  .chart-data summary { cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75rem; color: rgba(13,13,13,0.6); }
   .chart-data table { border-collapse: collapse; margin-top: 0.6rem; font-variant-numeric: tabular-nums; }
-  .chart-data th, .chart-data td { border: 1px solid var(--line); padding: 0.3rem 0.6rem; text-align: right; }
+  .chart-data th, .chart-data td { border: 1px solid var(--line-soft); padding: 0.28rem 0.55rem; text-align: right; }
   .chart-data th:first-child, .chart-data td:first-child { text-align: left; }
-  .chart-src { font-size: 0.75rem; color: rgba(11,24,38,0.5); margin-top: 1rem; max-width: 90ch; }
+  .chart-src { font-size: 0.72rem; color: rgba(13,13,13,0.55); margin-top: 1rem; max-width: 95ch; }
 
   /* pull quote */
   .pull {
-    font-family: var(--serif); font-style: italic;
-    font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.35;
-    max-width: 34ch; margin: 2.5rem 0 0;
-    padding-left: 1.5rem; border-left: 3px solid var(--heat);
-    color: rgba(11,24,38,0.85);
+    font-family: var(--sans); font-style: normal; font-weight: 600;
+    font-size: clamp(1rem, 2.2vw, 1.35rem); line-height: 1.5;
+    max-width: 46ch; margin: 2.25rem 0 0;
+    padding-left: 1.25rem; border-left: 4px solid var(--heat);
+    color: rgba(13,13,13,0.9);
   }
 
   /* featured event */
-  .featured { background: var(--deep); color: #eaf4fb; }
+  .featured { background: var(--ink); color: #f2f2f2; border-bottom: 2px solid var(--ink); }
   .featured .eyebrow { color: var(--sea-bright); }
-  .featured h2 { color: #fff; max-width: 30ch; }
+  .featured h2 { color: #fff; max-width: 40ch; }
   .event-card {
-    margin-top: 2.5rem; border: 1px solid rgba(234,244,251,0.18); border-radius: 16px;
-    padding: 2rem; background: rgba(255,255,255,0.04);
+    margin-top: 2.25rem; border: 2px solid #fff; padding: 1.75rem; background: transparent;
     display: grid; gap: 2rem; grid-template-columns: 1fr;
   }
-  @media (min-width: 800px) { .event-card { grid-template-columns: 1.5fr 1fr; padding: 2.5rem; } }
+  @media (min-width: 800px) { .event-card { grid-template-columns: 1.5fr 1fr; padding: 2rem; } }
   .event-card h3 {
-    font-family: var(--serif); font-weight: 500;
-    font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; margin-bottom: 1rem;
+    font-family: var(--sans); font-weight: 700; text-transform: uppercase;
+    font-size: clamp(1.05rem, 2.2vw, 1.35rem); line-height: 1.35; margin-bottom: 1rem;
   }
-  .event-card .desc { color: #b8d4e6; font-size: 0.98rem; }
+  .event-card .desc { color: #c9c9c9; font-size: 0.88rem; }
   .event-card .desc + .desc { margin-top: 0.85rem; }
   .event-meta { display: flex; flex-direction: column; gap: 1.1rem; align-self: start; }
-  .meta-item { border-left: 2px solid var(--sea); padding-left: 0.9rem; }
+  .meta-item { border-left: 3px solid var(--sea-bright); padding-left: 0.9rem; }
   .meta-item .label {
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--sea-bright); display: block; margin-bottom: 0.15rem;
   }
-  .meta-item .value { font-size: 0.95rem; color: #eaf4fb; }
+  .meta-item .value { font-size: 0.88rem; color: #f2f2f2; }
   .event-card .btn-heat { justify-self: start; margin-top: 0.5rem; }
-  .host-note { font-size: 0.82rem; color: rgba(184,212,230,0.7); margin-top: 1.25rem; }
+  .host-note { font-size: 0.75rem; color: rgba(201,201,201,0.7); margin-top: 1.25rem; }
 
   /* window / what we can do */
-  .window-list { margin-top: 2.25rem; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .window-list { margin-top: 2rem; display: grid; gap: 0; border-top: 2px solid var(--ink); }
   .window-item {
-    display: grid; gap: 0.35rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line);
+    display: grid; gap: 0.35rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line-soft);
     grid-template-columns: 1fr;
   }
   @media (min-width: 720px) { .window-item { grid-template-columns: 14rem 1fr; gap: 2rem; } }
-  .window-item h3 { font-size: 1rem; font-weight: 700; }
-  .window-item p { font-size: 0.97rem; color: rgba(11,24,38,0.75); max-width: 60ch; }
+  .window-item h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .window-item h3::before { content: "[+] "; color: var(--heat); }
+  .window-item p { font-size: 0.9rem; color: rgba(13,13,13,0.75); max-width: 62ch; }
 
   /* get involved */
-  .involve { background: var(--paper-2); border-top: 1px solid var(--line); }
-  .involve-grid { display: grid; gap: 3rem; grid-template-columns: 1fr; margin-top: 1rem; }
+  .involve { background: var(--paper-2); border-top: 2px solid var(--ink); }
+  .involve-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; margin-top: 1rem; }
   @media (min-width: 820px) { .involve-grid { grid-template-columns: 1fr 1fr; } }
-  .kickoff-box {
-    background: var(--deep); color: #eaf4fb; border-radius: 16px; padding: 2rem;
-    align-self: start;
-  }
-  .kickoff-box .eyebrow { color: var(--heat-bright); }
-  .kickoff-box h3 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.2; margin-bottom: 0.75rem; }
-  .kickoff-box p { color: #b8d4e6; font-size: 0.95rem; }
-  .kickoff-when { margin: 1.25rem 0; padding: 1rem; border-radius: 10px; background: rgba(255,255,255,0.06); font-size: 0.95rem; }
-  .kickoff-when strong { display: block; font-size: 1.05rem; margin-bottom: 0.2rem; }
+  .kickoff-box { background: var(--ink); color: #f2f2f2; border: 2px solid var(--ink); padding: 1.75rem; align-self: start; }
+  .kickoff-box .eyebrow { color: var(--sea-bright); }
+  .kickoff-box h3 { font-family: var(--sans); font-weight: 700; text-transform: uppercase; font-size: 1.1rem; line-height: 1.35; margin-bottom: 0.75rem; }
+  .kickoff-box p { color: #c9c9c9; font-size: 0.88rem; }
+  .kickoff-when { margin: 1.25rem 0; padding: 1rem; border: 1px dashed rgba(255,255,255,0.5); font-size: 0.88rem; }
+  .kickoff-when strong { display: block; font-size: 0.98rem; margin-bottom: 0.2rem; }
 
   form { display: grid; gap: 1rem; }
-  label { font-size: 0.85rem; font-weight: 600; display: grid; gap: 0.4rem; }
+  label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; display: grid; gap: 0.4rem; }
   input, select, textarea {
-    font: inherit; font-size: 0.95rem; padding: 0.75rem 0.9rem;
-    border: 1px solid rgba(11,24,38,0.25); border-radius: 8px; background: #fff;
-    width: 100%;
+    font: inherit; font-size: 0.9rem; padding: 0.7rem 0.85rem;
+    border: 2px solid var(--ink); background: var(--paper); width: 100%;
+    border-radius: 0; -webkit-appearance: none; appearance: none;
   }
-  input:focus, select:focus, textarea:focus { outline: 2px solid var(--sea); outline-offset: 1px; border-color: var(--sea); }
+  select { background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+  input:focus, select:focus, textarea:focus { outline: 3px solid var(--heat); outline-offset: 0; }
   textarea { resize: vertical; min-height: 5.5rem; }
-  button.btn { border: none; cursor: pointer; font-family: inherit; }
-  .form-note { font-size: 0.8rem; color: rgba(11,24,38,0.55); }
+  button.btn { border: 2px solid var(--ink); cursor: pointer; font-family: inherit; background: var(--heat); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
+  button.btn:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 var(--ink); }
+  .form-note { font-size: 0.75rem; color: rgba(13,13,13,0.55); text-transform: none; letter-spacing: 0; }
 
   /* footer */
-  footer { background: var(--deep); color: rgba(184,212,230,0.75); padding: 2.5rem 0; font-size: 0.85rem; }
+  footer { background: var(--ink); color: rgba(220,220,220,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
   footer .wrap { display: grid; gap: 0.75rem; }
-  footer a { color: #b8d4e6; }
-  footer .fine { font-size: 0.78rem; color: rgba(184,212,230,0.5); max-width: 70ch; }
+  footer a { color: #fff; }
+  footer .fine { font-size: 0.72rem; color: rgba(220,220,220,0.5); max-width: 80ch; }
+  footer .wrap > div:first-child::before { content: "// END OF BULLETIN //"; display: block; letter-spacing: 0.2em; font-weight: 700; color: rgba(220,220,220,0.45); margin-bottom: 1rem; font-size: 0.7rem; }
 </style>
 </head>
 <body>
+
+<div class="topline" aria-hidden="true"><span class="reel">*** EL NIÑO CLIMATE WEEK *** SEPTEMBER 20–27, 2026 *** PARALLEL TO NEW YORK CLIMATE WEEK *** STRONGEST EL NIÑO ON RECORD FORMING *** PLANNING CALL FRI AUG 28 · 3 PM ET *** THIS IS NOT A DRILL, IT IS A FORECAST *** *** EL NIÑO CLIMATE WEEK *** SEPTEMBER 20–27, 2026 *** PARALLEL TO NEW YORK CLIMATE WEEK *** STRONGEST EL NIÑO ON RECORD FORMING *** PLANNING CALL FRI AUG 28 · 3 PM ET *** THIS IS NOT A DRILL, IT IS A FORECAST *** </span></div>
 
 <nav>
   <div class="nav-inner">
@@ -342,23 +350,23 @@
             <path d="M52.0,385.9 L103.5,363.3 L155.0,340.8 L206.5,310.0 L258.0,282.4 L309.5,254.7" class="ln" stroke="#4a3aa7"/>
             <path d="M309.5,254.7 L361.0,227.0 L412.5,201.4 L464.0,175.8 L515.5,151.1 L567.0,134.8 L618.5,125.5 L670.0,140.9" class="ln ghost" stroke="#4a3aa7"/>
             <line x1="672" y1="73.2" x2="682" y2="58" class="leader"/>
-            <circle cx="670" cy="73.2" r="3.5" fill="#1baf7a" stroke="#f7f4ee" stroke-width="2"/>
+            <circle cx="670" cy="73.2" r="3.5" fill="#1baf7a" stroke="#ffffff" stroke-width="2"/>
             <text x="686" y="62" class="plab"><tspan fill="#1baf7a">●</tspan> 2015–16 · peaked +2.6°</text>
             <text x="686" y="79" class="dmg">$3.9T global losses</text>
             <line x1="672" y1="101.9" x2="682" y2="100" class="leader"/>
-            <circle cx="670" cy="101.9" r="3.5" fill="#2a78d6" stroke="#f7f4ee" stroke-width="2"/>
+            <circle cx="670" cy="101.9" r="3.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
             <text x="686" y="104" class="plab"><tspan fill="#2a78d6">●</tspan> 1997–98 · peaked +2.4°</text>
             <text x="686" y="121" class="dmg">$2.1T global losses</text>
             <line x1="672" y1="110.1" x2="682" y2="142" class="leader"/>
-            <circle cx="670" cy="110.1" r="3.5" fill="#e87ba4" stroke="#f7f4ee" stroke-width="2"/>
+            <circle cx="670" cy="110.1" r="3.5" fill="#e87ba4" stroke="#ffffff" stroke-width="2"/>
             <text x="686" y="146" class="plab"><tspan fill="#e87ba4">●</tspan> 1982–83 · peaked +2.1°</text>
             <text x="686" y="163" class="dmg">$1.3T global losses</text>
             <line x1="672" y1="140.9" x2="682" y2="184" class="leader"/>
-            <circle cx="670" cy="140.9" r="3.5" fill="#4a3aa7" stroke="#f7f4ee" stroke-width="2"/>
+            <circle cx="670" cy="140.9" r="3.5" fill="#4a3aa7" stroke="#ffffff" stroke-width="2"/>
             <text x="686" y="188" class="plab"><tspan fill="#4a3aa7">●</tspan> 2023–24 · peaked +2.0°</text>
             <text x="686" y="205" class="dmg">est. $3T by 2029</text>
             <path d="M52.0,369.5 L103.5,351.0 L155.0,318.2 L206.5,282.4 L258.0,232.1 L309.5,187.0" class="ln ln26" stroke="#e05a2b"/>
-            <circle cx="309.5" cy="187.0" r="5.5" fill="#e05a2b" stroke="#f7f4ee" stroke-width="2"/>
+            <circle cx="309.5" cy="187.0" r="5.5" fill="#e05a2b" stroke="#ffffff" stroke-width="2"/>
             <text x="295.5" y="160" class="lab26" text-anchor="end">2026: +1.39 °C</text>
             <text x="295.5" y="178" class="lab26b" text-anchor="end">warmest May–Jul of any El Niño on record</text>
             <text x="325.5" y="356" class="note2">Where this one goes isn’t written yet.</text>
