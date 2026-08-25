@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Niño Climate Week</title>
+<meta name="description" content="El Niño Climate Week — coming soon.">
+<style>
+  :root {
+    --bg: #06121f;
+    --fg: #eaf4fb;
+    --accent: #ffb74d;
+    --sea: #2d9cdb;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(180deg, #06121f 0%, #0a2238 60%, #0d3a54 100%);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+  main { max-width: 40rem; }
+  .mark { font-size: 3rem; }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0.5rem 0 1rem;
+  }
+  h1 .nino { color: var(--accent); }
+  p.tag {
+    font-size: 1.15rem;
+    color: #b8d4e6;
+    line-height: 1.6;
+  }
+  .soon {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--sea);
+    border-radius: 999px;
+    color: var(--sea);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="mark">🌊</div>
+  <h1>El <span class="nino">Niño</span> Climate&nbsp;Week</h1>
+  <p class="tag">The strongest El Niño on record is here. A week about what that means — for weather, for cities, for all of us.</p>
+  <span class="soon">Coming soon</span>
+</main>
+</body>
+</html>
