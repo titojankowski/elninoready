@@ -121,6 +121,20 @@
   .lede { font-size: 0.98rem; max-width: 68ch; color: rgba(13,13,13,0.85); }
   .lede + .lede { margin-top: 1rem; }
 
+  /* economist quote band */
+  .quoteband { background: var(--paper); border-bottom: 2px solid var(--ink); padding: 3rem 0; text-align: center; }
+  .quoteband blockquote {
+    font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.5rem); line-height: 1.5;
+    max-width: 52ch; margin: 0 auto; color: var(--ink);
+  }
+  .quoteband blockquote em { font-style: normal; color: var(--heat); }
+  .quoteband cite {
+    display: block; margin-top: 1.25rem; font-style: normal;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(13,13,13,0.55);
+  }
+  .quoteband cite a { color: rgba(13,13,13,0.55); }
+
   /* stakes cards */
   .stakes { background: var(--paper-2); border-bottom: 2px solid var(--ink); }
   .card-grid { display: grid; gap: 0; margin-top: 2.25rem; grid-template-columns: 1fr; border: 2px solid var(--ink); background: var(--ink); }
@@ -278,6 +292,14 @@
         <p>Fisheries collapse, harvests fail, supply chains snarl. The people hit hardest are the ones who never attend a climate conference.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="quoteband">
+  <div class="wrap">
+    <blockquote>&ldquo;The $986&nbsp;billion in year-one losses are largely baked in. The additional at least $6.2&nbsp;trillion in cumulative losses over the following five years&hellip; <em>is not</em>.&rdquo;
+      <cite>&mdash; Cullen Hendrix &middot; <a href="https://www.piie.com/blogs/realtime-economics/2026/el-nino-could-drag-down-global-economy-almost-1-trillion-or-least-7" target="_blank" rel="noopener">Peterson Institute for International Economics</a> &middot; July 2026</cite>
+    </blockquote>
   </div>
 </section>
 
