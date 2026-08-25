@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Niño Climate Week — September 20–27, 2026</title>
-<meta name="description" content="The last El Niño this big cost the world $3.9 trillion — and this one is already hotter. El Niño Climate Week runs alongside New York Climate Week to turn the world's biggest climate gathering toward the world's biggest climate event.">
+<meta name="description" content="The biggest El Niño in recorded history is forming right now — NOAA puts it at 69% odds of being the strongest ever measured. El Niño Climate Week runs alongside New York Climate Week to turn the world's biggest climate gathering toward the world's biggest climate event.">
 <meta property="og:title" content="El Niño Climate Week">
 <meta property="og:description" content="September 20–27, 2026 · Parallel to New York Climate Week. Three months to prepare. One week to start.">
 <meta property="og:type" content="website">
@@ -22,8 +22,8 @@
     --deep-2: #161616;
     --sea: #1c7fb8;
     --sea-bright: #ffb454;
-    --heat: #e05a2b;
-    --heat-bright: #ff7a45;
+    --heat: #f13a13;
+    --heat-bright: #ff5f38;
     --line: rgba(13,13,13,0.85);
     --line-soft: rgba(13,13,13,0.18);
     --serif: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -44,17 +44,6 @@
   ::selection { background: var(--heat); color: #fff; }
 
   .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
-
-  /* ---------- EAS ticker ---------- */
-  .topline {
-    background: var(--ink); color: #fff;
-    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
-    overflow: hidden; white-space: nowrap; padding: 0.35rem 0;
-    border-bottom: 3px double #fff;
-  }
-  .topline .reel { display: inline-block; padding-left: 0; animation: reel 45s linear infinite; }
-  @keyframes reel { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  @media (prefers-reduced-motion: reduce) { .topline .reel { animation: none; } }
 
   /* ---------- nav ---------- */
   nav {
@@ -275,8 +264,6 @@
 </head>
 <body>
 
-<div class="topline" aria-hidden="true"><span class="reel">*** EL NIÑO CLIMATE WEEK *** SEPTEMBER 20–27, 2026 *** PARALLEL TO NEW YORK CLIMATE WEEK *** STRONGEST EL NIÑO ON RECORD FORMING *** PLANNING CALL WED SEP 2 · 9 AM PT *** THIS IS NOT A DRILL, IT IS A FORECAST *** *** EL NIÑO CLIMATE WEEK *** SEPTEMBER 20–27, 2026 *** PARALLEL TO NEW YORK CLIMATE WEEK *** STRONGEST EL NIÑO ON RECORD FORMING *** PLANNING CALL WED SEP 2 · 9 AM PT *** THIS IS NOT A DRILL, IT IS A FORECAST *** </span></div>
-
 <nav>
   <div class="nav-inner">
     <a class="brand" href="#top">EL <span class="nino">NIÑO</span> CLIMATE WEEK</a>
@@ -288,7 +275,7 @@
 <header class="hero" id="top">
   <div class="wrap">
     <p class="kicker">September 20–27, 2026 · Parallel to New York Climate Week</p>
-    <h1>The last El&nbsp;Niño this big cost the world $3.9&nbsp;trillion. This one is <em>already hotter</em>.</h1>
+    <h1>The biggest El&nbsp;Niño in recorded history is forming <em>right now</em>.</h1>
     <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Climate Week</strong> points the world's largest climate gathering at the world's largest climate event.</p>
     <div class="btn-row">
       <a class="btn btn-heat" href="https://lu.ma/elninoclimateweek" target="_blank" rel="noopener">RSVP: Planning kickoff · Wed, Sep 2 · 9 AM PT</a>
@@ -353,8 +340,8 @@
             <circle cx="560" cy="254.7" r="3.5" fill="#e87ba4" stroke="#ffffff" stroke-width="2"/>
             <text x="578" y="296" class="plab"><tspan fill="#e87ba4">●</tspan> 1982–83 · peaked +2.1°</text>
             <text x="578" y="314" class="dmg">$1.3T global losses</text>
-            <path d="M52.0,369.5 L153.6,351.0 L255.2,318.2 L356.8,282.4 L458.4,232.1 L560.0,187.0" class="ln ln26" stroke="#e05a2b"/>
-            <circle cx="560" cy="187.0" r="5.5" fill="#e05a2b" stroke="#ffffff" stroke-width="2"/>
+            <path d="M52.0,369.5 L153.6,351.0 L255.2,318.2 L356.8,282.4 L458.4,232.1 L560.0,187.0" class="ln ln26" stroke="#f13a13"/>
+            <circle cx="560" cy="187.0" r="5.5" fill="#f13a13" stroke="#ffffff" stroke-width="2"/>
             <line x1="562" y1="187.0" x2="573" y2="123" class="leader"/>
             <text x="578" y="128" class="lab26">2026: +1.39 °C — and climbing</text>
             <text x="578" y="146" class="lab26b">warmest May–Jul of any El Niño on record.</text>
@@ -519,7 +506,7 @@
 (function () {
   var SEASONS = ["Dec\u2013Feb","Jan\u2013Mar","Feb\u2013Apr","Mar\u2013May","Apr\u2013Jun","May\u2013Jul"];
   var SERIES = [
-    { name: "2026", color: "#e05a2b", vals: [-0.39,-0.21,0.11,0.46,0.95,1.39] },
+    { name: "2026", color: "#f13a13", vals: [-0.39,-0.21,0.11,0.46,0.95,1.39] },
     { name: "2015\u201316", color: "#1baf7a", vals: [0.73,0.65,0.72,0.86,1.04,1.19] },
     { name: "1997\u201398", color: "#2a78d6", vals: [-0.41,-0.26,-0.03,0.30,0.71,1.13] },
     { name: "1982\u201383", color: "#e87ba4", vals: [-0.05,0.02,0.07,0.34,0.65,0.73] }
