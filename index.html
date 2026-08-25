@@ -133,6 +133,44 @@
   .card p { font-size: 0.95rem; color: rgba(11,24,38,0.75); }
   .card .glyph { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
 
+  /* enso chart */
+  .chart-block {
+    margin-top: 2.5rem; background: var(--paper); border: 1px solid var(--line);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .chart-title { font-weight: 700; font-size: 1.1rem; }
+  .chart-sub { font-size: 0.9rem; color: rgba(11,24,38,0.65); max-width: 72ch; margin: 0.4rem 0 1.1rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.8rem; font-weight: 600; color: rgba(11,24,38,0.75); margin-bottom: 0.75rem; }
+  .legend .sw { display: inline-block; width: 16px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 0.4rem; }
+  .legend .sw26 { background: var(--heat); height: 5px; }
+  .chart-scroll { overflow-x: auto; }
+  .chart-wrap { position: relative; min-width: 640px; }
+  svg.enso { display: block; width: 100%; height: auto; }
+  svg.enso .grid { stroke: #ddd6c8; stroke-width: 1; }
+  svg.enso .axis0 { stroke: rgba(11,24,38,0.35); stroke-width: 1; }
+  svg.enso .tick { font: 12px var(--sans); fill: rgba(11,24,38,0.55); }
+  svg.enso .guide { stroke: rgba(11,24,38,0.3); stroke-width: 1; stroke-dasharray: 2 4; }
+  svg.enso .note { font: 600 11px var(--sans); fill: rgba(11,24,38,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  svg.enso .ln26 { stroke-width: 3.5; }
+  svg.enso .plab { font: 12px var(--sans); fill: rgba(11,24,38,0.65); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .lab26 { font: 700 14px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
+  svg.enso .lab26b { font: 12px var(--sans); fill: rgba(11,24,38,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  .tip {
+    position: absolute; pointer-events: none; z-index: 5;
+    background: var(--deep); color: #eaf4fb; border-radius: 8px;
+    padding: 0.5rem 0.7rem; font-size: 0.78rem; line-height: 1.5; white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(6,18,31,0.25);
+  }
+  .tip .t-season { font-weight: 700; margin-bottom: 0.15rem; display: block; }
+  .tip .t-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.35rem; }
+  .chart-data { margin-top: 0.75rem; font-size: 0.85rem; }
+  .chart-data summary { cursor: pointer; font-weight: 600; color: rgba(11,24,38,0.6); }
+  .chart-data table { border-collapse: collapse; margin-top: 0.6rem; font-variant-numeric: tabular-nums; }
+  .chart-data th, .chart-data td { border: 1px solid var(--line); padding: 0.3rem 0.6rem; text-align: right; }
+  .chart-data th:first-child, .chart-data td:first-child { text-align: left; }
+  .chart-src { font-size: 0.75rem; color: rgba(11,24,38,0.5); margin-top: 1rem; max-width: 90ch; }
+
   /* pull quote */
   .pull {
     font-family: var(--serif); font-style: italic;
@@ -217,7 +255,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">EL <span class="nino">NIÑO</span> CLIMATE WEEK</a>
     <span class="nav-date">September 20–27, 2026 · New York + everywhere</span>
-    <a class="nav-cta" href="#involved">Get involved</a>
+    <a class="nav-cta" href="https://lu.ma/elninoclimateweek" target="_blank" rel="noopener">RSVP · Fri 3 PM ET</a>
   </div>
 </nav>
 
@@ -227,7 +265,7 @@
     <h1>The biggest El&nbsp;Niño in a generation peaks in <em>three months</em>.</h1>
     <p class="sub">Scientists can see it coming. Hundreds of millions of people will feel it — in their power, their water, their livelihoods. <strong>El Niño Climate Week</strong> points the world's largest climate gathering at the world's largest climate event, and kicks off three months of global action.</p>
     <div class="btn-row">
-      <a class="btn btn-heat" href="#involved">Join the planning kickoff</a>
+      <a class="btn btn-heat" href="https://lu.ma/elninoclimateweek" target="_blank" rel="noopener">RSVP: Planning kickoff · Fri, Aug 28 · 3 PM ET</a>
       <a class="btn btn-ghost" href="#event">See the featured event</a>
     </div>
   </div>
@@ -238,6 +276,71 @@
     <p class="eyebrow">What's at stake</p>
     <h2>This one is different — and the next one starts from a warmer world.</h2>
     <p class="lede">The 2026 El Niño is shaping up to be the strongest in modern records, and it's building on a baseline that gets warmer every cycle. The forecast is not the hard part. The hard part is what happens between the forecast and the flood.</p>
+    <div class="chart-block">
+      <p class="chart-title">No El Niño has ever been this warm, this early.</p>
+      <p class="chart-sub">Sea-surface temperature anomaly in the Niño 3.4 region (ONI), lined up by event year: the five biggest El Niños since records began in 1950. The 2026 line stops at the latest data — already above every previous event at the same point in the year.</p>
+      <div class="legend" role="list">
+        <span role="listitem"><i class="sw sw26"></i>2026 (so far)</span>
+        <span role="listitem"><i class="sw" style="background:#1baf7a"></i>2015–16</span>
+        <span role="listitem"><i class="sw" style="background:#2a78d6"></i>1997–98</span>
+        <span role="listitem"><i class="sw" style="background:#e87ba4"></i>1982–83</span>
+        <span role="listitem"><i class="sw" style="background:#4a3aa7"></i>2023–24</span>
+      </div>
+      <div class="chart-scroll">
+        <div class="chart-wrap" id="ensoWrap">
+          <svg class="enso" viewBox="0 0 940 480" role="img" aria-label="Line chart of Oceanic Niño Index by month for the five strongest El Niño events. At May–July of the onset year, 2026 is at plus 1.39 degrees Celsius, higher than 2015, 1997, 1982, and 2023 at the same point. Previous events peaked between plus 2.0 and plus 2.6 degrees in November–January.">
+            <line x1="52" y1="432" x2="912" y2="432" class="grid"/>
+            <text x="44" y="436" class="tick" text-anchor="end">−1°</text>
+            <line x1="52" y1="329.5" x2="912" y2="329.5" class="axis0"/>
+            <text x="44" y="333.5" class="tick" text-anchor="end">0°</text>
+            <line x1="52" y1="227" x2="912" y2="227" class="grid"/>
+            <text x="44" y="231" class="tick" text-anchor="end">+1°</text>
+            <line x1="52" y1="124.5" x2="912" y2="124.5" class="grid"/>
+            <text x="44" y="128.5" class="tick" text-anchor="end">+2°</text>
+            <line x1="52" y1="22" x2="912" y2="22" class="grid"/>
+            <text x="44" y="26" class="tick" text-anchor="end">+3°</text>
+            <text x="52" y="454" class="tick" text-anchor="middle">Jan</text>
+            <text x="224" y="454" class="tick" text-anchor="middle">Apr</text>
+            <text x="396" y="454" class="tick" text-anchor="middle">Jul</text>
+            <text x="568" y="454" class="tick" text-anchor="middle">Oct</text>
+            <text x="740" y="454" class="tick" text-anchor="middle">Jan (yr 2)</text>
+            <text x="912" y="454" class="tick" text-anchor="middle">Apr</text>
+            <line x1="338.7" y1="30" x2="338.7" y2="432" class="guide"/>
+            <text x="338.7" y="24" class="note" text-anchor="middle">Latest data · May–Jul 2026</text>
+            <line x1="510.7" y1="60.9" x2="510.7" y2="432" class="guide"/>
+            <text x="510.7" y="52.9" class="note" text-anchor="middle">Climate Week · Sep 20–27</text>
+            <path d="M52.0,334.6 L109.3,327.4 L166.7,322.3 L224.0,294.6 L281.3,262.9 L338.7,254.7 L396.0,249.6 L453.3,228.0 L510.7,180.9 L568.0,142.9 L625.3,121.4 L682.7,112.2 L740.0,110.1 L797.3,133.7 L854.7,173.7 L912.0,203.4" class="ln" stroke="#e87ba4"/>
+            <path d="M52.0,371.5 L109.3,356.1 L166.7,332.6 L224.0,298.8 L281.3,256.7 L338.7,213.7 L396.0,177.8 L453.3,146.0 L510.7,120.4 L568.0,99.9 L625.3,89.7 L682.7,86.6 L740.0,101.9 L797.3,133.7 L854.7,186.0 L912.0,223.9" class="ln" stroke="#2a78d6"/>
+            <path d="M52.0,254.7 L109.3,262.9 L166.7,255.7 L224.0,241.4 L281.3,222.9 L338.7,207.5 L396.0,181.9 L453.3,152.2 L510.7,122.4 L568.0,95.8 L625.3,78.4 L682.7,64.0 L740.0,73.2 L797.3,103.0 L854.7,156.3 L912.0,215.7" class="ln" stroke="#1baf7a"/>
+            <path d="M52.0,385.9 L109.3,363.3 L166.7,340.8 L224.0,310.0 L281.3,282.4 L338.7,254.7 L396.0,227.0 L453.3,201.4 L510.7,175.8 L568.0,151.1 L625.3,134.8 L682.7,125.5 L740.0,140.9 L797.3,172.7 L854.7,208.6 L912.0,250.6" class="ln" stroke="#4a3aa7"/>
+            <circle cx="682.7" cy="64" r="3.5" fill="#1baf7a" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="692.7" y="68" class="plab">2015–16 peaked +2.6°</text>
+            <circle cx="682.7" cy="86.6" r="3.5" fill="#2a78d6" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="692.7" y="90.6" class="plab">1997–98 peaked +2.4°</text>
+            <circle cx="682.7" cy="112.2" r="3.5" fill="#e87ba4" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="692.7" y="112.2" class="plab">1982–83 peaked +2.1°</text>
+            <circle cx="682.7" cy="125.5" r="3.5" fill="#4a3aa7" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="692.7" y="135.5" class="plab">2023–24 peaked +2.0°</text>
+            <path d="M52.0,369.5 L109.3,351.0 L166.7,318.2 L224.0,282.4 L281.3,232.1 L338.7,187.0" class="ln ln26" stroke="#e05a2b"/>
+            <circle cx="338.7" cy="187" r="5.5" fill="#e05a2b" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="324" y="160" class="lab26" text-anchor="end">2026: +1.39 °C</text>
+            <text x="324" y="178" class="lab26b" text-anchor="end">warmest May–Jul of any El Niño on record</text>
+            <rect id="ensoHit" x="52" y="22" width="860" height="410" fill="transparent"/>
+          </svg>
+          <div class="tip" id="ensoTip" hidden></div>
+        </div>
+      </div>
+      <details class="chart-data">
+        <summary>View the data</summary>
+        <div style="overflow-x:auto">
+        <table>
+          <thead><tr><th>Season</th><th>2026</th><th>2015–16</th><th>1997–98</th><th>1982–83</th><th>2023–24</th></tr></thead>
+          <tbody id="ensoTable"></tbody>
+        </table>
+        </div>
+      </details>
+      <p class="chart-src">Data: NOAA Climate Prediction Center, <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/" target="_blank" rel="noopener">Oceanic Niño Index</a> (ERSSTv6) — three-month running mean of Niño 3.4 sea-surface temperature anomaly, retrieved August 25, 2026. Even on NOAA's new Relative ONI, which subtracts the background warming of the whole tropical ocean, 2026 is tracking the two strongest events ever recorded (1997, 2015) — and the total ocean heat underneath it is unprecedented either way: 29.0 °C in Niño 3.4, the warmest May–July ever measured.</p>
+    </div>
     <div class="card-grid">
       <div class="card">
         <span class="glyph">⚡</span>
@@ -334,9 +437,10 @@
         <h3>El Niño Climate Week planning call</h3>
         <div class="kickoff-when">
           <strong>Friday, August 28 · 3:00 PM ET</strong>
-          Online — the call link goes out to everyone who signs up.
+          Online — RSVP on Luma and the call link is yours.
         </div>
         <p>We'll cover the structure of the week, what events and programming are needed, how you can help, and how to bring your organization or community in. It's going to be fast — come ready to build.</p>
+        <a class="btn btn-heat" style="margin-top:1.25rem" href="https://lu.ma/elninoclimateweek" target="_blank" rel="noopener">RSVP on Luma →</a>
       </div>
       <div>
         <form name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
@@ -361,7 +465,7 @@
             <textarea name="message" placeholder="Where you're based, what you work on, who you can bring…"></textarea>
           </label>
           <button class="btn btn-heat" type="submit">Count me in</button>
-          <p class="form-note">You'll get the kickoff call link and updates on the week. No spam, ever.</p>
+          <p class="form-note">You'll get updates as the week takes shape. For Friday's call, RSVP on Luma. No spam, ever.</p>
         </form>
       </div>
     </div>
@@ -376,5 +480,53 @@
   </div>
 </footer>
 
+
+<script>
+(function () {
+  var SEASONS = ["Dec\u2013Feb","Jan\u2013Mar","Feb\u2013Apr","Mar\u2013May","Apr\u2013Jun","May\u2013Jul","Jun\u2013Aug","Jul\u2013Sep","Aug\u2013Oct","Sep\u2013Nov","Oct\u2013Dec","Nov\u2013Jan","Dec\u2013Feb (yr 2)","Jan\u2013Mar (yr 2)","Feb\u2013Apr (yr 2)","Mar\u2013May (yr 2)"];
+  var SERIES = [
+    { name: "2026", color: "#e05a2b", vals: [-0.39,-0.21,0.11,0.46,0.95,1.39] },
+    { name: "2015\u201316", color: "#1baf7a", vals: [0.73,0.65,0.72,0.86,1.04,1.19,1.44,1.73,2.02,2.28,2.45,2.59,2.50,2.21,1.69,1.11] },
+    { name: "1997\u201398", color: "#2a78d6", vals: [-0.41,-0.26,-0.03,0.30,0.71,1.13,1.48,1.79,2.04,2.24,2.34,2.37,2.22,1.91,1.40,1.03] },
+    { name: "1982\u201383", color: "#e87ba4", vals: [-0.05,0.02,0.07,0.34,0.65,0.73,0.78,0.99,1.45,1.82,2.03,2.12,2.14,1.91,1.52,1.23] },
+    { name: "2023\u201324", color: "#4a3aa7", vals: [-0.55,-0.33,-0.11,0.19,0.46,0.73,1.00,1.25,1.50,1.74,1.90,1.99,1.84,1.53,1.18,0.77] }
+  ];
+  var fmt = function (v) { return v == null ? "\u2014" : (v > 0 ? "+" : "") + v.toFixed(2) + "\u00a0\u00b0C"; };
+
+  var tbody = document.getElementById("ensoTable");
+  if (tbody) {
+    var rows = SEASONS.map(function (s, i) {
+      return "<tr><td>" + s + "</td>" + SERIES.map(function (sr) {
+        return "<td>" + (sr.vals[i] == null ? "\u2014" : fmt(sr.vals[i])) + "</td>";
+      }).join("") + "</tr>";
+    });
+    tbody.innerHTML = rows.join("");
+  }
+
+  var wrap = document.getElementById("ensoWrap");
+  var tip = document.getElementById("ensoTip");
+  var svg = wrap && wrap.querySelector("svg.enso");
+  if (!wrap || !tip || !svg) return;
+  var L = 52, RGT = 912, VW = 940;
+  svg.addEventListener("mousemove", function (e) {
+    var r = svg.getBoundingClientRect();
+    var xv = (e.clientX - r.left) / r.width * VW;
+    if (xv < L - 20 || xv > RGT + 20) { tip.hidden = true; return; }
+    var i = Math.round((xv - L) / ((RGT - L) / 15));
+    i = Math.max(0, Math.min(15, i));
+    var lines = SERIES.filter(function (s) { return s.vals[i] != null; }).map(function (s) {
+      return '<span class="t-dot" style="background:' + s.color + '"></span>' + s.name + " " + fmt(s.vals[i]);
+    });
+    tip.innerHTML = '<span class="t-season">' + SEASONS[i] + "</span>" + lines.join("<br>");
+    tip.hidden = false;
+    var wx = e.clientX - wrap.getBoundingClientRect().left + 14;
+    var wy = e.clientY - wrap.getBoundingClientRect().top - 10;
+    if (wx + tip.offsetWidth > wrap.offsetWidth) wx -= tip.offsetWidth + 28;
+    tip.style.left = wx + "px";
+    tip.style.top = wy + "px";
+  });
+  svg.addEventListener("mouseleave", function () { tip.hidden = true; });
+})();
+</script>
 </body>
 </html>
