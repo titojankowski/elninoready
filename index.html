@@ -130,45 +130,6 @@
   .card p { font-size: 0.88rem; color: rgba(13,13,13,0.75); }
   .card .glyph { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
 
-  /* enso chart */
-  .chart-block { margin-top: 2.25rem; background: var(--paper); border: 2px solid var(--ink); padding: 1.4rem; }
-  .chart-title { font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.04em; }
-  .chart-sub { font-size: 0.85rem; color: rgba(13,13,13,0.65); max-width: 76ch; margin: 0.5rem 0 1.1rem; }
-  .legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; font-size: 0.78rem; font-weight: 600; color: rgba(13,13,13,0.8); margin-bottom: 0.75rem; }
-  .legend .sw { display: inline-block; width: 16px; height: 3px; vertical-align: middle; margin-right: 0.4rem; }
-  .legend .sw26 { background: var(--heat); height: 5px; }
-  .chart-scroll { overflow-x: auto; }
-  .chart-wrap { position: relative; min-width: 640px; }
-  svg.enso { display: block; width: 100%; height: auto; }
-  svg.enso .grid { stroke: #e4e4e0; stroke-width: 1; }
-  svg.enso .axis0 { stroke: rgba(13,13,13,0.4); stroke-width: 1; }
-  svg.enso .tick { font: 11px var(--sans); fill: rgba(13,13,13,0.6); }
-  svg.enso .guide { stroke: rgba(13,13,13,0.35); stroke-width: 1; stroke-dasharray: 2 4; }
-  svg.enso .cut { stroke: var(--ink); stroke-width: 2; }
-  svg.enso .note { font: 600 11px var(--sans); fill: rgba(13,13,13,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
-  svg.enso .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  svg.enso .ln26 { stroke-width: 3.5; }
-  svg.enso .ghost { opacity: 0.5; stroke-dasharray: 3 6; stroke-width: 2; }
-  svg.enso .leader { stroke: rgba(13,13,13,0.3); stroke-width: 1; }
-  svg.enso .dmg { font: 700 13px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
-  svg.enso .note2 { font: italic 500 14px var(--sans); fill: rgba(13,13,13,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
-  svg.enso .plab { font: 11.5px var(--sans); fill: rgba(13,13,13,0.7); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
-  svg.enso .lab26 { font: 700 14px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
-  svg.enso .lab26b { font: 11.5px var(--sans); fill: rgba(13,13,13,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
-  .tip {
-    position: absolute; pointer-events: none; z-index: 5;
-    background: var(--ink); color: #fff; border: 1px solid #fff;
-    padding: 0.5rem 0.7rem; font-size: 0.74rem; line-height: 1.55; white-space: nowrap;
-  }
-  .tip .t-season { font-weight: 700; margin-bottom: 0.15rem; display: block; }
-  .tip .t-dot { display: inline-block; width: 8px; height: 8px; margin-right: 0.35rem; }
-  .chart-data { margin-top: 0.75rem; font-size: 0.82rem; }
-  .chart-data summary { cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.75rem; color: rgba(13,13,13,0.6); }
-  .chart-data table { border-collapse: collapse; margin-top: 0.6rem; font-variant-numeric: tabular-nums; }
-  .chart-data th, .chart-data td { border: 1px solid var(--line-soft); padding: 0.28rem 0.55rem; text-align: right; }
-  .chart-data th:first-child, .chart-data td:first-child { text-align: left; }
-  .chart-src { font-size: 0.72rem; color: rgba(13,13,13,0.55); margin-top: 1rem; max-width: 95ch; }
-
   /* 2015 vignette */
   .vignette { margin-top: 1.25rem; background: var(--ink); color: #f2f2f2; padding: 1.75rem; }
   .vignette h3 {
@@ -287,74 +248,7 @@
   <div class="wrap">
     <h2>No El Niño has ever been this warm, this early.</h2>
     <p class="lede">The 2026 El Niño is shaping up to be the strongest in modern records, and it's building on a baseline that gets warmer every cycle. The forecast is not the hard part. The hard part is what happens between the forecast and the flood.</p>
-    <div class="chart-block">
-      <div class="legend" role="list">
-        <span role="listitem"><i class="sw sw26"></i>2026 (so far)</span>
-        <span role="listitem"><i class="sw" style="background:#1baf7a"></i>2015–16</span>
-        <span role="listitem"><i class="sw" style="background:#2a78d6"></i>1997–98</span>
-        <span role="listitem"><i class="sw" style="background:#e87ba4"></i>1982–83</span>
-      </div>
-      <div class="chart-scroll">
-        <div class="chart-wrap" id="ensoWrap">
-          <svg class="enso" viewBox="0 0 940 480" role="img" aria-label="Line chart of Oceanic Niño Index from July of the year before through the latest data, May to July of the El Niño year: 2026 against the three strongest El Niños on record. 2015-16 entered its year already warm at plus 0.8 from a weak prior El Niño. 2026 was below zero as late as December, then rose plus 1.99 degrees to plus 1.39 by May-July — the fastest rise and the warmest May-July on record, above 2015 at plus 1.19, 1997 at plus 1.13, and 1982 at plus 0.73. Labels show those events peaked between plus 2.1 and plus 2.6 degrees, costing 1.3 to 3.9 trillion dollars in global losses.">
-            <line x1="52" y1="432.0" x2="560" y2="432.0" class="grid"/>
-            <text x="44" y="436.0" class="tick" text-anchor="end">−1°</text>
-            <line x1="52" y1="329.5" x2="560" y2="329.5" class="axis0"/>
-            <text x="44" y="333.5" class="tick" text-anchor="end">0°</text>
-            <line x1="52" y1="227.0" x2="560" y2="227.0" class="grid"/>
-            <text x="44" y="231.0" class="tick" text-anchor="end">+1°</text>
-            <line x1="52" y1="124.5" x2="560" y2="124.5" class="grid"/>
-            <text x="44" y="128.5" class="tick" text-anchor="end">+2°</text>
-            <line x1="52" y1="22.0" x2="560" y2="22.0" class="grid"/>
-            <text x="44" y="26.0" class="tick" text-anchor="end">+3°</text>
-            <text x="52.0" y="454" class="tick" text-anchor="middle">Jul</text>
-            <text x="144.4" y="454" class="tick" text-anchor="middle">Sep</text>
-            <text x="236.7" y="454" class="tick" text-anchor="middle">Nov</text>
-            <text x="329.1" y="454" class="tick" text-anchor="middle">Jan</text>
-            <text x="421.5" y="454" class="tick" text-anchor="middle">Mar</text>
-            <text x="513.8" y="454" class="tick" text-anchor="middle">May</text>
-            <line x1="329.1" y1="46" x2="329.1" y2="432" class="guide"/>
-            <text x="329.1" y="40" class="note" text-anchor="middle">Jan &middot; El Ni&ntilde;o year</text>
-            <line x1="560" y1="36" x2="560" y2="432" class="cut"/>
-            <text x="560" y="28" class="note" text-anchor="middle">TODAY &middot; latest data (May&ndash;Jul)</text>
-            <path d="M52.0,358.2 L98.2,353.1 L144.4,337.7 L190.5,345.9 L236.7,349.0 L282.9,343.9 L329.1,334.6 L375.3,327.4 L421.5,322.3 L467.6,294.6 L513.8,262.9 L560.0,254.7" class="ln" stroke="#e87ba4"/>
-            <path d="M52.0,352.1 L98.2,357.2 L144.4,360.2 L190.5,363.3 L236.7,369.5 L282.9,371.5 L329.1,371.5 L375.3,356.1 L421.5,332.6 L467.6,298.8 L513.8,256.7 L560.0,213.7" class="ln" stroke="#2a78d6"/>
-            <path d="M52.0,322.3 L98.2,322.3 L144.4,304.9 L190.5,277.2 L236.7,257.8 L282.9,247.5 L329.1,254.7 L375.3,262.9 L421.5,255.7 L467.6,241.4 L513.8,222.9 L560.0,207.5" class="ln" stroke="#1baf7a"/>
-            <line x1="562" y1="207.5" x2="573" y2="187" class="leader"/>
-            <circle cx="560" cy="207.5" r="3.5" fill="#1baf7a" stroke="#ffffff" stroke-width="2"/>
-            <text x="578" y="192" class="plab"><tspan fill="#1baf7a">&#9679;</tspan> 2015&ndash;16 &middot; peaked +2.6&deg;</text>
-            <text x="578" y="210" class="dmg">$3.9T global losses</text>
-            <line x1="562" y1="213.7" x2="573" y2="239" class="leader"/>
-            <circle cx="560" cy="213.7" r="3.5" fill="#2a78d6" stroke="#ffffff" stroke-width="2"/>
-            <text x="578" y="244" class="plab"><tspan fill="#2a78d6">&#9679;</tspan> 1997&ndash;98 &middot; peaked +2.4&deg;</text>
-            <text x="578" y="262" class="dmg">$2.1T global losses</text>
-            <line x1="562" y1="254.7" x2="573" y2="291" class="leader"/>
-            <circle cx="560" cy="254.7" r="3.5" fill="#e87ba4" stroke="#ffffff" stroke-width="2"/>
-            <text x="578" y="296" class="plab"><tspan fill="#e87ba4">&#9679;</tspan> 1982&ndash;83 &middot; peaked +2.1&deg;</text>
-            <text x="578" y="314" class="dmg">$1.3T global losses</text>
-            <path d="M52.0,340.8 L98.2,356.1 L144.4,373.6 L190.5,387.9 L236.7,392.0 L282.9,391.0 L329.1,369.5 L375.3,351.0 L421.5,318.2 L467.6,282.4 L513.8,232.1 L560.0,187.0" class="ln ln26" stroke="#f13a13"/>
-            <circle cx="560" cy="187.0" r="5.5" fill="#f13a13" stroke="#ffffff" stroke-width="2"/>
-            <line x1="562" y1="187.0" x2="573" y2="123" class="leader"/>
-            <text x="578" y="128" class="lab26">2026: +1.39 &deg;C &mdash; and climbing</text>
-            <text x="578" y="146" class="lab26b">warmest May&ndash;Jul &middot; fastest rise ever recorded.</text>
-            <text x="578" y="163" class="lab26b">Where it goes isn&rsquo;t written yet.</text>
-            <rect id="ensoHit" x="52" y="22" width="508" height="410" fill="transparent"/>
-          </svg>
-          <div class="tip" id="ensoTip" hidden></div>
-        </div>
-      </div>
-      <details class="chart-data">
-        <summary>View the data</summary>
-        <div style="overflow-x:auto">
-        <table>
-          <thead><tr><th>Season</th><th>2026</th><th>2015–16</th><th>1997–98</th><th>1982–83</th></tr></thead>
-          <tbody id="ensoTable"></tbody>
-        </table>
-        </div>
-      </details>
-      <p class="chart-src">Data: NOAA Climate Prediction Center, <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/" target="_blank" rel="noopener">Oceanic Niño Index</a> (ERSSTv6), retrieved August 25, 2026. 2015&ndash;16 starts the year already warm because a weak El&nbsp;Ni&ntilde;o was underway in the winter of 2014&ndash;15 &mdash; it had a running start; 2026 was still below zero in December and passed it anyway &mdash; a +1.99&nbsp;&deg;C climb in seven months, the fastest rise in the 76-year record. Loss figures are cumulative global economic losses attributed to each event over the onset year and the three years after — about 4–5% of global GDP at the time (<a href="https://www.nature.com/articles/s41467-023-41551-9" target="_blank" rel="noopener">Liu et&nbsp;al., <em>Nature Communications</em>, 2023</a>, figures as published). Even on NOAA’s new Relative ONI, which subtracts the background warming of the whole tropical ocean, 2026 is tracking the strongest events ever recorded — and the absolute ocean heat is unprecedented either way: 29.0&nbsp;°C in Niño&nbsp;3.4, the warmest May–July ever measured.</p>
-    </div>
-    <div class="vignette">
+        <div class="vignette">
       <h3>If this is &ldquo;just another 2015&rdquo; &mdash; remember what <em>2015 actually did</em>.</h3>
       <ul>
         <li><strong>60&ndash;100 million people</strong> pushed into food insecurity worldwide</li>
@@ -473,51 +367,5 @@
 </footer>
 
 
-<script>
-(function () {
-  var SEASONS = ["Jun\u2013Aug (yr before)","Jul\u2013Sep (yr before)","Aug\u2013Oct (yr before)","Sep\u2013Nov (yr before)","Oct\u2013Dec (yr before)","Nov\u2013Jan","Dec\u2013Feb","Jan\u2013Mar","Feb\u2013Apr","Mar\u2013May","Apr\u2013Jun","May\u2013Jul"];
-  var SERIES = [
-    { name: "2026", color: "#f13a13", vals: [-0.11,-0.26,-0.43,-0.57,-0.61,-0.60,-0.39,-0.21,0.11,0.46,0.95,1.39] },
-    { name: "2015\u201316", color: "#1baf7a", vals: [0.07,0.07,0.24,0.51,0.70,0.80,0.73,0.65,0.72,0.86,1.04,1.19] },
-    { name: "1997\u201398", color: "#2a78d6", vals: [-0.22,-0.27,-0.30,-0.33,-0.39,-0.41,-0.41,-0.26,-0.03,0.30,0.71,1.13] },
-    { name: "1982\u201383", color: "#e87ba4", vals: [-0.28,-0.23,-0.08,-0.16,-0.19,-0.14,-0.05,0.02,0.07,0.34,0.65,0.73] }
-  ];
-  var fmt = function (v) { return v == null ? "\u2014" : (v > 0 ? "+" : "") + v.toFixed(2) + "\u00a0\u00b0C"; };
-
-  var tbody = document.getElementById("ensoTable");
-  if (tbody) {
-    var rows = SEASONS.map(function (s, i) {
-      return "<tr><td>" + s + "</td>" + SERIES.map(function (sr) {
-        return "<td>" + (sr.vals[i] == null ? "\u2014" : fmt(sr.vals[i])) + "</td>";
-      }).join("") + "</tr>";
-    });
-    tbody.innerHTML = rows.join("");
-  }
-
-  var wrap = document.getElementById("ensoWrap");
-  var tip = document.getElementById("ensoTip");
-  var svg = wrap && wrap.querySelector("svg.enso");
-  if (!wrap || !tip || !svg) return;
-  var L = 52, RGT = 560, VW = 940;
-  svg.addEventListener("mousemove", function (e) {
-    var r = svg.getBoundingClientRect();
-    var xv = (e.clientX - r.left) / r.width * VW;
-    if (xv < L - 20 || xv > RGT + 20) { tip.hidden = true; return; }
-    var i = Math.round((xv - L) / ((RGT - L) / 11));
-    i = Math.max(0, Math.min(11, i));
-    var lines = SERIES.filter(function (s) { return s.vals[i] != null; }).map(function (s) {
-      return '<span class="t-dot" style="background:' + s.color + '"></span>' + s.name + " " + fmt(s.vals[i]);
-    });
-    tip.innerHTML = '<span class="t-season">' + SEASONS[i] + "</span>" + lines.join("<br>");
-    tip.hidden = false;
-    var wx = e.clientX - wrap.getBoundingClientRect().left + 14;
-    var wy = e.clientY - wrap.getBoundingClientRect().top - 10;
-    if (wx + tip.offsetWidth > wrap.offsetWidth) wx -= tip.offsetWidth + 28;
-    tip.style.left = wx + "px";
-    tip.style.top = wy + "px";
-  });
-  svg.addEventListener("mouseleave", function () { tip.hidden = true; });
-})();
-</script>
 </body>
 </html>
