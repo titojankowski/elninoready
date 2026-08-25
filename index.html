@@ -153,6 +153,10 @@
   svg.enso .note { font: 600 11px var(--sans); fill: rgba(11,24,38,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
   svg.enso .ln { fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   svg.enso .ln26 { stroke-width: 3.5; }
+  svg.enso .ghost { opacity: 0.5; stroke-dasharray: 3 6; stroke-width: 2; }
+  svg.enso .leader { stroke: rgba(11,24,38,0.25); stroke-width: 1; }
+  svg.enso .dmg { font: 700 13.5px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
+  svg.enso .note2 { font: italic 500 16px var(--serif); fill: rgba(11,24,38,0.55); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
   svg.enso .plab { font: 12px var(--sans); fill: rgba(11,24,38,0.65); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
   svg.enso .lab26 { font: 700 14px var(--sans); fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 4; }
   svg.enso .lab26b { font: 12px var(--sans); fill: rgba(11,24,38,0.6); paint-order: stroke; stroke: var(--paper); stroke-width: 3; }
@@ -278,7 +282,7 @@
     <p class="lede">The 2026 El Niño is shaping up to be the strongest in modern records, and it's building on a baseline that gets warmer every cycle. The forecast is not the hard part. The hard part is what happens between the forecast and the flood.</p>
     <div class="chart-block">
       <p class="chart-title">No El Niño has ever been this warm, this early.</p>
-      <p class="chart-sub">Sea-surface temperature anomaly in the Niño 3.4 region (ONI), lined up by event year: the five biggest El Niños since records began in 1950. The 2026 line stops at the latest data — already above every previous event at the same point in the year.</p>
+      <p class="chart-sub">Sea-surface temperature anomaly in the Niño 3.4 region (ONI) for the five biggest El Niños since records began in 1950, aligned by event year. Solid lines stop at the latest data — 2026 is already above every previous event at this point. The dotted paths show where the others went from here, and what it cost the world.</p>
       <div class="legend" role="list">
         <span role="listitem"><i class="sw sw26"></i>2026 (so far)</span>
         <span role="listitem"><i class="sw" style="background:#1baf7a"></i>2015–16</span>
@@ -288,44 +292,56 @@
       </div>
       <div class="chart-scroll">
         <div class="chart-wrap" id="ensoWrap">
-          <svg class="enso" viewBox="0 0 940 480" role="img" aria-label="Line chart of Oceanic Niño Index by month for the five strongest El Niño events. At May–July of the onset year, 2026 is at plus 1.39 degrees Celsius, higher than 2015, 1997, 1982, and 2023 at the same point. Previous events peaked between plus 2.0 and plus 2.6 degrees in November–January.">
-            <line x1="52" y1="432" x2="912" y2="432" class="grid"/>
-            <text x="44" y="436" class="tick" text-anchor="end">−1°</text>
-            <line x1="52" y1="329.5" x2="912" y2="329.5" class="axis0"/>
+          <svg class="enso" viewBox="0 0 940 480" role="img" aria-label="Line chart of Oceanic Niño Index by month for the five strongest El Niño events, cut off at the latest data, May to July 2026. At that point 2026 is at plus 1.39 degrees Celsius, higher than every previous event. Dotted paths show how past events played out: 2015-16 peaked at plus 2.6 degrees with 3.9 trillion dollars in global losses; 1997-98 peaked at plus 2.4 with 2.1 trillion; 1982-83 peaked at plus 2.1 with 1.3 trillion; 2023-24 peaked at plus 2.0 with an estimated 3 trillion by 2029.">
+            <line x1="52" y1="432.0" x2="670" y2="432.0" class="grid"/>
+            <text x="44" y="436.0" class="tick" text-anchor="end">−1°</text>
+            <line x1="52" y1="329.5" x2="670" y2="329.5" class="axis0"/>
             <text x="44" y="333.5" class="tick" text-anchor="end">0°</text>
-            <line x1="52" y1="227" x2="912" y2="227" class="grid"/>
-            <text x="44" y="231" class="tick" text-anchor="end">+1°</text>
-            <line x1="52" y1="124.5" x2="912" y2="124.5" class="grid"/>
+            <line x1="52" y1="227.0" x2="670" y2="227.0" class="grid"/>
+            <text x="44" y="231.0" class="tick" text-anchor="end">+1°</text>
+            <line x1="52" y1="124.5" x2="670" y2="124.5" class="grid"/>
             <text x="44" y="128.5" class="tick" text-anchor="end">+2°</text>
-            <line x1="52" y1="22" x2="912" y2="22" class="grid"/>
-            <text x="44" y="26" class="tick" text-anchor="end">+3°</text>
-            <text x="52" y="454" class="tick" text-anchor="middle">Jan</text>
-            <text x="224" y="454" class="tick" text-anchor="middle">Apr</text>
-            <text x="396" y="454" class="tick" text-anchor="middle">Jul</text>
-            <text x="568" y="454" class="tick" text-anchor="middle">Oct</text>
-            <text x="740" y="454" class="tick" text-anchor="middle">Jan (yr 2)</text>
-            <text x="912" y="454" class="tick" text-anchor="middle">Apr</text>
-            <line x1="338.7" y1="30" x2="338.7" y2="432" class="guide"/>
-            <text x="338.7" y="24" class="note" text-anchor="middle">Latest data · May–Jul 2026</text>
-            <line x1="510.7" y1="60.9" x2="510.7" y2="432" class="guide"/>
-            <text x="510.7" y="52.9" class="note" text-anchor="middle">Climate Week · Sep 20–27</text>
-            <path d="M52.0,334.6 L109.3,327.4 L166.7,322.3 L224.0,294.6 L281.3,262.9 L338.7,254.7 L396.0,249.6 L453.3,228.0 L510.7,180.9 L568.0,142.9 L625.3,121.4 L682.7,112.2 L740.0,110.1 L797.3,133.7 L854.7,173.7 L912.0,203.4" class="ln" stroke="#e87ba4"/>
-            <path d="M52.0,371.5 L109.3,356.1 L166.7,332.6 L224.0,298.8 L281.3,256.7 L338.7,213.7 L396.0,177.8 L453.3,146.0 L510.7,120.4 L568.0,99.9 L625.3,89.7 L682.7,86.6 L740.0,101.9 L797.3,133.7 L854.7,186.0 L912.0,223.9" class="ln" stroke="#2a78d6"/>
-            <path d="M52.0,254.7 L109.3,262.9 L166.7,255.7 L224.0,241.4 L281.3,222.9 L338.7,207.5 L396.0,181.9 L453.3,152.2 L510.7,122.4 L568.0,95.8 L625.3,78.4 L682.7,64.0 L740.0,73.2 L797.3,103.0 L854.7,156.3 L912.0,215.7" class="ln" stroke="#1baf7a"/>
-            <path d="M52.0,385.9 L109.3,363.3 L166.7,340.8 L224.0,310.0 L281.3,282.4 L338.7,254.7 L396.0,227.0 L453.3,201.4 L510.7,175.8 L568.0,151.1 L625.3,134.8 L682.7,125.5 L740.0,140.9 L797.3,172.7 L854.7,208.6 L912.0,250.6" class="ln" stroke="#4a3aa7"/>
-            <circle cx="682.7" cy="64" r="3.5" fill="#1baf7a" stroke="#f7f4ee" stroke-width="2"/>
-            <text x="692.7" y="68" class="plab">2015–16 peaked +2.6°</text>
-            <circle cx="682.7" cy="86.6" r="3.5" fill="#2a78d6" stroke="#f7f4ee" stroke-width="2"/>
-            <text x="692.7" y="90.6" class="plab">1997–98 peaked +2.4°</text>
-            <circle cx="682.7" cy="112.2" r="3.5" fill="#e87ba4" stroke="#f7f4ee" stroke-width="2"/>
-            <text x="692.7" y="112.2" class="plab">1982–83 peaked +2.1°</text>
-            <circle cx="682.7" cy="125.5" r="3.5" fill="#4a3aa7" stroke="#f7f4ee" stroke-width="2"/>
-            <text x="692.7" y="135.5" class="plab">2023–24 peaked +2.0°</text>
-            <path d="M52.0,369.5 L109.3,351.0 L166.7,318.2 L224.0,282.4 L281.3,232.1 L338.7,187.0" class="ln ln26" stroke="#e05a2b"/>
-            <circle cx="338.7" cy="187" r="5.5" fill="#e05a2b" stroke="#f7f4ee" stroke-width="2"/>
-            <text x="324" y="160" class="lab26" text-anchor="end">2026: +1.39 °C</text>
-            <text x="324" y="178" class="lab26b" text-anchor="end">warmest May–Jul of any El Niño on record</text>
-            <rect id="ensoHit" x="52" y="22" width="860" height="410" fill="transparent"/>
+            <line x1="52" y1="22.0" x2="670" y2="22.0" class="grid"/>
+            <text x="44" y="26.0" class="tick" text-anchor="end">+3°</text>
+            <text x="52.0" y="454" class="tick" text-anchor="middle">Jan</text>
+            <text x="206.5" y="454" class="tick" text-anchor="middle">Apr</text>
+            <text x="361.0" y="454" class="tick" text-anchor="middle">Jul</text>
+            <text x="515.5" y="454" class="tick" text-anchor="middle">Oct</text>
+            <text x="670.0" y="454" class="tick" text-anchor="middle">Jan (yr 2)</text>
+            <line x1="309.5" y1="30" x2="309.5" y2="432" class="guide"/>
+            <text x="309.5" y="24" class="note" text-anchor="middle">Latest data · May–Jul 2026</text>
+            <line x1="464.0" y1="50" x2="464.0" y2="432" class="guide"/>
+            <text x="464.0" y="44" class="note" text-anchor="middle">Climate Week · Sep 20–27</text>
+            <path d="M52.0,334.6 L103.5,327.4 L155.0,322.3 L206.5,294.6 L258.0,262.9 L309.5,254.7" class="ln" stroke="#e87ba4"/>
+            <path d="M309.5,254.7 L361.0,249.6 L412.5,228.0 L464.0,180.9 L515.5,142.9 L567.0,121.4 L618.5,112.2 L670.0,110.1" class="ln ghost" stroke="#e87ba4"/>
+            <path d="M52.0,371.5 L103.5,356.1 L155.0,332.6 L206.5,298.8 L258.0,256.7 L309.5,213.7" class="ln" stroke="#2a78d6"/>
+            <path d="M309.5,213.7 L361.0,177.8 L412.5,146.0 L464.0,120.4 L515.5,99.9 L567.0,89.7 L618.5,86.6 L670.0,101.9" class="ln ghost" stroke="#2a78d6"/>
+            <path d="M52.0,254.7 L103.5,262.9 L155.0,255.7 L206.5,241.4 L258.0,222.9 L309.5,207.5" class="ln" stroke="#1baf7a"/>
+            <path d="M309.5,207.5 L361.0,181.9 L412.5,152.2 L464.0,122.4 L515.5,95.8 L567.0,78.4 L618.5,64.0 L670.0,73.2" class="ln ghost" stroke="#1baf7a"/>
+            <path d="M52.0,385.9 L103.5,363.3 L155.0,340.8 L206.5,310.0 L258.0,282.4 L309.5,254.7" class="ln" stroke="#4a3aa7"/>
+            <path d="M309.5,254.7 L361.0,227.0 L412.5,201.4 L464.0,175.8 L515.5,151.1 L567.0,134.8 L618.5,125.5 L670.0,140.9" class="ln ghost" stroke="#4a3aa7"/>
+            <line x1="672" y1="73.2" x2="682" y2="58" class="leader"/>
+            <circle cx="670" cy="73.2" r="3.5" fill="#1baf7a" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="686" y="62" class="plab"><tspan fill="#1baf7a">●</tspan> 2015–16 · peaked +2.6°</text>
+            <text x="686" y="79" class="dmg">$3.9T global losses</text>
+            <line x1="672" y1="101.9" x2="682" y2="100" class="leader"/>
+            <circle cx="670" cy="101.9" r="3.5" fill="#2a78d6" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="686" y="104" class="plab"><tspan fill="#2a78d6">●</tspan> 1997–98 · peaked +2.4°</text>
+            <text x="686" y="121" class="dmg">$2.1T global losses</text>
+            <line x1="672" y1="110.1" x2="682" y2="142" class="leader"/>
+            <circle cx="670" cy="110.1" r="3.5" fill="#e87ba4" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="686" y="146" class="plab"><tspan fill="#e87ba4">●</tspan> 1982–83 · peaked +2.1°</text>
+            <text x="686" y="163" class="dmg">$1.3T global losses</text>
+            <line x1="672" y1="140.9" x2="682" y2="184" class="leader"/>
+            <circle cx="670" cy="140.9" r="3.5" fill="#4a3aa7" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="686" y="188" class="plab"><tspan fill="#4a3aa7">●</tspan> 2023–24 · peaked +2.0°</text>
+            <text x="686" y="205" class="dmg">est. $3T by 2029</text>
+            <path d="M52.0,369.5 L103.5,351.0 L155.0,318.2 L206.5,282.4 L258.0,232.1 L309.5,187.0" class="ln ln26" stroke="#e05a2b"/>
+            <circle cx="309.5" cy="187.0" r="5.5" fill="#e05a2b" stroke="#f7f4ee" stroke-width="2"/>
+            <text x="295.5" y="160" class="lab26" text-anchor="end">2026: +1.39 °C</text>
+            <text x="295.5" y="178" class="lab26b" text-anchor="end">warmest May–Jul of any El Niño on record</text>
+            <text x="325.5" y="356" class="note2">Where this one goes isn’t written yet.</text>
+            <rect id="ensoHit" x="52" y="22" width="618" height="410" fill="transparent"/>
           </svg>
           <div class="tip" id="ensoTip" hidden></div>
         </div>
@@ -339,7 +355,7 @@
         </table>
         </div>
       </details>
-      <p class="chart-src">Data: NOAA Climate Prediction Center, <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/" target="_blank" rel="noopener">Oceanic Niño Index</a> (ERSSTv6) — three-month running mean of Niño 3.4 sea-surface temperature anomaly, retrieved August 25, 2026. Even on NOAA's new Relative ONI, which subtracts the background warming of the whole tropical ocean, 2026 is tracking the two strongest events ever recorded (1997, 2015) — and the total ocean heat underneath it is unprecedented either way: 29.0 °C in Niño 3.4, the warmest May–July ever measured.</p>
+      <p class="chart-src">Data: NOAA Climate Prediction Center, <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/oni/v6/" target="_blank" rel="noopener">Oceanic Niño Index</a> (ERSSTv6), retrieved August 25, 2026. Loss figures are cumulative global economic losses attributed to each event over the onset year and the three years after — about 4–5% of global GDP at the time (<a href="https://www.nature.com/articles/s41467-023-41551-9" target="_blank" rel="noopener">Liu et&nbsp;al., <em>Nature Communications</em>, 2023</a>, figures as published). The 2023–24 figure is a pre-event projection of losses through 2029 (<a href="https://www.science.org/doi/10.1126/science.adf2983" target="_blank" rel="noopener">Callahan &amp; Mankin, <em>Science</em>, 2023</a>). Even on NOAA’s new Relative ONI, which subtracts the background warming of the whole tropical ocean, 2026 is tracking the strongest events ever recorded — and the absolute ocean heat is unprecedented either way: 29.0&nbsp;°C in Niño&nbsp;3.4, the warmest May–July ever measured.</p>
     </div>
     <div class="card-grid">
       <div class="card">
@@ -483,13 +499,13 @@
 
 <script>
 (function () {
-  var SEASONS = ["Dec\u2013Feb","Jan\u2013Mar","Feb\u2013Apr","Mar\u2013May","Apr\u2013Jun","May\u2013Jul","Jun\u2013Aug","Jul\u2013Sep","Aug\u2013Oct","Sep\u2013Nov","Oct\u2013Dec","Nov\u2013Jan","Dec\u2013Feb (yr 2)","Jan\u2013Mar (yr 2)","Feb\u2013Apr (yr 2)","Mar\u2013May (yr 2)"];
+  var SEASONS = ["Dec\u2013Feb","Jan\u2013Mar","Feb\u2013Apr","Mar\u2013May","Apr\u2013Jun","May\u2013Jul","Jun\u2013Aug","Jul\u2013Sep","Aug\u2013Oct","Sep\u2013Nov","Oct\u2013Dec","Nov\u2013Jan","Dec\u2013Feb (yr 2)"];
   var SERIES = [
     { name: "2026", color: "#e05a2b", vals: [-0.39,-0.21,0.11,0.46,0.95,1.39] },
-    { name: "2015\u201316", color: "#1baf7a", vals: [0.73,0.65,0.72,0.86,1.04,1.19,1.44,1.73,2.02,2.28,2.45,2.59,2.50,2.21,1.69,1.11] },
-    { name: "1997\u201398", color: "#2a78d6", vals: [-0.41,-0.26,-0.03,0.30,0.71,1.13,1.48,1.79,2.04,2.24,2.34,2.37,2.22,1.91,1.40,1.03] },
-    { name: "1982\u201383", color: "#e87ba4", vals: [-0.05,0.02,0.07,0.34,0.65,0.73,0.78,0.99,1.45,1.82,2.03,2.12,2.14,1.91,1.52,1.23] },
-    { name: "2023\u201324", color: "#4a3aa7", vals: [-0.55,-0.33,-0.11,0.19,0.46,0.73,1.00,1.25,1.50,1.74,1.90,1.99,1.84,1.53,1.18,0.77] }
+    { name: "2015\u201316", color: "#1baf7a", vals: [0.73,0.65,0.72,0.86,1.04,1.19,1.44,1.73,2.02,2.28,2.45,2.59,2.50] },
+    { name: "1997\u201398", color: "#2a78d6", vals: [-0.41,-0.26,-0.03,0.30,0.71,1.13,1.48,1.79,2.04,2.24,2.34,2.37,2.22] },
+    { name: "1982\u201383", color: "#e87ba4", vals: [-0.05,0.02,0.07,0.34,0.65,0.73,0.78,0.99,1.45,1.82,2.03,2.12,2.14] },
+    { name: "2023\u201324", color: "#4a3aa7", vals: [-0.55,-0.33,-0.11,0.19,0.46,0.73,1.00,1.25,1.50,1.74,1.90,1.99,1.84] }
   ];
   var fmt = function (v) { return v == null ? "\u2014" : (v > 0 ? "+" : "") + v.toFixed(2) + "\u00a0\u00b0C"; };
 
@@ -507,13 +523,13 @@
   var tip = document.getElementById("ensoTip");
   var svg = wrap && wrap.querySelector("svg.enso");
   if (!wrap || !tip || !svg) return;
-  var L = 52, RGT = 912, VW = 940;
+  var L = 52, RGT = 670, VW = 940;
   svg.addEventListener("mousemove", function (e) {
     var r = svg.getBoundingClientRect();
     var xv = (e.clientX - r.left) / r.width * VW;
     if (xv < L - 20 || xv > RGT + 20) { tip.hidden = true; return; }
-    var i = Math.round((xv - L) / ((RGT - L) / 15));
-    i = Math.max(0, Math.min(15, i));
+    var i = Math.round((xv - L) / ((RGT - L) / 12));
+    i = Math.max(0, Math.min(12, i));
     var lines = SERIES.filter(function (s) { return s.vals[i] != null; }).map(function (s) {
       return '<span class="t-dot" style="background:' + s.color + '"></span>' + s.name + " " + fmt(s.vals[i]);
     });
