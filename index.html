@@ -104,6 +104,18 @@
   }
   .btn-heat { background: var(--heat); color: #fff; border-color: #fff; box-shadow: 4px 4px 0 rgba(255,255,255,0.35); }
   .btn-heat:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
+  /* hero email signup — the primary CTA */
+  .hero-signup { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+  .hero-signup input[type="email"] {
+    flex: 1 1 16rem; min-width: 0;
+    font-family: inherit; font-size: 0.95rem;
+    padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff;
+  }
+  .hero-signup input[type="email"]::placeholder { color: rgba(255,255,255,0.55); }
+  .hero-signup button { flex: 0 0 auto; }
+  .hidden-field { display: none; }
+  .hero-secondary { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+  .hero-secondary a { color: #fff; }
   .btn-ghost { border: 2px dashed rgba(255,255,255,0.6); color: #fff; }
   .btn-ghost:hover { border-style: solid; border-color: #fff; }
 
@@ -247,7 +259,7 @@
   <div class="nav-inner">
     <a class="brand" href="#top">EL <span class="nino">NIÑO</span> CLIMATE WEEK</a>
     <span class="nav-date">September 20–27, 2026 · New York + everywhere</span>
-    <a class="nav-cta" href="https://luma.com/tu0uvbx1" target="_blank" rel="noopener">RSVP · Wed 9 AM PT</a>
+    <a class="nav-cta" href="#top">Sign up for email</a>
   </div>
 </nav>
 
@@ -255,9 +267,12 @@
   <div class="wrap">
     <h1>Forecasted to be <em>3&times; the costliest</em> El&nbsp;Niño ever.</h1>
     <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Climate Week</strong> points the world's largest climate gathering at the world's largest climate event.</p>
-    <div class="btn-row">
-      <a class="btn btn-heat" href="https://luma.com/tu0uvbx1" target="_blank" rel="noopener">RSVP: Planning kickoff · Wed, Sep 2 · 9 AM PT</a>
-    </div>
+    <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+      <button class="btn btn-heat" type="submit">Sign up for email updates</button>
+    </form>
+    <p class="hero-secondary">Or join the planning kickoff: <a href="https://luma.com/tu0uvbx1" target="_blank" rel="noopener">Wed, Sep 2 · 9 AM PT</a></p>
   </div>
 </header>
 
