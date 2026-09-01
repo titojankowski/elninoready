@@ -79,6 +79,14 @@
     font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--sea-bright); margin-bottom: 1.5rem;
   }
+  .countdown {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sea-bright); margin-bottom: 1.5rem; display: flex; align-items: center; flex-wrap: wrap; gap: 0.6rem;
+  }
+  .cd-digits {
+    font-variant-numeric: tabular-nums; color: #fff; font-size: 1.05rem; letter-spacing: 0.08em;
+    background: rgba(255,255,255,0.07); border: 1px dashed rgba(255,180,84,0.65); padding: 0.2rem 0.65rem;
+  }
   .hero h1 {
     font-family: var(--sans);
     font-size: clamp(1.4rem, 3.9vw, 2.6rem);
@@ -265,6 +273,7 @@
 
 <header class="hero" id="top">
   <div class="wrap">
+    <p class="countdown" id="countdown"><span>El Ni&ntilde;o Climate Week begins in</span> <span class="cd-digits" id="cdDigits">&hellip;</span></p>
     <h1>The <em>costliest El&nbsp;Niño in history</em> is forming right now.</h1>
     <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Climate Week</strong> points the world's largest climate gathering at the world's largest climate event.</p>
     <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
@@ -362,5 +371,26 @@
 </footer>
 
 
+<script>
+(function () {
+  var T = new Date("2026-09-20T00:00:00-04:00").getTime();
+  var digits = document.getElementById("cdDigits");
+  var wrap = document.getElementById("countdown");
+  if (!digits || !wrap) return;
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function tick() {
+    var d = T - Date.now();
+    if (d <= 0) {
+      wrap.innerHTML = '<span>El Ni\u00f1o Climate Week is</span> <span class="cd-digits">LIVE NOW \u00b7 SEP 20\u201327</span>';
+      clearInterval(iv);
+      return;
+    }
+    var s = Math.floor(d / 1000);
+    digits.textContent = Math.floor(s / 86400) + " DAYS " + pad(Math.floor(s % 86400 / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
+  }
+  tick();
+  var iv = setInterval(tick, 1000);
+})();
+</script>
 </body>
 </html>
