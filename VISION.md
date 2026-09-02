@@ -29,7 +29,7 @@ Three levers, all of which reward action *before* the peak:
 
 **September 20–27, 2026 · New York + everywhere**
 
-Every September, the climate community gathers in New York — the world's largest climate gathering, happening three months before the peak. Breakfasts, run clubs, networking dinners. To the people who will actually live through this El Niño, that can look like climate isn't all that urgent.
+Every September, the climate community gathers in New York — the world's largest climate gathering, happening three months before the peak.
 
 El Niño Climate Week points that gathering at the storm. It's how El Niño Ready recruits: every event is a room where a warning spreads, money gets moved, or a plan gets picked up.
 
