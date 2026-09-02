@@ -253,6 +253,8 @@
   button.btn:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 var(--ink); }
   .form-note { font-size: 0.75rem; color: rgba(13,13,13,0.55); text-transform: none; letter-spacing: 0; }
 
+  .ideas-sec { background: var(--paper-2); border-top: 2px solid var(--ink); }
+
   /* footer */
   footer { background: var(--ink); color: rgba(220,220,220,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
   footer .wrap { display: grid; gap: 0.75rem; }
@@ -359,6 +361,24 @@
         <p>Use a live, global climate event to expand who talks about climate — from the people already at the conference to the people living the impacts.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="ideas-sec" id="ideas">
+  <div class="wrap">
+    <h2>Got an idea? Want something to exist during the week?</h2>
+    <p class="lede">Event ideas, requests, offers to help, people we should talk to &mdash; drop it here. It goes straight to the organizers&rsquo; inbox.</p>
+    <form name="ideas" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-idea.html" style="margin-top:1.75rem; max-width:38rem;">
+      <input type="hidden" name="form-name" value="ideas">
+      <p class="hidden-field"><label>Don&rsquo;t fill this out: <input name="bot-field"></label></p>
+      <label>Your idea or request
+        <textarea name="idea" required placeholder="An event, a speaker, a tool, a request&hellip;"></textarea>
+      </label>
+      <label>Email (if you want a reply)
+        <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+      </label>
+      <button class="btn" type="submit">Send it</button>
+    </form>
   </div>
 </section>
 
