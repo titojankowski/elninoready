@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Niño Ready — Save lives during the strongest El Niño ever measured</title>
-<meta name="description" content="The strongest El Niño ever measured is forecast to peak in December. Forecast disasters are preventable ones. El Niño Ready is a volunteer effort to make sure warnings reach people, money moves early, and systems hold. First campaign: El Niño Climate Week, September 20–27, 2026.">
+<meta name="description" content="The strongest El Niño ever measured is forecast to peak in December. Forecast disasters are preventable ones. El Niño Ready is a volunteer effort to make sure warnings reach people, money moves early, and systems hold.">
 <meta property="og:title" content="El Niño Ready">
-<meta property="og:description" content="Save lives during the strongest El Niño ever measured. First campaign: El Niño Climate Week, September 20–27, 2026.">
+<meta property="og:description" content="Save lives during the strongest El Niño ever measured. Forecast disasters are preventable ones.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elninoready.earth">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
@@ -268,16 +268,16 @@
 <nav>
   <div class="nav-inner">
     <a class="brand" href="#top">EL <span class="nino">NIÑO</span> READY</a>
-    <span class="nav-date">First campaign: El Niño Climate Week · September 20–27, 2026</span>
+    <span class="nav-date">Save lives during the strongest El Niño ever measured</span>
     <a class="nav-cta" href="#top">Sign up for email</a>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="wrap">
-    <p class="countdown" id="countdown"><span>El Ni&ntilde;o Climate Week begins in</span> <span class="cd-digits" id="cdDigits">&hellip;</span></p>
+    <p class="countdown"><span>Forecast peak</span> <span class="cd-digits">DECEMBER 2026</span></p>
     <h1>The <em>costliest El&nbsp;Niño in history</em> is forming right now.</h1>
-    <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with one idea at its core: forecast disasters are preventable ones. Its first campaign, <strong>El Niño Climate Week</strong>, points the world's largest climate gathering at the world's largest climate event.</p>
+    <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with one idea at its core: forecast disasters are preventable ones. Warnings reach people. Money moves early. Systems hold.</p>
     <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
       <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
@@ -383,33 +383,12 @@
 
 <footer>
   <div class="wrap">
-    <div>🌊 <strong style="color:#eaf4fb">El Niño Ready</strong> · First campaign: El Niño Climate Week · September 20–27, 2026</div>
+    <div>🌊 <strong style="color:#eaf4fb">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
     <div>An open, volunteer-organized initiative. Questions or ideas: drop them in the ideas form above, or reply to any email from us.</div>
-    <p class="fine">El Niño Ready and El Niño Climate Week are an independent, grassroots effort. El Niño Climate Week runs parallel to New York Climate Week. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University.</p>
+    <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University.</p>
   </div>
 </footer>
 
 
-<script>
-(function () {
-  var T = new Date("2026-09-20T00:00:00-04:00").getTime();
-  var digits = document.getElementById("cdDigits");
-  var wrap = document.getElementById("countdown");
-  if (!digits || !wrap) return;
-  function pad(n) { return (n < 10 ? "0" : "") + n; }
-  function tick() {
-    var d = T - Date.now();
-    if (d <= 0) {
-      wrap.innerHTML = '<span>El Ni\u00f1o Climate Week is</span> <span class="cd-digits">LIVE NOW \u00b7 SEP 20\u201327</span>';
-      clearInterval(iv);
-      return;
-    }
-    var s = Math.floor(d / 1000);
-    digits.textContent = Math.floor(s / 86400) + " DAYS " + pad(Math.floor(s % 86400 / 3600)) + ":" + pad(Math.floor(s % 3600 / 60)) + ":" + pad(s % 60);
-  }
-  tick();
-  var iv = setInterval(tick, 1000);
-})();
-</script>
 </body>
 </html>
