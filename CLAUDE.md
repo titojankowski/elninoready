@@ -14,12 +14,11 @@ There is no build step, no framework, no dependencies.
 ## How a change ships
 
 1. Edit the file.
-2. Commit with a message that says what changed and why, one change per commit.
-3. Push to `main`.
+2. **Show it locally first.** Start a preview with `python3 -m http.server 8000` in the repo (run it in the background) and open http://localhost:8000 for the person you're working with. Iterate here until they're happy. This costs nothing.
+3. Commit with a message that says what changed and why.
+4. **Ask before you push.** Pushing to `main` is the deploy: Netlify watches `main` and publishes within about a minute, and every deploy spends Netlify credits. Confirm with the person that the batch is ready, then push once. Never push after every tweak.
 
-Netlify watches `main` and publishes automatically, usually within a minute. Nobody needs to log in to Netlify. There is no staging site; `main` is live. Each deploy spends Netlify credits, so batch related edits into one push rather than pushing after every tweak.
-
-To preview before pushing, run `python3 -m http.server 8000` in the repo and open http://localhost:8000.
+Nobody needs to log in to Netlify. There is no staging site; `main` is live.
 
 ## Rules
 
@@ -28,7 +27,7 @@ To preview before pushing, run `python3 -m http.server 8000` in the repo and ope
 - **Forms keep their names.** `get-involved` and `ideas` are Netlify Forms. Renaming a form or its fields breaks submission collection. The hidden `bot-field` honeypot stays.
 - **Don't add tracking.** No analytics, no third-party scripts, no cookie banners.
 - **Don't add pages** unless asked. If you must, copy the `<head>` from `index.html` so fonts and styles match.
-- **Prefer small commits.** If a request is large, do it in a few commits so any one can be reverted.
+- **Prefer small commits.** If a request is large, do it in a few commits so any one can be reverted. Commits are free; pushes are not, so commit often and push once.
 
 ## Who's who
 
