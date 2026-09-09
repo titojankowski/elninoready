@@ -14,7 +14,7 @@ There is no build step, no framework, no dependencies.
 ## How a change ships
 
 1. Edit the file.
-2. **Show it locally first.** Start a preview with `python3 -m http.server 8000` in the repo (run it in the background) and open http://localhost:8000 for the person you're working with. Iterate here until they're happy. This costs nothing.
+2. **Show it locally first.** The site is one self-contained HTML file, so just open it in the browser: `start index.html` on Windows, `open index.html` on macOS. No server, no install. Iterate there until the person you're working with is happy. (Only the two forms need a real server to submit; everything else renders exactly as it will live.)
 3. Commit with a message that says what changed and why.
 4. **Ask before you push.** Pushing to `main` is the deploy: Netlify watches `main` and publishes within about a minute, and every deploy spends Netlify credits. Confirm with the person that the batch is ready, then push once. Never push after every tweak.
 
