@@ -4,3 +4,4 @@ signups.csv
 __pycache__/
 # stale copy; the live one is actions-beta/cities.json
 actions/cities.json
+mock-spotters.html

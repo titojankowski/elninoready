@@ -27,7 +27,7 @@ YEAR = 2026
 CSV = os.path.join(ROOT, "events.csv")
 OUT = os.path.join(ROOT, "events")
 COLUMNS = ["Title", "Date", "Start", "End", "URL", "Location", "Host", "Why go", "Summary",
-           "Format", "RSVP Type", "NYCW listed"]
+           "Format", "RSVP Type", "NYCW listed", "Spotted by"]
 
 
 # ----------------------------------------------------------------- data ----
@@ -180,6 +180,22 @@ EXTRA_CSS = """
   .btn-go small { display: block; font-weight: 400; letter-spacing: 0.04em; text-transform: none; font-size: 0.68rem; opacity: 0.85; }
   .missing { border: 2px dashed var(--ink); padding: 1.5rem; margin: 3rem 0 1rem; font-size: 0.92rem; }
   .missing strong { text-transform: uppercase; letter-spacing: 0.06em; }
+  /* spotters: credit for the person who found an event */
+  .spotted { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(30,35,42,0.7); }
+  .spotted::before { content: "◎"; color: var(--heat); font-size: 1rem; }
+  .spotted b { color: var(--ink); }
+  .spotters { border-top: 2px solid var(--ink); padding-top: 1.5rem; margin-top: 2.5rem; }
+  .spotters h3 { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--heat); margin-bottom: 0.75rem; }
+  .spotters ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .spotters li { border: 1px solid var(--ink); padding: 0.25rem 0.7rem; font-size: 0.82rem; }
+  .spotters li.you { border: 2px dashed var(--ink); color: rgba(30,35,42,0.6); }
+  .addform { max-width: 40rem; display: grid; gap: 1.1rem; margin-top: 2rem; }
+  .addform label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; display: grid; gap: 0.45rem; }
+  .addform input, .addform textarea { font: inherit; font-size: 0.95rem; padding: 0.8rem 1rem; border: 2px solid var(--ink); background: var(--paper); width: 100%; border-radius: 0; -webkit-appearance: none; }
+  .addform input:focus, .addform textarea:focus { outline: 3px solid var(--heat); outline-offset: 0; }
+  .addform textarea { min-height: 5rem; resize: vertical; }
+  .addform .hint { font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 0.78rem; color: rgba(30,35,42,0.6); }
+  .addform button { justify-self: start; border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; font-family: inherit; }
   /* single event page */
   .single { padding: 3rem 0 3.5rem; }
   .single .meta-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin: 0 0 2rem; }
@@ -269,7 +285,7 @@ def nav(active):
     <div class="nav-links">
       %s
       %s
-      <a href="/#ideas">Add event</a>
+      <a href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
@@ -322,6 +338,34 @@ def cta(r, big=False):
             % (e(r["URL"]), e(r["_cta"]), e(host)))
 
 
+def spotted_line(r):
+    who = (r.get("Spotted by") or "").strip()
+    return '<p class="spotted">Spotted by <b>%s</b></p>' % html.escape(who) if who else ""
+
+
+def spot_form():
+    """The 'spot an event' form at the bottom of /events/. Netlify form 'spot-event';
+    an empty credit field means anonymous, so nobody has to ask for credit."""
+    return """
+<section class="tier alt" id="add">
+  <div class="wrap">
+    <p class="eyebrow">/// SPOT AN EVENT</p>
+    <h2>Know a Climate Week event about El Niño? Send the link.</h2>
+    <p class="lede">We check it, add it to the list, and credit you as the spotter. Events count when El Niño is the subject, or when the host has agreed to give it two minutes from the main microphone.</p>
+    <form class="addform" name="spot-event" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-spot.html">
+      <input type="hidden" name="form-name" value="spot-event">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <label>Event link <input type="url" name="url" required placeholder="https://"></label>
+      <label>The El Niño connection <span class="hint">One line. Optional; we'll read the event page too.</span><textarea name="connection" placeholder="e.g. Panel on food prices; the host agreed to open with the forecast."></textarea></label>
+      <label>Credit you as <span class="hint">This is what shows on the list. Leave it blank to stay anonymous.</span><input type="text" name="credit" placeholder="Maria K., Brooklyn" maxlength="60"></label>
+      <label>Email <span class="hint">So we can tell you when it's up. Never shown.</span><input type="email" name="email" placeholder="you@example.com" autocomplete="email"></label>
+      <button class="btn btn-heat" type="submit">Send it in</button>
+    </form>
+  </div>
+</section>
+"""
+
+
 def render_index(rows):
     e = html.escape
     n = len(rows)
@@ -330,13 +374,19 @@ def render_index(rows):
         if not days or days[-1][0] != r["_date"]:
             days.append((r["_date"], r["_day"], []))
         days[-1][2].append(r)
+    spotters = []
+    for r in rows:
+        who = (r.get("Spotted by") or "").strip()
+        if who and who not in spotters:
+            spotters.append(who)
+    spotted = (", <strong class=\"count\">spotted by %d %s</strong>" % (len(spotters), "person" if len(spotters) == 1 else "people")) if spotters else ""
     parts = []
     parts.append("""
 <header class="hero slim" id="top">
   <div class="wrap">
     <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
     <h1>Every event about the <em>storm on the horizon</em>.</h1>
-    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño. They are listed here in the order they happen, with registration going straight to each host. If an event is missing, <a href="/#ideas" style="color:#fff">tell us</a>.</p>
+    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño%s. They are listed here in the order they happen, with registration going straight to each host. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
     <form class="hero-signup ev-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <input type="hidden" name="form-name" value="get-involved">
       <input type="hidden" name="message" value="Notify me about new El Niño events at Climate Week">
@@ -351,7 +401,7 @@ def render_index(rows):
 </header>
 <section style="padding-top:0.5rem">
   <div class="wrap">
-""" % n)
+""" % (n, spotted))
     for _, label, evs in days:
         parts.append('<div class="day"><h2>%s <small>%d event%s</small></h2></div>' % (e(label), len(evs), "" if len(evs) == 1 else "s"))
         for r in evs:
@@ -363,16 +413,20 @@ def render_index(rows):
         <h3><a href="/events/%s/">%s</a></h3>
         <p class="who">%s</p>
         <p class="why">%s</p>
-        %s
+        %s%s
       </div>
       <div class="ev-cta">%s</div>
     </article>""" % (r["_slug"], e(r["_when"]), r["_slug"], e(r["Title"]), e(who),
-                     e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r), cta(r)))
+                     e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r), spotted_line(r), cta(r)))
+    roll = ""
+    if spotters:
+        roll = '<div class="spotters"><h3>/// Spotters</h3><ul>%s<li class="you">you?</li></ul></div>' % "".join("<li>%s</li>" % e(s) for s in spotters)
     parts.append("""
-    <div class="missing"><strong>Missing one?</strong> We add any Climate Week event where El Niño is the subject, or where the host has agreed to talk about it from the main microphone. <a href="/#ideas">Send it in</a> and it goes on this list.</div>
+    %s
   </div>
 </section>
-""")
+%s
+""" % (roll, spot_form()))
     desc = "%d El Niño events at Climate Week NYC 2026, in the order they happen, with registration straight to each host." % n
     return page("El Niño events at Climate Week NYC · El Niño Ready", desc, SITE + "/events/", "".join(parts))
 
@@ -401,6 +455,7 @@ def render_single(r):
     %s
     %s
     %s
+    %s
     <p class="host-note">This page exists so the event has a link. Details, tickets, and any changes are on the host's page; El Niño Ready volunteers keep this listing and are not the organizer.</p>
     <a class="backlink" href="/events/">← All El Niño events at Climate Week</a>
   </div>
@@ -408,7 +463,7 @@ def render_single(r):
 """ % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html,
        '<p class="why">%s</p>' % e(r["Why go"]) if r.get("Why go") else "",
        '<p class="desc">%s</p>' % e(r["Summary"]) if r.get("Summary") else "",
-       tags_for(r), '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True))
+       tags_for(r), '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True), spotted_line(r))
     desc = "%s · %s ET. %s" % (r["_day"], r["_when"], r.get("Why go") or "")
     return page("%s · El Niño Ready" % r["Title"], desc.strip(), url, body, og_type="article")
 

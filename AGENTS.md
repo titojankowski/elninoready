@@ -31,7 +31,7 @@ Nobody needs to log in to Netlify. There is no staging site; `main` is live.
 
 - **Style is fixed.** Emergency-bulletin look on the AirMiners palette: IBM Plex Mono, Almost Black `#1E232A` text on white, Navy Grey `#2B323D` dark sections, Reddish-Orange `#FE5B41` emphasis and buttons, Light Grey `#D8DDE2` panels and labels on dark, hard 2px borders with offset shadows, `/// ` eyebrows. No rounded corners, no gradients, no new fonts, no frameworks.
 - **Facts need sources.** The site makes numeric claims (NOAA odds, ONI values, loss estimates). Do not change a number, a date, or a claim without a source you can cite in the commit message. Keep the chart's claims ONI-scoped.
-- **Forms keep their names.** `get-involved` and `ideas` are Netlify Forms. Renaming a form or its fields breaks submission collection. The hidden `bot-field` honeypot stays.
+- **Forms keep their names.** `get-involved`, `ideas`, and `spot-event` (the "spot an event" form on /events/, thank-you page `thanks-spot.html`; the `credit` field is what shows as "Spotted by", blank = anonymous) are Netlify Forms. Renaming a form or its fields breaks submission collection. The hidden `bot-field` honeypot stays.
 - **Don't add tracking.** No analytics, no third-party scripts, no cookie banners.
 - **Don't add pages** unless asked. If you must, copy the `<head>` from `index.html` so fonts and styles match.
 - **Prefer small commits.** If a request is large, do it in a few commits so any one can be reverted. Commits are free; pushes are not, so commit often and push once.
