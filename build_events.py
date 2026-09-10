@@ -148,6 +148,10 @@ EXTRA_CSS = """
   header.hero.slim .sub { margin-bottom: 0; }
   .hero .eyebrow { color: var(--sea-bright); }
   .count { color: var(--sea-bright); }
+  .ev-signup { display: block; margin-top: 2rem; max-width: 40rem; }
+  .ev-signup-label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D8DDE2; margin-bottom: 0.5rem; }
+  .ev-signup-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .ev-signup-row input[type="email"] { flex: 1 1 16rem; min-width: 0; }
   .day { padding: 2.5rem 0 0.5rem; }
   .day h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; max-width: none; }
   .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(30,35,42,0.55); margin-left: 1rem; }
@@ -329,6 +333,16 @@ def render_index(rows):
     <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
     <h1>Every event about the <em>storm on the horizon</em>.</h1>
     <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño. They are listed here in the order they happen, with registration going straight to each host. If an event is missing, <a href="/#ideas" style="color:#fff">tell us</a>.</p>
+    <form class="hero-signup ev-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+      <input type="hidden" name="form-name" value="get-involved">
+      <input type="hidden" name="message" value="Notify me about new El Niño events at Climate Week">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <label class="ev-signup-label" for="ev-email">Get notified as new events are added</label>
+      <div class="ev-signup-row">
+        <input id="ev-email" type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+        <button class="btn btn-heat" type="submit">Notify me</button>
+      </div>
+    </form>
   </div>
 </header>
 <section style="padding-top:0.5rem">
