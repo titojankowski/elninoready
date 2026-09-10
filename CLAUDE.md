@@ -17,7 +17,7 @@ There is no build step for the home page, no framework, no dependencies. The onl
 ## How a change ships
 
 1. Edit the file.
-2. **Show it locally first.** The site is one self-contained HTML file, so just open it in the browser: `start index.html` on Windows, `open index.html` on macOS. No server, no install. Iterate there until the person you're working with is happy. (Only the two forms need a real server to submit; everything else renders exactly as it will live.)
+2. **Show it locally first.** Run `./serve.sh` and open http://localhost:8931/ (no install; it uses the Python that ships with macOS). That serves the whole site, so `/events/` and `/actions/` links work. Iterate there until the person you're working with is happy. (Only the two forms need Netlify to submit; everything else renders exactly as it will live.)
 3. Commit with a message that says what changed and why.
 4. **Ask before you push.** Pushing to `main` is the deploy: Netlify watches `main` and publishes within about a minute, and every deploy spends Netlify credits. Confirm with the person that the batch is ready, then push once. Never push after every tweak.
 
