@@ -150,20 +150,20 @@ EXTRA_CSS = """
   .count { color: var(--sea-bright); }
   .day { padding: 2.5rem 0 0.5rem; }
   .day h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; max-width: none; }
-  .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(13,13,13,0.55); margin-left: 1rem; }
+  .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(30,35,42,0.55); margin-left: 1rem; }
   .ev { display: grid; gap: 0.5rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .ev { grid-template-columns: 9rem 1fr 11rem; } }
   .ev-time { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
-  .ev-time .tz { display: block; font-weight: 400; font-size: 0.68rem; color: rgba(13,13,13,0.5); letter-spacing: 0.1em; }
+  .ev-time .tz { display: block; font-weight: 400; font-size: 0.68rem; color: rgba(30,35,42,0.5); letter-spacing: 0.1em; }
   .ev h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.35rem; }
   .ev h3 a { text-decoration: none; }
   .ev h3 a:hover { text-decoration: underline; text-decoration-color: var(--heat); }
-  .ev .who { font-size: 0.8rem; color: rgba(13,13,13,0.65); margin-bottom: 0.55rem; }
+  .ev .who { font-size: 0.8rem; color: rgba(30,35,42,0.65); margin-bottom: 0.55rem; }
   .ev .why { font-size: 0.92rem; max-width: 62ch; }
   .ev .why::before { content: "[+] "; color: var(--heat); }
   .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
   .tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--ink); }
-  .tag.official { background: var(--ink); color: var(--sea-bright); }
+  .tag.official { background: var(--deep); color: var(--sea-bright); }
   .ev-cta { align-self: start; }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
@@ -185,8 +185,8 @@ EXTRA_CSS = """
   .single .meta-item .value { font-size: 0.92rem; color: var(--ink); }
   .single .why { font-size: 1.05rem; font-weight: 600; max-width: 60ch; margin-bottom: 1.5rem; }
   .single .why::before { content: "[+] "; color: var(--heat); }
-  .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(13,13,13,0.8); margin-bottom: 2rem; }
-  .single .host-note { font-size: 0.78rem; color: rgba(13,13,13,0.55); max-width: 68ch; margin-top: 1.25rem; }
+  .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(30,35,42,0.8); margin-bottom: 2rem; }
+  .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 """
 
@@ -206,7 +206,7 @@ NAV = """
 FOOTER = """
 <footer>
   <div class="wrap">
-    <div>🌊 <strong style="color:#eaf4fb">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
+    <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
     <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>

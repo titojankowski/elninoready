@@ -16,17 +16,17 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0d0d0d;
+    --ink: #1E232A;      /* AirMiners "Almost Black": text, borders */
     --paper: #ffffff;
-    --paper-2: #f4f3ee;
-    --deep: #0d0d0d;
-    --deep-2: #161616;
-    --sea: #1c7fb8;
-    --sea-bright: #ffb454;
-    --heat: #f13a13;
-    --heat-bright: #ff5f38;
-    --line: rgba(13,13,13,0.85);
-    --line-soft: rgba(13,13,13,0.18);
+    --paper-2: #D8DDE2;  /* AirMiners "Light Grey" background */
+    --deep: #2B323D;     /* AirMiners "Navy Grey": dark sections */
+    --deep-2: #1E232A;
+    --sea: #687993;      /* AirMiners grey */
+    --sea-bright: #D8DDE2;  /* labels on dark sections (was amber) */
+    --heat: #FE5B41;     /* AirMiners "Reddish-Orange" */
+    --heat-bright: #FE5B41;
+    --line: rgba(30,35,42,0.85);
+    --line-soft: rgba(30,35,42,0.18);
     --serif: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     --sans: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   }
@@ -65,7 +65,7 @@
   .nav-links a.nav-cta { padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; }
   .nav-links a.nav-cta:hover { border-color: var(--ink); }
   @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } }
-  .nav-date { font-size: 0.78rem; color: rgba(13,13,13,0.6); display: none; letter-spacing: 0.04em; }
+  .nav-date { font-size: 0.78rem; color: rgba(30,35,42,0.6); display: none; letter-spacing: 0.04em; }
   @media (min-width: 700px) { .nav-date { display: block; } }
   .nav-cta {
     font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
@@ -78,8 +78,8 @@
 
   /* ---------- hero ---------- */
   header.hero {
-    background: var(--ink);
-    color: #f2f2f2;
+    background: var(--deep);
+    color: #fff;
     padding: 3.25rem 0 4rem;
     border-bottom: 2px solid var(--ink);
   }
@@ -100,7 +100,7 @@
   .hero h1 em { font-style: normal; color: var(--heat-bright); }
   .hero .sub {
     font-size: clamp(0.92rem, 1.6vw, 1.05rem);
-    color: #c9c9c9; max-width: 58ch; margin-bottom: 2.25rem;
+    color: #D8DDE2; max-width: 58ch; margin-bottom: 2.25rem;
   }
   .hero .sub strong { color: #fff; font-weight: 700; }
   .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
@@ -138,7 +138,7 @@
     font-size: clamp(1.25rem, 2.8vw, 1.8rem); line-height: 1.3;
     letter-spacing: 0.01em; max-width: 34ch; margin-bottom: 1.25rem;
   }
-  .lede { font-size: 0.98rem; max-width: 68ch; color: rgba(13,13,13,0.85); }
+  .lede { font-size: 0.98rem; max-width: 68ch; color: rgba(30,35,42,0.85); }
   .lede + .lede { margin-top: 1rem; }
 
   /* economist quote band */
@@ -151,10 +151,10 @@
   .quoteband cite {
     display: block; margin-top: 1.25rem; font-style: normal;
     font-size: 0.92rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(13,13,13,0.65);
+    color: rgba(30,35,42,0.65);
   }
-  .quoteband cite a { color: rgba(13,13,13,0.55); }
-  .qb-compare { margin: 1.5rem auto 0; max-width: 64ch; font-size: 0.8rem; color: rgba(13,13,13,0.6); }
+  .quoteband cite a { color: rgba(30,35,42,0.55); }
+  .qb-compare { margin: 1.5rem auto 0; max-width: 64ch; font-size: 0.8rem; color: rgba(30,35,42,0.6); }
   .qb-compare strong { color: var(--ink); }
   .qb-compare em { font-style: normal; color: var(--heat); }
 
@@ -164,11 +164,11 @@
   @media (min-width: 720px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
   .card { background: var(--paper); padding: 1.4rem; border: 0; outline: 1px solid var(--ink); }
   .card h3 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .card p { font-size: 0.88rem; color: rgba(13,13,13,0.75); }
+  .card p { font-size: 0.88rem; color: rgba(30,35,42,0.75); }
   .card .glyph { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
 
   /* 2015 vignette */
-  .vignette { margin-top: 1.25rem; background: var(--ink); color: #f2f2f2; padding: 1.75rem; }
+  .vignette { margin-top: 1.25rem; background: var(--deep); color: #fff; padding: 1.75rem; }
   .vignette h3 {
     text-transform: uppercase; font-weight: 700; font-size: clamp(0.98rem, 2vw, 1.15rem);
     line-height: 1.45; max-width: 52ch; margin-bottom: 1.25rem;
@@ -176,12 +176,12 @@
   .vignette h3 em { font-style: normal; color: var(--heat-bright); }
   .vignette ul { list-style: none; display: grid; grid-template-columns: 1fr; gap: 0.6rem 2.5rem; }
   @media (min-width: 760px) { .vignette ul { grid-template-columns: 1fr 1fr; } }
-  .vignette li { font-size: 0.88rem; color: #c9c9c9; padding-left: 1.2rem; position: relative; }
+  .vignette li { font-size: 0.88rem; color: #D8DDE2; padding-left: 1.2rem; position: relative; }
   .vignette li::before { content: "\25B8"; color: var(--heat-bright); position: absolute; left: 0; }
   .vignette li strong { color: #fff; }
   .vig-note { margin-top: 1.4rem; font-size: 0.85rem; color: var(--sea-bright); max-width: 72ch; }
-  .vig-src { margin-top: 0.75rem; font-size: 0.7rem; color: rgba(220,220,220,0.45); }
-  .vig-src a { color: rgba(220,220,220,0.6); }
+  .vig-src { margin-top: 0.75rem; font-size: 0.7rem; color: rgba(216,221,226,0.45); }
+  .vig-src a { color: rgba(216,221,226,0.6); }
 
   /* pull quote */
   .pull {
@@ -189,11 +189,11 @@
     font-size: clamp(1rem, 2.2vw, 1.35rem); line-height: 1.5;
     max-width: 46ch; margin: 2.25rem 0 0;
     padding-left: 1.25rem; border-left: 4px solid var(--heat);
-    color: rgba(13,13,13,0.9);
+    color: rgba(30,35,42,0.9);
   }
 
   /* featured event */
-  .featured { background: var(--ink); color: #f2f2f2; border-bottom: 2px solid var(--ink); }
+  .featured { background: var(--deep); color: #fff; border-bottom: 2px solid var(--ink); }
   .featured .eyebrow { color: var(--sea-bright); }
   .featured h2 { color: #fff; max-width: 40ch; }
   .event-card {
@@ -205,7 +205,7 @@
     font-family: var(--sans); font-weight: 700; text-transform: uppercase;
     font-size: clamp(1.05rem, 2.2vw, 1.35rem); line-height: 1.35; margin-bottom: 1rem;
   }
-  .event-card .desc { color: #c9c9c9; font-size: 0.88rem; }
+  .event-card .desc { color: #D8DDE2; font-size: 0.88rem; }
   .event-card .desc + .desc { margin-top: 0.85rem; }
   .event-meta { display: flex; flex-direction: column; gap: 1.1rem; align-self: start; }
   .meta-item { border-left: 3px solid var(--sea-bright); padding-left: 0.9rem; }
@@ -213,16 +213,16 @@
     font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--sea-bright); display: block; margin-bottom: 0.15rem;
   }
-  .meta-item .value { font-size: 0.88rem; color: #f2f2f2; }
+  .meta-item .value { font-size: 0.88rem; color: #fff; }
   .event-card .btn-heat { justify-self: start; margin-top: 0.5rem; }
-  .host-note { font-size: 0.75rem; color: rgba(201,201,201,0.7); margin-top: 1.25rem; }
+  .host-note { font-size: 0.75rem; color: rgba(216,221,226,0.7); margin-top: 1.25rem; }
 
   /* home events block (contents generated by build_events.py between the markers) */
-  .home-events { background: var(--ink); color: #f2f2f2; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .home-events { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
   .home-events .eyebrow { color: var(--sea-bright); }
   .home-events h2 { color: #fff; max-width: 40ch; }
   .home-events h2 em { font-style: normal; color: var(--heat-bright); }
-  .home-events .lede { color: #c9c9c9; }
+  .home-events .lede { color: #D8DDE2; }
   .he-list { margin-top: 2rem; border-top: 2px solid #fff; }
   .he-day { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea-bright); padding: 1.25rem 0 0.25rem; }
   .he-item { display: grid; gap: 0.35rem 1.5rem; grid-template-columns: 1fr; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); align-items: baseline; }
@@ -231,12 +231,12 @@
   .he-title { font-weight: 700; font-size: 0.95rem; text-transform: uppercase; line-height: 1.35; }
   .he-title a { color: #fff; text-decoration: none; }
   .he-title a:hover { text-decoration: underline; text-decoration-color: var(--heat-bright); }
-  .he-host { display: block; font-weight: 400; font-size: 0.78rem; text-transform: none; color: rgba(201,201,201,0.8); margin-top: 0.15rem; }
+  .he-host { display: block; font-weight: 400; font-size: 0.78rem; text-transform: none; color: rgba(216,221,226,0.8); margin-top: 0.15rem; }
   .he-go { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; border: 2px solid #fff; padding: 0.35rem 0.75rem; white-space: nowrap; justify-self: start; }
   @media (min-width: 760px) { .he-go { justify-self: end; } }
   .he-go:hover { background: var(--heat); border-color: var(--heat); }
   .he-all { display: inline-block; margin-top: 1.75rem; }
-  .he-note { font-size: 0.78rem; color: rgba(201,201,201,0.65); margin-top: 1.25rem; max-width: 62ch; }
+  .he-note { font-size: 0.78rem; color: rgba(216,221,226,0.65); margin-top: 1.25rem; max-width: 62ch; }
 
   /* window / what we can do */
   .window-list { margin-top: 2rem; display: grid; gap: 0; border-top: 2px solid var(--ink); }
@@ -247,16 +247,16 @@
   @media (min-width: 720px) { .window-item { grid-template-columns: 14rem 1fr; gap: 2rem; } }
   .window-item h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
   .window-item h3::before { content: "[+] "; color: var(--heat); }
-  .window-item p { font-size: 0.9rem; color: rgba(13,13,13,0.75); max-width: 62ch; }
+  .window-item p { font-size: 0.9rem; color: rgba(30,35,42,0.75); max-width: 62ch; }
 
   /* get involved */
   .involve { background: var(--paper-2); border-top: 2px solid var(--ink); }
   .involve-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; margin-top: 1rem; }
   @media (min-width: 820px) { .involve-grid { grid-template-columns: 1fr 1fr; } }
-  .kickoff-box { background: var(--ink); color: #f2f2f2; border: 2px solid var(--ink); padding: 1.75rem; align-self: start; }
+  .kickoff-box { background: var(--deep); color: #fff; border: 2px solid var(--ink); padding: 1.75rem; align-self: start; }
   .kickoff-box .eyebrow { color: var(--sea-bright); }
   .kickoff-box h3 { font-family: var(--sans); font-weight: 700; text-transform: uppercase; font-size: 1.1rem; line-height: 1.35; margin-bottom: 0.75rem; }
-  .kickoff-box p { color: #c9c9c9; font-size: 0.88rem; }
+  .kickoff-box p { color: #D8DDE2; font-size: 0.88rem; }
   .kickoff-when { margin: 1.25rem 0; padding: 1rem; border: 1px dashed rgba(255,255,255,0.5); font-size: 0.88rem; }
   .kickoff-when strong { display: block; font-size: 0.98rem; margin-bottom: 0.2rem; }
 
@@ -272,16 +272,16 @@
   textarea { resize: vertical; min-height: 5.5rem; }
   button.btn { border: 2px solid var(--ink); cursor: pointer; font-family: inherit; background: var(--heat); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
   button.btn:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 var(--ink); }
-  .form-note { font-size: 0.75rem; color: rgba(13,13,13,0.55); text-transform: none; letter-spacing: 0; }
+  .form-note { font-size: 0.75rem; color: rgba(30,35,42,0.55); text-transform: none; letter-spacing: 0; }
 
   .ideas-sec { background: var(--paper-2); border-top: 2px solid var(--ink); }
 
   /* footer */
-  footer { background: var(--ink); color: rgba(220,220,220,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
+  footer { background: var(--deep); color: rgba(216,221,226,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
   footer .wrap { display: grid; gap: 0.75rem; }
   footer a { color: #fff; }
-  footer .fine { font-size: 0.72rem; color: rgba(220,220,220,0.5); max-width: 80ch; }
-  footer .wrap > div:first-child::before { content: "// END OF BULLETIN //"; display: block; letter-spacing: 0.2em; font-weight: 700; color: rgba(220,220,220,0.45); margin-bottom: 1rem; font-size: 0.7rem; }
+  footer .fine { font-size: 0.72rem; color: rgba(216,221,226,0.5); max-width: 80ch; }
+  footer .wrap > div:first-child::before { content: "// END OF BULLETIN //"; display: block; letter-spacing: 0.2em; font-weight: 700; color: rgba(216,221,226,0.45); margin-bottom: 1rem; font-size: 0.7rem; }
 
   /* ---------- events (generated by build_events.py) ---------- */
   header.hero.slim { padding: 2.5rem 0 3rem; }
@@ -291,20 +291,20 @@
   .count { color: var(--sea-bright); }
   .day { padding: 2.5rem 0 0.5rem; }
   .day h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; max-width: none; }
-  .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(13,13,13,0.55); margin-left: 1rem; }
+  .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(30,35,42,0.55); margin-left: 1rem; }
   .ev { display: grid; gap: 0.5rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .ev { grid-template-columns: 9rem 1fr 11rem; } }
   .ev-time { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
-  .ev-time .tz { display: block; font-weight: 400; font-size: 0.68rem; color: rgba(13,13,13,0.5); letter-spacing: 0.1em; }
+  .ev-time .tz { display: block; font-weight: 400; font-size: 0.68rem; color: rgba(30,35,42,0.5); letter-spacing: 0.1em; }
   .ev h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.35rem; }
   .ev h3 a { text-decoration: none; }
   .ev h3 a:hover { text-decoration: underline; text-decoration-color: var(--heat); }
-  .ev .who { font-size: 0.8rem; color: rgba(13,13,13,0.65); margin-bottom: 0.55rem; }
+  .ev .who { font-size: 0.8rem; color: rgba(30,35,42,0.65); margin-bottom: 0.55rem; }
   .ev .why { font-size: 0.92rem; max-width: 62ch; }
   .ev .why::before { content: "[+] "; color: var(--heat); }
   .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
   .tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--ink); }
-  .tag.official { background: var(--ink); color: var(--sea-bright); }
+  .tag.official { background: var(--deep); color: var(--sea-bright); }
   .ev-cta { align-self: start; }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
@@ -326,8 +326,8 @@
   .single .meta-item .value { font-size: 0.92rem; color: var(--ink); }
   .single .why { font-size: 1.05rem; font-weight: 600; max-width: 60ch; margin-bottom: 1.5rem; }
   .single .why::before { content: "[+] "; color: var(--heat); }
-  .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(13,13,13,0.8); margin-bottom: 2rem; }
-  .single .host-note { font-size: 0.78rem; color: rgba(13,13,13,0.55); max-width: 68ch; margin-top: 1.25rem; }
+  .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(30,35,42,0.8); margin-bottom: 2rem; }
+  .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 </style>
 </head>
@@ -400,7 +400,7 @@
 
 <footer>
   <div class="wrap">
-    <div>🌊 <strong style="color:#eaf4fb">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
+    <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
     <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>
