@@ -196,8 +196,8 @@ NAV = """
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       <a href="/">Home</a>
-      <a href="/events/" class="active">Events</a>
-      <a class="nav-cta" href="/#ideas">Add an event</a>
+      <a href="/#ideas">Add an event</a>
+      <a class="nav-cta" href="/events/">Events</a>
     </div>
   </div>
 </nav>

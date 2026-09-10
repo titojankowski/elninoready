@@ -61,7 +61,9 @@
   .nav-links a { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 0.3rem 0; border-bottom: 2px solid transparent; }
   .nav-links a:hover { border-bottom-color: var(--heat); }
   .nav-links a.active { border-bottom-color: var(--ink); }
-  @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-cta { padding: 0.4rem 0.6rem; } }
+  .nav-links a.nav-cta { padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; }
+  .nav-links a.nav-cta:hover { border-color: var(--ink); }
+  @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } }
   .nav-date { font-size: 0.78rem; color: rgba(13,13,13,0.6); display: none; letter-spacing: 0.04em; }
   @media (min-width: 700px) { .nav-date { display: block; } }
   .nav-cta {
@@ -92,12 +94,6 @@
     font-variant-numeric: tabular-nums; color: #fff; font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: 0.08em;
     background: rgba(255,255,255,0.07); border: 2px dashed rgba(255,180,84,0.65); padding: 0.25rem 0.9rem;
   }
-  .hero-events {
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
-    color: #fff; background: var(--heat); padding: 0.45rem 0.9rem; border: 2px solid #fff; box-shadow: 3px 3px 0 rgba(255,255,255,0.35);
-    transition: transform 0.1s, box-shadow 0.1s;
-  }
-  .hero-events:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 rgba(255,255,255,0.35); }
   .hero h1 {
     font-family: var(--sans);
     font-size: clamp(1.4rem, 3.9vw, 2.6rem);
@@ -304,15 +300,15 @@
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       <a href="/" class="active">Home</a>
-      <a href="/events/">Events</a>
-      <a class="nav-cta" href="/#ideas">Add an event</a>
+      <a href="/#ideas">Add an event</a>
+      <a class="nav-cta" href="/events/">Events</a>
     </div>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="wrap">
-    <p class="countdown"><span>Forecast peak</span> <span class="cd-digits">DECEMBER 2026</span> <a class="hero-events" href="/events/">El Niño events at Climate Week ↗</a></p>
+    <p class="countdown"><span>Forecast peak</span> <span class="cd-digits">DECEMBER 2026</span></p>
     <h1>The <em>biggest El&nbsp;Niño in history</em> is forming right now.</h1>
     <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with <strong>one idea at its core: to save lives through communication.</strong> Forecast disasters are preventable ones. Warnings reach people. Money moves early. Systems hold.</p>
     <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
