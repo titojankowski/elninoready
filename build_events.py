@@ -7,6 +7,7 @@
 Output:
     events/index.html          every event, chronological, grouped by day
     events/<slug>/index.html   one thin page per event, so a single event has a link
+    index.html                 the block between <!-- events:start --> and <!-- events:end --> is replaced
 
 The <head> (fonts, styles, favicon) is copied from index.html at build time so
 the events pages can never drift from the home page's look. Stdlib only.
@@ -326,6 +327,51 @@ def render_single(r):
     return page("%s · El Niño Ready" % r["Title"], desc.strip(), url, body, og_type="article")
 
 
+def render_home_block(rows):
+    """The events section on the home page, dropped between the events:start/end markers."""
+    e = html.escape
+    n = len(rows)
+    items, last_day = [], None
+    for r in rows:
+        if r["_date"] != last_day:
+            items.append('<div class="he-day">%s</div>' % e(r["_day"]))
+            last_day = r["_date"]
+        items.append(
+            '<div class="he-item"><span class="he-time">%s ET</span>'
+            '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
+            '<a class="he-go" href="%s" target="_blank" rel="noopener">%s ↗</a></div>'
+            % (e(r["_when"]), r["_slug"], e(r["Title"]), e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
+               e(r["URL"]), e(r["_cta"])))
+    return """
+<section class="home-events" id="events">
+  <div class="wrap">
+    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
+    <h2>Climate Week has more than a thousand events. <em>%d</em> %s about the storm.</h2>
+    <p class="lede">Here they are in the order they happen. Registration goes straight to each host.</p>
+    <div class="he-list">
+%s
+    </div>
+    <a class="btn btn-heat he-all" href="/events/">All El Niño events at Climate Week →</a>
+    <p class="he-note">Hosting one, or know one we missed? <a href="#ideas" style="color:#fff">Tell us</a> and it goes on the list. And if your Climate Week event isn't about El Niño, our only ask is two minutes about it from the main microphone.</p>
+  </div>
+</section>
+""" % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items))
+
+
+def update_home(rows):
+    path = os.path.join(ROOT, "index.html")
+    src = open(path, encoding="utf-8").read()
+    start, end = "<!-- events:start", "<!-- events:end -->"
+    a, b = src.find(start), src.find(end)
+    if a < 0 or b < 0:
+        sys.exit("index.html is missing the events:start / events:end markers")
+    a = src.find("-->", a) + 3
+    new = src[:a] + "\n" + render_home_block(rows) + src[b:]
+    if new != src:
+        open(path, "w", encoding="utf-8").write(new)
+        print("index.html: events block updated (%d events)" % len(rows))
+
+
 # ----------------------------------------------------------------- main ----
 
 def main(argv):
@@ -334,6 +380,7 @@ def main(argv):
         write_csv(rows)
         print("events.csv: %d events" % len(rows))
     rows = enrich(read_csv())
+    update_home(rows)          # before site_head() is read, so the events pages see the final home page
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     os.makedirs(OUT)
