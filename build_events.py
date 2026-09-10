@@ -1,0 +1,353 @@
+#!/usr/bin/env python3
+"""Build events/ from events.csv (or straight from a googled sheet_read reply).
+
+    python3 build_events.py                      # rebuild from events.csv
+    python3 build_events.py --from-json x.json   # write events.csv from the sheet reply, then build
+
+Output:
+    events/index.html          every event, chronological, grouped by day
+    events/<slug>/index.html   one thin page per event, so a single event has a link
+
+The <head> (fonts, styles, favicon) is copied from index.html at build time so
+the events pages can never drift from the home page's look. Stdlib only.
+"""
+import csv
+import datetime
+import html
+import json
+import os
+import re
+import shutil
+import sys
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+SITE = "https://elninoready.earth"
+YEAR = 2026
+CSV = os.path.join(ROOT, "events.csv")
+OUT = os.path.join(ROOT, "events")
+COLUMNS = ["Title", "Date", "Start", "End", "URL", "Location", "Host", "Why go", "Summary",
+           "Format", "RSVP Type", "NYCW listed"]
+
+
+# ----------------------------------------------------------------- data ----
+
+def rows_from_sheet_json(path):
+    d = json.load(open(path, encoding="utf-8"))
+    if not d.get("ok"):
+        sys.exit("sheet_read failed: %s" % d.get("error"))
+    values = d.get("values") or []
+    header = [h.strip() for h in values[0]]
+    out = []
+    for v in values[1:]:
+        v = list(v) + [""] * (len(header) - len(v))
+        row = {h: (c or "").strip() for h, c in zip(header, v) if h}
+        if row.get("Title") and row.get("URL"):
+            out.append(row)
+    return out
+
+
+def write_csv(rows):
+    with open(CSV, "w", encoding="utf-8", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=COLUMNS, extrasaction="ignore")
+        w.writeheader()
+        for r in rows:
+            w.writerow({c: r.get(c, "") for c in COLUMNS})
+
+
+def read_csv():
+    with open(CSV, encoding="utf-8") as f:
+        return [dict(r) for r in csv.DictReader(f)]
+
+
+DATE_FORMATS = ["%m/%d/%Y", "%m/%d/%y", "%Y-%m-%d", "%A, %B %d, %Y", "%A, %B %d", "%B %d, %Y", "%B %d",
+                "%a, %m/%d/%Y", "%a %m/%d", "%m/%d", "%a, %B %d", "%A %B %d"]
+TIME_FORMATS = ["%I:%M %p", "%I:%M%p", "%I %p", "%I%p", "%H:%M"]
+
+
+def parse_date(s):
+    s = re.sub(r"\s+", " ", (s or "").strip())
+    for fmt in DATE_FORMATS:
+        text, f = s, fmt
+        if "%Y" not in fmt and "%y" not in fmt:   # sheet formats often drop the year
+            text, f = "%s %d" % (s, YEAR), fmt + " %Y"
+        try:
+            return datetime.datetime.strptime(text, f).date()
+        except ValueError:
+            continue
+    sys.exit("cannot parse date %r" % s)
+
+
+def parse_time(s):
+    s = (s or "").strip().upper().replace(".", "")
+    for fmt in TIME_FORMATS:
+        try:
+            return datetime.datetime.strptime(s, fmt).time()
+        except ValueError:
+            continue
+    return None
+
+
+def slugify(title):
+    s = title.lower()
+    s = s.replace("ñ", "n").replace("&", "and")
+    words = re.sub(r"[^a-z0-9]+", "-", s).strip("-").split("-")
+    out = ""
+    for w in words:                      # cut on a word boundary, ~60 chars
+        if len(out) + len(w) + 1 > 60:
+            break
+        out += ("-" if out else "") + w
+    return out or "event"
+
+
+def fmt_time(t):
+    if t is None:
+        return ""
+    return t.strftime("%-I:%M %p").replace(":00", "").replace(" AM", "am").replace(" PM", "pm")
+
+
+def enrich(rows):
+    seen = set()
+    for r in rows:
+        r["_date"] = parse_date(r["Date"])
+        r["_start"] = parse_time(r.get("Start"))
+        r["_end"] = parse_time(r.get("End"))
+        slug = slugify(r["Title"])
+        while slug in seen:
+            slug += "-2"
+        seen.add(slug)
+        r["_slug"] = slug
+        r["_when"] = fmt_time(r["_start"]) + (" to " + fmt_time(r["_end"]) if r["_end"] else "")
+        r["_day"] = r["_date"].strftime("%A, %B %-d")
+        r["_official"] = r.get("NYCW listed", "").strip().lower() in ("yes", "y", "true", "listed")
+        rsvp = r.get("RSVP Type", "").strip()
+        r["_rsvp"] = rsvp
+        r["_cta"] = ("Apply to attend" if "apply" in rsvp.lower()
+                     else "Request an invite" if "invite" in rsvp.lower()
+                     else "Register")
+    rows.sort(key=lambda r: (r["_date"], r["_start"] or datetime.time(23, 59)))
+    return rows
+
+
+# ------------------------------------------------------------- templates ----
+
+def site_head():
+    src = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+    m = re.search(r"<head>(.*?)</head>", src, re.S)
+    head = m.group(1)
+    head = re.sub(r"<title>.*?</title>\s*", "", head, flags=re.S)
+    head = re.sub(r'<meta name="description"[^>]*>\s*', "", head)
+    head = re.sub(r'<meta property="og:[^"]*"[^>]*>\s*', "", head)
+    return head
+
+
+EXTRA_CSS = """
+  /* ---------- events (generated by build_events.py) ---------- */
+  nav .brand { margin-bottom: 0; }
+  .nav-inner a { text-decoration: none; }
+  header.hero.slim { padding: 2.5rem 0 3rem; }
+  header.hero.slim h1 { margin-bottom: 1rem; }
+  header.hero.slim .sub { margin-bottom: 0; }
+  .hero .eyebrow { color: var(--sea-bright); }
+  .count { color: var(--sea-bright); }
+  .day { padding: 2.5rem 0 0.5rem; }
+  .day h2 { border-bottom: 2px solid var(--ink); padding-bottom: 0.5rem; max-width: none; }
+  .day h2 small { font-size: 0.72rem; letter-spacing: 0.16em; color: rgba(13,13,13,0.55); margin-left: 1rem; }
+  .ev { display: grid; gap: 0.5rem 2rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .ev { grid-template-columns: 9rem 1fr 11rem; } }
+  .ev-time { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.04em; text-transform: uppercase; }
+  .ev-time .tz { display: block; font-weight: 400; font-size: 0.68rem; color: rgba(13,13,13,0.5); letter-spacing: 0.1em; }
+  .ev h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.35rem; }
+  .ev h3 a { text-decoration: none; }
+  .ev h3 a:hover { text-decoration: underline; text-decoration-color: var(--heat); }
+  .ev .who { font-size: 0.8rem; color: rgba(13,13,13,0.65); margin-bottom: 0.55rem; }
+  .ev .why { font-size: 0.92rem; max-width: 62ch; }
+  .ev .why::before { content: "[+] "; color: var(--heat); }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
+  .tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--ink); }
+  .tag.official { background: var(--ink); color: var(--sea-bright); }
+  .ev-cta { align-self: start; }
+  @media (min-width: 760px) { .ev-cta { justify-self: end; } }
+  .btn-go {
+    display: inline-block; font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
+    background: var(--heat); color: #fff; letter-spacing: 0.06em;
+    padding: 0.6rem 1rem; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s; white-space: nowrap;
+  }
+  .btn-go:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn-go small { display: block; font-weight: 400; letter-spacing: 0.04em; text-transform: none; font-size: 0.68rem; opacity: 0.85; }
+  .missing { border: 2px dashed var(--ink); padding: 1.5rem; margin: 3rem 0 1rem; font-size: 0.92rem; }
+  .missing strong { text-transform: uppercase; letter-spacing: 0.06em; }
+  /* single event page */
+  .single { padding: 3rem 0 3.5rem; }
+  .single .meta-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin: 0 0 2rem; }
+  @media (min-width: 720px) { .single .meta-grid { grid-template-columns: repeat(2, 1fr); } }
+  .single .meta-item { border-left: 3px solid var(--heat); padding-left: 0.9rem; }
+  .single .meta-item .label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); display: block; margin-bottom: 0.15rem; }
+  .single .meta-item .value { font-size: 0.92rem; color: var(--ink); }
+  .single .why { font-size: 1.05rem; font-weight: 600; max-width: 60ch; margin-bottom: 1.5rem; }
+  .single .why::before { content: "[+] "; color: var(--heat); }
+  .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(13,13,13,0.8); margin-bottom: 2rem; }
+  .single .host-note { font-size: 0.78rem; color: rgba(13,13,13,0.55); max-width: 68ch; margin-top: 1.25rem; }
+  .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+"""
+
+NAV = """
+<nav>
+  <div class="nav-inner">
+    <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
+    <span class="nav-date">Climate Week NYC · September 20 to 27, 2026 · all times ET</span>
+    <a class="nav-cta" href="/#ideas">Add an event</a>
+  </div>
+</nav>
+"""
+
+FOOTER = """
+<footer>
+  <div class="wrap">
+    <div>🌊 <strong style="color:#eaf4fb">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
+    <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
+    <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
+  </div>
+</footer>
+"""
+
+
+def page(title, description, url, body, og_type="website"):
+    e = html.escape
+    return ("<!doctype html>\n<html lang=\"en\">\n<head>"
+            "<title>%s</title>\n<meta name=\"description\" content=\"%s\">\n"
+            "<meta property=\"og:title\" content=\"%s\">\n<meta property=\"og:description\" content=\"%s\">\n"
+            "<meta property=\"og:type\" content=\"%s\">\n<meta property=\"og:url\" content=\"%s\">\n"
+            "<link rel=\"canonical\" href=\"%s\">\n"
+            % (e(title), e(description), e(title), e(description), og_type, url, url)
+            + site_head().replace("</style>", EXTRA_CSS + "</style>")
+            + "</head>\n<body>\n" + NAV + body + FOOTER + "\n</body>\n</html>\n")
+
+
+def tags_for(r):
+    e = html.escape
+    out = []
+    if r["_official"]:
+        out.append('<span class="tag official">On the Climate Week NYC program</span>')
+    if r.get("Format"):
+        out.append('<span class="tag">%s</span>' % e(r["Format"]))
+    if r["_rsvp"]:
+        out.append('<span class="tag">%s</span>' % e(r["_rsvp"].replace(",", " · ")))
+    if "zoom" in (r.get("Location") or "").lower() or "online" in (r.get("Location") or "").lower():
+        out.append('<span class="tag">Online option</span>')
+    return '<div class="tags">%s</div>' % "".join(out) if out else ""
+
+
+def cta(r, big=False):
+    e = html.escape
+    host = re.sub(r"^www\.", "", re.sub(r"^https?://", "", r["URL"]).split("/")[0])
+    return ('<a class="btn-go" href="%s" target="_blank" rel="noopener">%s ↗<small>on %s</small></a>'
+            % (e(r["URL"]), e(r["_cta"]), e(host)))
+
+
+def render_index(rows):
+    e = html.escape
+    n = len(rows)
+    days = []
+    for r in rows:
+        if not days or days[-1][0] != r["_date"]:
+            days.append((r["_date"], r["_day"], []))
+        days[-1][2].append(r)
+    parts = []
+    parts.append("""
+<header class="hero slim" id="top">
+  <div class="wrap">
+    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
+    <h1>Every event about the <em>storm on the horizon</em>.</h1>
+    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño. They are listed here in the order they happen, with registration going straight to each host. If an event is missing, <a href="/#ideas" style="color:#fff">tell us</a>.</p>
+  </div>
+</header>
+<section style="padding-top:0.5rem">
+  <div class="wrap">
+""" % n)
+    for _, label, evs in days:
+        parts.append('<div class="day"><h2>%s <small>%d event%s</small></h2></div>' % (e(label), len(evs), "" if len(evs) == 1 else "s"))
+        for r in evs:
+            who = " · ".join(x for x in [r.get("Host"), r.get("Location")] if x)
+            parts.append("""
+    <article class="ev" id="%s">
+      <div class="ev-time">%s<span class="tz">ET</span></div>
+      <div>
+        <h3><a href="/events/%s/">%s</a></h3>
+        <p class="who">%s</p>
+        <p class="why">%s</p>
+        %s
+      </div>
+      <div class="ev-cta">%s</div>
+    </article>""" % (r["_slug"], e(r["_when"]), r["_slug"], e(r["Title"]), e(who),
+                     e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r), cta(r)))
+    parts.append("""
+    <div class="missing"><strong>Missing one?</strong> We add any Climate Week event where El Niño is the subject, or where the host has agreed to talk about it from the main microphone. <a href="/#ideas">Send it in</a> and it goes on this list.</div>
+  </div>
+</section>
+""")
+    desc = "%d El Niño events at Climate Week NYC 2026, in the order they happen, with registration straight to each host." % n
+    return page("El Niño events at Climate Week NYC · El Niño Ready", desc, SITE + "/events/", "".join(parts))
+
+
+def render_single(r):
+    e = html.escape
+    url = "%s/events/%s/" % (SITE, r["_slug"])
+    meta = [("When", "%s · %s ET" % (r["_day"], r["_when"])),
+            ("Where", r.get("Location") or "See host page"),
+            ("Host", r.get("Host") or ""),
+            ("Format", " · ".join(x for x in [r.get("Format"), r["_rsvp"].replace(",", " · ")] if x))]
+    meta_html = "".join('<div class="meta-item"><span class="label">%s</span><span class="value">%s</span></div>'
+                        % (e(k), e(v)) for k, v in meta if v)
+    body = """
+<header class="hero slim">
+  <div class="wrap">
+    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC · <a href="/events/" style="color:inherit">ALL EVENTS</a></p>
+    <h1>%s</h1>
+    <p class="sub">%s · %s ET</p>
+  </div>
+</header>
+<section class="single">
+  <div class="wrap">
+    <div class="meta-grid">%s</div>
+    %s
+    %s
+    %s
+    %s
+    <p class="host-note">This page exists so the event has a link. Details, tickets, and any changes are on the host's page; El Niño Ready volunteers keep this listing and are not the organizer.</p>
+    <a class="backlink" href="/events/">← All El Niño events at Climate Week</a>
+  </div>
+</section>
+""" % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html,
+       '<p class="why">%s</p>' % e(r["Why go"]) if r.get("Why go") else "",
+       '<p class="desc">%s</p>' % e(r["Summary"]) if r.get("Summary") else "",
+       tags_for(r), '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True))
+    desc = "%s · %s ET. %s" % (r["_day"], r["_when"], r.get("Why go") or "")
+    return page("%s · El Niño Ready" % r["Title"], desc.strip(), url, body, og_type="article")
+
+
+# ----------------------------------------------------------------- main ----
+
+def main(argv):
+    if "--from-json" in argv:
+        rows = rows_from_sheet_json(argv[argv.index("--from-json") + 1])
+        write_csv(rows)
+        print("events.csv: %d events" % len(rows))
+    rows = enrich(read_csv())
+    if os.path.isdir(OUT):
+        shutil.rmtree(OUT)
+    os.makedirs(OUT)
+    with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
+        f.write(render_index(rows))
+    for r in rows:
+        d = os.path.join(OUT, r["_slug"])
+        os.makedirs(d)
+        with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
+            f.write(render_single(r))
+    print("events/index.html + %d event pages" % len(rows))
+    for r in rows:
+        print("  %s %-8s %s" % (r["_date"], fmt_time(r["_start"]), r["_slug"]))
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

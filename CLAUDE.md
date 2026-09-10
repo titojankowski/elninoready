@@ -8,8 +8,9 @@ This repo is the website at **https://elninoready.earth**. Read this before chan
 - `thanks.html`, `thanks-idea.html` — landing pages after someone submits a form.
 - `VISION.md` — the mission and the reasoning behind the copy. Read it before rewriting any text.
 - `_redirects`, `fetch_signups.sh`, `.gitignore` — plumbing. Leave alone unless asked.
+- `events/` — the El Niño events index (`events/index.html`) and one thin page per event. **Generated; do not hand-edit.** Source of truth is the Google Sheet "El Niño events at NYCW" (Tito's airminers Drive). `./fetch_events.sh` pulls the sheet through the `googled` permission proxy into `events.csv` and runs `build_events.py`, which writes `events/`. The events pages copy their `<head>` from `index.html` at build time, so restyle the home page and rebuild. Columns are read by header name; add or reorder columns in the sheet freely. Commit `events.csv` and `events/` together.
 
-There is no build step, no framework, no dependencies.
+There is no build step for the home page, no framework, no dependencies. The only generated part is `events/` (stdlib Python).
 
 ## How a change ships
 
