@@ -10,7 +10,9 @@ This repo is the website at **https://elninoready.earth**. Read this before chan
 - `_redirects`, `fetch_signups.sh`, `.gitignore` — plumbing. Leave alone unless asked.
 - `events/` — the El Niño events index (`events/index.html`) and one thin page per event. **Generated; do not hand-edit.** Source of truth is the Google Sheet "El Niño events at NYCW" (Tito's airminers Drive). `./fetch_events.sh` pulls the sheet through the `googled` permission proxy into `events.csv` and runs `build_events.py`, which writes `events/`. The events pages copy their `<head>` from `index.html` at build time, so restyle the home page and rebuild. Columns are read by header name; add or reorder columns in the sheet freely. Commit `events.csv` and `events/` together.
 
-There is no build step for the home page, no framework, no dependencies. The only generated part is `events/` (stdlib Python).
+- `actions/` — the Actions page (`/actions/`): what to do at three scales (family, community, state/region/country). **Generated; do not hand-edit.** The words live in `actions_content.py`; `build_events.py` renders them with the same head, nav, and footer as the events pages. Edit the content file, run `python3 build_events.py`, commit both. Every action links to a source; keep it that way, and keep numeric claims off this page (they belong on the home page with cites).
+
+There is no build step for the home page, no framework, no dependencies. The only generated parts are `events/` and `actions/` (stdlib Python).
 
 ## How a change ships
 

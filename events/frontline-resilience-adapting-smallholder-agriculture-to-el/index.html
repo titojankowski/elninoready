@@ -331,6 +331,28 @@
   .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(30,35,42,0.8); margin-bottom: 2rem; }
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  /* actions page */
+  .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
+  .levers span::before { content: "[+] "; color: var(--heat); }
+  .tier { border-top: 2px solid var(--ink); }
+  .tier:nth-of-type(even) { background: var(--paper-2); }
+  .tier .lede { margin-bottom: 0.5rem; }
+  .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
+  .act:last-child { border-bottom: 0; }
+  .act-n { font-weight: 700; font-size: 1.1rem; color: var(--heat); }
+  .act h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.4rem; }
+  .act p { font-size: 0.92rem; max-width: 62ch; }
+  .act-links { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-size: 0.78rem; }
+  .act-links a { font-weight: 700; }
+  .act-links a::after { content: " ↗"; }
+  .act-links a[href^="/"]::after { content: " →"; }
+  .lever { align-self: start; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.55rem; border: 1px solid var(--ink); justify-self: start; white-space: nowrap; }
+  .lever.warnings { background: var(--ink); color: #D8DDE2; }
+  .lever.money { background: var(--heat); color: #fff; border-color: var(--heat); }
+  .outro { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); }
+  .outro h2 { color: #fff; }
+  .outro .lede { color: #D8DDE2; }
 </style>
 </head>
 <body>
@@ -340,6 +362,7 @@
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       <a href="/">Home</a>
+      <a href="/actions/">Actions</a>
       <a href="/#ideas">Add event</a>
       <a class="nav-cta" href="/events/">Events</a>
     </div>

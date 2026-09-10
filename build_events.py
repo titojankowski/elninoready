@@ -188,20 +188,47 @@ EXTRA_CSS = """
   .single .desc { font-size: 0.92rem; max-width: 68ch; color: rgba(30,35,42,0.8); margin-bottom: 2rem; }
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  /* actions page */
+  .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
+  .levers span::before { content: "[+] "; color: var(--heat); }
+  .tier { border-top: 2px solid var(--ink); }
+  .tier:nth-of-type(even) { background: var(--paper-2); }
+  .tier .lede { margin-bottom: 0.5rem; }
+  .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
+  @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
+  .act:last-child { border-bottom: 0; }
+  .act-n { font-weight: 700; font-size: 1.1rem; color: var(--heat); }
+  .act h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.4rem; }
+  .act p { font-size: 0.92rem; max-width: 62ch; }
+  .act-links { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-size: 0.78rem; }
+  .act-links a { font-weight: 700; }
+  .act-links a::after { content: " ↗"; }
+  .act-links a[href^="/"]::after { content: " →"; }
+  .lever { align-self: start; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.55rem; border: 1px solid var(--ink); justify-self: start; white-space: nowrap; }
+  .lever.warnings { background: var(--ink); color: #D8DDE2; }
+  .lever.money { background: var(--heat); color: #fff; border-color: var(--heat); }
+  .outro { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); }
+  .outro h2 { color: #fff; }
+  .outro .lede { color: #D8DDE2; }
 """
 
-NAV = """
+def nav(active):
+    """Keep in sync with the <nav> in index.html."""
+    def link(href, label, key):
+        return '<a href="%s"%s>%s</a>' % (href, ' class="active"' if key == active else "", label)
+    return """
 <nav>
   <div class="nav-inner">
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
-      <a href="/">Home</a>
+      %s
+      %s
       <a href="/#ideas">Add event</a>
       <a class="nav-cta" href="/events/">Events</a>
     </div>
   </div>
 </nav>
-"""
+""" % (link("/", "Home", "home"), link("/actions/", "Actions", "actions"))
 
 FOOTER = """
 <footer>
@@ -214,7 +241,7 @@ FOOTER = """
 """
 
 
-def page(title, description, url, body, og_type="website"):
+def page(title, description, url, body, og_type="website", active="events"):
     e = html.escape
     return ("<!doctype html>\n<html lang=\"en\">\n<head>"
             "<title>%s</title>\n<meta name=\"description\" content=\"%s\">\n"
@@ -223,7 +250,7 @@ def page(title, description, url, body, og_type="website"):
             "<link rel=\"canonical\" href=\"%s\">\n"
             % (e(title), e(description), e(title), e(description), og_type, url, url)
             + site_head().replace("</style>", EXTRA_CSS + "</style>")
-            + "</head>\n<body>\n" + NAV + body + FOOTER + "\n</body>\n</html>\n")
+            + "</head>\n<body>\n" + nav(active) + body + FOOTER + "\n</body>\n</html>\n")
 
 
 def tags_for(r):
@@ -359,6 +386,57 @@ def render_home_block(rows):
 """ % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items))
 
 
+def render_actions():
+    import actions_content as A
+    e = html.escape
+    parts = ["""
+<header class="hero slim" id="top">
+  <div class="wrap">
+    <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
+    <h1>%s</h1>
+    <p class="sub">%s</p>
+    <div class="levers">%s</div>
+  </div>
+</header>
+""" % (A.INTRO_TITLE, e(A.INTRO), "".join("<span>%s</span>" % e(v) for v in A.LEVERS.values()))]
+    for t in A.TIERS:
+        items = []
+        for i, a in enumerate(t["actions"], 1):
+            links = "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label))
+                            for label, href in a["links"])
+            items.append("""
+      <div class="act">
+        <div class="act-n">%02d</div>
+        <div>
+          <h3>%s</h3>
+          <p>%s</p>
+          <div class="act-links">%s</div>
+        </div>
+        <span class="lever %s">%s</span>
+      </div>""" % (i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
+        parts.append("""
+<section class="tier" id="%s">
+  <div class="wrap">
+    <p class="eyebrow">%s</p>
+    <h2>%s</h2>
+    <p class="lede">%s</p>
+    <div>%s
+    </div>
+  </div>
+</section>""" % (t["id"], e(t["eyebrow"]), e(t["title"]), e(t["lede"]), "".join(items)))
+    parts.append("""
+<section class="outro">
+  <div class="wrap">
+    <h2>%s</h2>
+    <p class="lede">%s</p>
+    <a class="btn btn-heat he-all" href="/#ideas">Tell us what you did →</a>
+  </div>
+</section>
+""" % (e(A.OUTRO_TITLE), e(A.OUTRO)))
+    desc = "What to do about the 2026 El Niño at three scales: your family, your community, your state or country. Each action names the lever it pulls and links to a source."
+    return page("Actions · El Niño Ready", desc, SITE + "/actions/", "".join(parts), active="actions")
+
+
 def update_home(rows):
     path = os.path.join(ROOT, "index.html")
     src = open(path, encoding="utf-8").read()
@@ -393,6 +471,10 @@ def main(argv):
         with open(os.path.join(d, "index.html"), "w", encoding="utf-8") as f:
             f.write(render_single(r))
     print("events/index.html + %d event pages" % len(rows))
+    os.makedirs(os.path.join(ROOT, "actions"), exist_ok=True)
+    with open(os.path.join(ROOT, "actions", "index.html"), "w", encoding="utf-8") as f:
+        f.write(render_actions())
+    print("actions/index.html")
     for r in rows:
         print("  %s %-8s %s" % (r["_date"], fmt_time(r["_start"]), r["_slug"]))
 
