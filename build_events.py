@@ -189,7 +189,17 @@ EXTRA_CSS = """
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
   /* actions page */
-  .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
+  .jump { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+  .jump-btn {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+    color: #fff; border: 2px solid #fff; padding: 0.6rem 1rem; box-shadow: 3px 3px 0 rgba(255,255,255,0.35);
+    transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
+  }
+  .jump-btn::before { content: "↓ "; color: var(--heat); }
+  .jump-btn:hover { background: var(--heat); border-color: var(--heat); transform: translate(1px,1px); box-shadow: 2px 2px 0 rgba(255,255,255,0.35); }
+  .jump-btn:hover::before { color: #fff; }
+  .tier { scroll-margin-top: 4rem; }
+  .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
   .levers span::before { content: "[+] "; color: var(--heat); }
   .tier { border-top: 2px solid var(--ink); }
   .tier:nth-of-type(even) { background: var(--paper-2); }
@@ -395,10 +405,13 @@ def render_actions():
     <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
     <h1>%s</h1>
     <p class="sub">%s</p>
+    <div class="jump">%s</div>
     <div class="levers">%s</div>
   </div>
 </header>
-""" % (A.INTRO_TITLE, e(A.INTRO), "".join("<span>%s</span>" % e(v) for v in A.LEVERS.values()))]
+""" % (A.INTRO_TITLE, e(A.INTRO),
+       "".join('<a class="jump-btn" href="#%s">%s</a>' % (t["id"], e(t["title"])) for t in A.TIERS),
+       "".join("<span>%s</span>" % e(v) for v in A.LEVERS.values()))]
     for t in A.TIERS:
         items = []
         for i, a in enumerate(t["actions"], 1):
