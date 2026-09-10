@@ -250,6 +250,10 @@ EXTRA_CSS = """
   .lever.warnings { background: var(--ink); color: #D8DDE2; }
   .lever.money { background: var(--heat); color: #fff; border-color: var(--heat); }
   .outro { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); }
+  .notify h2 em { font-style: normal; color: var(--heat); }
+  .notify .hero-signup input[type="email"] { border-color: var(--ink); background: var(--paper); color: var(--ink); }
+  .notify .hero-signup input[type="email"]::placeholder { color: rgba(30,35,42,0.5); }
+  .notify .hero-signup .btn-heat { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
   .outro h2 { color: #fff; }
   .outro .lede { color: #D8DDE2; }
 """
@@ -677,7 +681,7 @@ def render_actions_placeholder():
     </div>
   </div>
 </section>
-<section class="outro" id="notify">
+<section class="tier notify" id="notify">
   <div class="wrap">
     <p class="eyebrow">/// COMING</p>
     <h2>We're building a tool that tells you what to do <em>where you live</em>, and keeps you posted as the forecast changes.</h2>
