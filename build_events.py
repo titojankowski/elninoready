@@ -351,7 +351,6 @@ def spot_form():
     return """
 <section class="tier alt" id="add">
   <div class="wrap">
-    <p class="eyebrow">/// SPOT AN EVENT</p>
     <h2>Know a Climate Week event about El Niño? Send the link.</h2>
     <p class="lede">We check it, add it to the list, and credit you as the spotter. Events count when El Niño is the subject, or when the host has agreed to give it two minutes from the main microphone.</p>
     <form class="addform" name="spot-event" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-spot.html">
@@ -386,8 +385,7 @@ def render_index(rows):
     parts.append("""
 <header class="hero slim" id="top">
   <div class="wrap">
-    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
-    <h1>Every event about the <em>storm on the horizon</em>.</h1>
+    <h1>Every <em>El Niño</em> event at Climate Week NYC</h1>
     <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño%s. They are listed here in the order they happen, with registration going straight to each host. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
     <form class="hero-signup ev-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <input type="hidden" name="form-name" value="get-involved">
@@ -422,7 +420,7 @@ def render_index(rows):
                      e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r), spotted_line(r), cta(r)))
     roll = ""
     if spotters:
-        roll = '<div class="spotters"><h3>/// Spotters</h3><ul>%s<li class="you">you?</li></ul></div>' % "".join("<li>%s</li>" % e(s) for s in spotters)
+        roll = '<div class="spotters"><h3>Spotters</h3><ul>%s<li class="you">you?</li></ul></div>' % "".join("<li>%s</li>" % e(s) for s in spotters)
     parts.append("""
     %s
   </div>
@@ -445,7 +443,6 @@ def render_single(r):
     body = """
 <header class="hero slim">
   <div class="wrap">
-    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC · <a href="/events/" style="color:inherit">ALL EVENTS</a></p>
     <h1>%s</h1>
     <p class="sub">%s · %s ET</p>
   </div>
@@ -488,7 +485,6 @@ def render_home_block(rows):
     return """
 <section class="home-events" id="events">
   <div class="wrap">
-    <p class="eyebrow">/// EL NIÑO AT CLIMATE WEEK NYC</p>
     <h2>Climate Week has more than a thousand events. <em>%d</em> %s about El Niño.</h2>
     <p class="lede">Here they are in the order they happen. Registration goes straight to each host.</p>
     <div class="he-list">
@@ -633,7 +629,6 @@ def render_actions():
     parts = ["""
 <header class="hero slim" id="top">
   <div class="wrap">
-    <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
     <h1>%s</h1>
     <p class="sub">%s</p>
     <form class="city-form" id="city-form" autocomplete="off" onsubmit="return false">
@@ -653,7 +648,7 @@ def render_actions():
 </header>
 <section class="region-card" id="region-card" hidden>
   <div class="wrap">
-    <p class="eyebrow">/// <span id="rc-city"></span></p>
+    <p class="eyebrow"><span id="rc-city"></span></p>
     <h2 id="rc-name"></h2>
     <p class="lede" id="rc-usually"></p>
     <div class="rc-meta">
@@ -684,13 +679,14 @@ def render_actions():
         parts.append("""
 <section class="tier%s" id="%s">
   <div class="wrap">
-    <p class="eyebrow">%s</p>
-    <h2>%s</h2>
+    %s<h2>%s</h2>
     <p class="lede">%s</p>
     <div>%s
     </div>
   </div>
-</section>""" % (" alt" if A.TIERS.index(t) % 2 else "", t["id"], e(t["eyebrow"]), e(t["title"]), e(t["lede"]), "".join(items)))
+</section>""" % (" alt" if A.TIERS.index(t) % 2 else "", t["id"],
+                 ('<p class="eyebrow">%s</p>\n    ' % e(t["eyebrow"])) if t.get("eyebrow") else "",
+                 e(t["title"]), e(t["lede"]), "".join(items)))
     parts.append("""
 <section class="outro">
   <div class="wrap">
@@ -728,14 +724,12 @@ def render_actions_placeholder():
     body = """
 <header class="hero slim" id="top">
   <div class="wrap">
-    <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
     <h1>%s</h1>
     <p class="sub">%s</p>
   </div>
 </header>
 <section class="tier" id="start">
   <div class="wrap">
-    <p class="eyebrow">/// START HERE</p>
     <h2>Three things anyone can do this week.</h2>
     <div>%s
     </div>
@@ -743,7 +737,6 @@ def render_actions_placeholder():
 </section>
 <section class="tier notify" id="notify">
   <div class="wrap">
-    <p class="eyebrow">/// COMING</p>
     <h2>We're building a tool that tells you what to do <em>where you live</em>, and keeps you posted as the forecast changes.</h2>
     <p class="lede">Type in your city, get the actions that matter there, for your family, your community, and your country. Sign up and we'll tell you the moment it's ready.</p>
     <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" style="max-width:38rem">

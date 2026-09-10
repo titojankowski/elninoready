@@ -18,7 +18,6 @@ LEVERS = {
 TIERS = [
     {
         "id": "family",
-        "eyebrow": "/// SCALE 1",
         "title": "For your family",
         "lede": "Things one household can finish this month. Most take an hour.",
         "actions": [
@@ -91,7 +90,6 @@ TIERS = [
     },
     {
         "id": "community",
-        "eyebrow": "/// SCALE 2",
         "title": "For your community",
         "lede": "A congregation, a school, a block, a workplace, a run club. Anywhere people already gather.",
         "actions": [
@@ -149,7 +147,6 @@ TIERS = [
     },
     {
         "id": "region",
-        "eyebrow": "/// SCALE 3",
         "title": "For your state, region, or country",
         "lede": "For people who can move budgets, activate plans, or ask the people who can. The window is the months before the peak.",
         "actions": [
