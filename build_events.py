@@ -137,7 +137,9 @@ def site_head():
     head = m.group(1)
     head = re.sub(r"<title>.*?</title>\s*", "", head, flags=re.S)
     head = re.sub(r'<meta name="description"[^>]*>\s*', "", head)
-    head = re.sub(r'<meta property="og:[^"]*"[^>]*>\s*', "", head)
+    # Drop only the per-page og tags; keep og:image (and twitter:card) so link
+    # previews on Slack etc. get the picture on every generated page.
+    head = re.sub(r'<meta property="og:(title|description|type|url)"[^>]*>\s*', "", head)
     return head
 
 
