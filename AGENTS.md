@@ -25,7 +25,7 @@ Nobody needs to log in to Netlify. There is no staging site; `main` is live.
 
 ## Rules
 
-- **Style is fixed.** Emergency-bulletin look: IBM Plex Mono, black on white, hard 2px borders with offset shadows, amber `#ffb454` labels on dark sections, `/// ` eyebrows. No rounded corners, no gradients, no new fonts, no frameworks.
+- **Style is fixed.** Emergency-bulletin look on the AirMiners palette: IBM Plex Mono, Almost Black `#1E232A` text on white, Navy Grey `#2B323D` dark sections, Reddish-Orange `#FE5B41` emphasis and buttons, Light Grey `#D8DDE2` panels and labels on dark, hard 2px borders with offset shadows, `/// ` eyebrows. No rounded corners, no gradients, no new fonts, no frameworks.
 - **Facts need sources.** The site makes numeric claims (NOAA odds, ONI values, loss estimates). Do not change a number, a date, or a claim without a source you can cite in the commit message. Keep the chart's claims ONI-scoped.
 - **Forms keep their names.** `get-involved` and `ideas` are Netlify Forms. Renaming a form or its fields breaks submission collection. The hidden `bot-field` honeypot stays.
 - **Don't add tracking.** No analytics, no third-party scripts, no cookie banners.
