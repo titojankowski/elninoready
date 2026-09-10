@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head><title>Actions · El Niño Ready</title>
-<meta name="description" content="What to do about the 2026 El Niño at three scales: your family, your community, your state or country. Each action names the lever it pulls and links to a source.">
+<meta name="description" content="What to do about the 2026 El Niño. Three things anyone can do this week, and a tool on the way that tells you what to do where you live.">
 <meta property="og:title" content="Actions · El Niño Ready">
-<meta property="og:description" content="What to do about the 2026 El Niño at three scales: your family, your community, your state or country. Each action names the lever it pulls and links to a source.">
+<meta property="og:description" content="What to do about the 2026 El Niño. Three things anyone can do this week, and a tool on the way that tells you what to do where you live.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://elninoready.earth/actions/">
 <link rel="canonical" href="https://elninoready.earth/actions/">
@@ -332,6 +332,34 @@
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
   /* actions page */
+  /* city picker */
+  .city-form { margin-top: 2rem; max-width: 40rem; }
+  .city-form label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D8DDE2; margin-bottom: 0.5rem; }
+  .city-row { display: flex; gap: 0.6rem; align-items: stretch; }
+  .city-box { position: relative; flex: 1 1 auto; }
+  #city { width: 100%; font: inherit; font-size: 1.05rem; padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff; border-radius: 0; -webkit-appearance: none; }
+  #city::placeholder { color: rgba(255,255,255,0.55); }
+  #city:focus { outline: 3px solid var(--heat); outline-offset: 0; }
+  .city-list { position: absolute; left: 0; right: 0; top: 100%; z-index: 30; list-style: none; margin: 0; padding: 0; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); max-height: 18rem; overflow-y: auto; }
+  .city-list li { padding: 0.55rem 1rem; font-size: 0.92rem; cursor: pointer; border-bottom: 1px solid var(--line-soft); }
+  .city-list li:last-child { border-bottom: 0; }
+  .city-list li:hover { background: var(--heat); color: #fff; }
+  .city-clear { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0 1rem; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+  .city-clear:hover { background: #fff; color: var(--ink); }
+  .city-note { font-size: 0.75rem; color: rgba(216,221,226,0.7); margin-top: 0.6rem; }
+  .region-card { background: var(--paper-2); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2.5rem 0; scroll-margin-top: 4rem; }
+  .region-card h2 { max-width: none; }
+  .rc-meta { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .rc-meta { grid-template-columns: 1fr 2fr; } }
+  .region-card .meta-item { border-left: 3px solid var(--heat); padding-left: 0.9rem; }
+  .region-card .meta-item .label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); display: block; margin-bottom: 0.15rem; }
+  .region-card .meta-item .value { font-size: 0.92rem; color: var(--ink); }
+  .rc-foot { font-size: 0.8rem; color: rgba(30,35,42,0.7); max-width: 70ch; }
+  .rc-foot a { font-weight: 700; color: var(--ink); }
+  .act.act-hidden { display: none; }
+  .has-city .act-match .act-n::after { content: " ●"; font-size: 0.7em; vertical-align: middle; }
+  .more-actions { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1.25rem; padding: 0.6rem 1rem; border: 2px dashed var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+  .more-actions:hover { border-style: solid; }
   .jump { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
   .jump-btn {
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
@@ -345,7 +373,7 @@
   .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
   .levers span::before { content: "[+] "; color: var(--heat); }
   .tier { border-top: 2px solid var(--ink); }
-  .tier:nth-of-type(even) { background: var(--paper-2); }
+  .tier.alt { background: var(--paper-2); }
   .tier .lede { margin-bottom: 0.5rem; }
   .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
@@ -384,16 +412,12 @@
     <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
     <h1>You can see this one <em>coming</em>.</h1>
     <p class="sub">The forecast is in. What kills people in an El Niño is the gap between the forecast and the action: the warning that never arrived, the money that came after, the plan that stayed in the drawer. Here is what to do with the forecast, at whatever scale you can reach.</p>
-    <div class="jump"><a class="jump-btn" href="#family">For your family</a><a class="jump-btn" href="#community">For your community</a><a class="jump-btn" href="#region">For your state, region, or country</a></div>
-    <div class="levers"><span>Warnings reach people</span><span>Money moves early</span><span>Systems hold</span></div>
   </div>
 </header>
-
-<section class="tier" id="family">
+<section class="tier" id="start">
   <div class="wrap">
-    <p class="eyebrow">/// SCALE 1</p>
-    <h2>For your family</h2>
-    <p class="lede">Things one household can finish this month. Most take an hour.</p>
+    <p class="eyebrow">/// START HERE</p>
+    <h2>Three things anyone can do this week.</h2>
     <div>
       <div class="act">
         <div class="act-n">01</div>
@@ -416,51 +440,6 @@
       <div class="act">
         <div class="act-n">03</div>
         <div>
-          <h3>Make a heat plan before the first heat wave.</h3>
-          <p>Decide now who in your family is most at risk (babies, elders, anyone with a heart or kidney condition, anyone working outdoors), where each of them will cool off when power or air conditioning fails, and who checks on whom. Learn to read the daily HeatRisk forecast.</p>
-          <div class="act-links"><a href="https://www.weather.gov/safety/heat" target="_blank" rel="noopener">NWS heat safety</a><a href="https://www.wpc.ncep.noaa.gov/heatrisk/" target="_blank" rel="noopener">HeatRisk forecast (US)</a><a href="https://www.who.int/news-room/fact-sheets/detail/climate-change-heat-and-health" target="_blank" rel="noopener">WHO: heat and health</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">04</div>
-        <div>
-          <h3>If you live near fire or peat country, plan for smoke.</h3>
-          <p>Pick one room you can seal and filter, buy the masks now, and know where to check the air quality index. Smoke travels hundreds of miles and kills quietly, weeks after the fire.</p>
-          <div class="act-links"><a href="https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq" target="_blank" rel="noopener">EPA: wildfire smoke indoors</a><a href="https://www.airnow.gov/" target="_blank" rel="noopener">AirNow air quality</a><a href="https://www.ready.gov/wildfires" target="_blank" rel="noopener">Ready.gov: wildfires</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">05</div>
-        <div>
-          <h3>Cover three days without power or tap water.</h3>
-          <p>Heat waves and storms take the grid down when demand peaks. Water, a way to keep food and medicine cold, a charged battery, and a plan for anyone on home medical equipment.</p>
-          <div class="act-links"><a href="https://www.ready.gov/kit" target="_blank" rel="noopener">Ready.gov: build a kit</a><a href="https://www.ready.gov/power-outages" target="_blank" rel="noopener">Ready.gov: power outages</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">06</div>
-        <div>
-          <h3>Know your water risk, both directions.</h3>
-          <p>Some regions get flooding, some get drought, some get one then the other. Learn which yours is, know your evacuation route if it&#x27;s floods, and start using less water now if it&#x27;s drought.</p>
-          <div class="act-links"><a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov: floods</a><a href="https://www.ready.gov/drought" target="_blank" rel="noopener">Ready.gov: drought</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">07</div>
-        <div>
-          <h3>Where mosquitoes carry disease, get ahead of them.</h3>
-          <p>Dengue, malaria, and cholera have followed the shifted rains of every major El Niño. Empty standing water weekly, sleep under nets where malaria is present, and know the early symptoms so nobody waits too long to get treated.</p>
-          <div class="act-links"><a href="https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue" target="_blank" rel="noopener">WHO: dengue</a><a href="https://www.who.int/news-room/fact-sheets/detail/malaria" target="_blank" rel="noopener">WHO: malaria</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-      <div class="act">
-        <div class="act-n">08</div>
-        <div>
           <h3>Tell five people. In their language.</h3>
           <p>The cheapest warning system on Earth is a group chat. Send the forecast to family in affected regions, to the people who work outside, to whoever looks after someone frail. Attach one thing they can do.</p>
           <div class="act-links"><a href="/">The forecast, in one page</a></div>
@@ -470,171 +449,25 @@
     </div>
   </div>
 </section>
-<section class="tier" id="community">
+<section class="outro" id="notify">
   <div class="wrap">
-    <p class="eyebrow">/// SCALE 2</p>
-    <h2>For your community</h2>
-    <p class="lede">A congregation, a school, a block, a workplace, a run club. Anywhere people already gather.</p>
-    <div>
-      <div class="act">
-        <div class="act-n">01</div>
-        <div>
-          <h3>Put El Niño on the agenda of something that already meets.</h3>
-          <p>You don&#x27;t need a new event. Take two minutes at the start of the meeting, service, practice, or all-hands: the forecast, what it means here, one thing to do. This is the whole idea behind El Niño Climate Week.</p>
-          <div class="act-links"><a href="/events/">Events at Climate Week</a><a href="/#ideas">Add yours</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-      <div class="act">
-        <div class="act-n">02</div>
-        <div>
-          <h3>List who is most at risk, and who checks on them.</h3>
-          <p>Elders living alone, people on oxygen or dialysis, outdoor workers, families without cooling, people without housing. Heat kills the people nobody checks on. Pair every name with a person who will call or knock.</p>
-          <div class="act-links"><a href="https://ghhin.org/" target="_blank" rel="noopener">Global Heat Health Information Network</a><a href="https://www.who.int/health-topics/heatwaves" target="_blank" rel="noopener">WHO: heatwaves</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">03</div>
-        <div>
-          <h3>Find or open a cooling place, and publish its hours.</h3>
-          <p>A library, a community center, a house of worship with air conditioning. Agree now that it opens on hot days, decide who holds the key, and make sure the people on your list know where it is.</p>
-          <div class="act-links"><a href="https://www.weather.gov/safety/heat" target="_blank" rel="noopener">NWS heat safety</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">04</div>
-        <div>
-          <h3>Translate the warning.</h3>
-          <p>Official alerts arrive in the official language. Your community may not live in it. Get the forecast and the alerts into the languages people actually speak, on the channels they actually use: local radio, messaging groups, the notice board.</p>
-          <div class="act-links"><a href="https://www.ready.gov/alerts" target="_blank" rel="noopener">Ready.gov: alerts and warnings</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-      <div class="act">
-        <div class="act-n">05</div>
-        <div>
-          <h3>Ask your local emergency manager three questions.</h3>
-          <p>What is the heat plan, what is the flood or drought plan, and what event triggers each one? If the answers are vague, that is the finding. Plans that live in a drawer don&#x27;t save anyone.</p>
-          <div class="act-links"><a href="https://www.ready.gov/plan" target="_blank" rel="noopener">Ready.gov: make a plan</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">06</div>
-        <div>
-          <h3>Stock the food bank before prices move.</h3>
-          <p>Harvest failures show up in food prices months after the drought. Give to food banks and mutual aid now, while a dollar buys more, and ask them what they will need in the spring.</p>
-          <div class="act-links"><a href="https://fews.net/" target="_blank" rel="noopener">FEWS NET food security outlook</a></div>
-        </div>
-        <span class="lever money">Money moves early</span>
-      </div>
-      <div class="act">
-        <div class="act-n">07</div>
-        <div>
-          <h3>Host an event, or lend a piece of one.</h3>
-          <p>A forecast briefing at your workplace. A readiness workshop at the school. An online session for family abroad. Bring an idea, a room, a speaker, or an audience and we will help assemble the rest.</p>
-          <div class="act-links"><a href="/#ideas">Send us the idea</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="tier" id="region">
-  <div class="wrap">
-    <p class="eyebrow">/// SCALE 3</p>
-    <h2>For your state, region, or country</h2>
-    <p class="lede">For people who can move budgets, activate plans, or ask the people who can. The window is the months before the peak.</p>
-    <div>
-      <div class="act">
-        <div class="act-n">01</div>
-        <div>
-          <h3>Move the money before the disaster, not after.</h3>
-          <p>Anticipatory action means releasing funds on the forecast: food, cash transfers, water treatment, and fuel delivered before the shock lands. Fund it, or ask why your government or your donors are not.</p>
-          <div class="act-links"><a href="https://www.unocha.org/anticipatory-action" target="_blank" rel="noopener">UN OCHA: anticipatory action</a><a href="https://www.wfp.org/anticipatory-actions" target="_blank" rel="noopener">WFP: anticipatory action</a><a href="https://www.startnetwork.org/" target="_blank" rel="noopener">Start Network</a></div>
-        </div>
-        <span class="lever money">Money moves early</span>
-      </div>
-      <div class="act">
-        <div class="act-n">02</div>
-        <div>
-          <h3>Pre-position supplies where the forecast points.</h3>
-          <p>Seasonal forecasts already name the regions facing drought, flood, or fire. Stage food, water treatment, medical supplies, and fuel there now, while roads are open and prices are normal.</p>
-          <div class="act-links"><a href="https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/" target="_blank" rel="noopener">IRI seasonal forecast</a><a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml" target="_blank" rel="noopener">NOAA ENSO discussion</a></div>
-        </div>
-        <span class="lever money">Money moves early</span>
-      </div>
-      <div class="act">
-        <div class="act-n">03</div>
-        <div>
-          <h3>Activate a heat action plan with named triggers.</h3>
-          <p>A heat plan needs a threshold that switches it on automatically, a list of who does what when it does, and cooling capacity for the people most at risk. Rehearse it before the first heat wave, not during.</p>
-          <div class="act-links"><a href="https://www.who.int/publications/i/item/9789240010789" target="_blank" rel="noopener">WHO: heat-health action plans</a><a href="https://ghhin.org/" target="_blank" rel="noopener">Global Heat Health Information Network</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">04</div>
-        <div>
-          <h3>Harden the grid for a hotter peak season.</h3>
-          <p>Demand-response agreements signed, backup power confirmed at hospitals, water plants, and cooling centers, and outage plans that protect people on home medical equipment. Heat is when the grid is needed most and fails most.</p>
-          <div class="act-links"><a href="https://wmo.int/news/media-centre/el-nino-set-become-very-strong-raising-risks-of-extreme-weather-2027" target="_blank" rel="noopener">WMO: extreme weather risks into 2027</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">05</div>
-        <div>
-          <h3>Get water contingency plans out of the drawer.</h3>
-          <p>Reservoir operating rules for drought, storage and treatment staged where floods are likely, well and pump contingencies for the towns that lose supply first. Every one of these is cheaper before the season than during it.</p>
-          <div class="act-links"><a href="https://www.ready.gov/drought" target="_blank" rel="noopener">Ready.gov: drought</a><a href="https://www.ready.gov/floods" target="_blank" rel="noopener">Ready.gov: floods</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">06</div>
-        <div>
-          <h3>Stand up disease surveillance and stock the response.</h3>
-          <p>Dengue, malaria, and cholera follow shifted rains with a lag of weeks to months. Surveillance, vector control, tests, treatment, and vaccine stocks all need to be in place before cases climb.</p>
-          <div class="act-links"><a href="https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue" target="_blank" rel="noopener">WHO: dengue</a><a href="https://www.who.int/news-room/fact-sheets/detail/malaria" target="_blank" rel="noopener">WHO: malaria</a><a href="https://www.who.int/news-room/fact-sheets/detail/cholera" target="_blank" rel="noopener">WHO: cholera</a></div>
-        </div>
-        <span class="lever systems">Systems hold</span>
-      </div>
-      <div class="act">
-        <div class="act-n">07</div>
-        <div>
-          <h3>Fund the last mile of the warning.</h3>
-          <p>A forecast that stops at the capital saves nobody in the village. Pay for the radio time, the local-language translation, the community volunteers, and the messaging channels that carry a warning the final kilometer.</p>
-          <div class="act-links"><a href="https://earlywarningsforall.org/" target="_blank" rel="noopener">Early Warnings for All</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-      <div class="act">
-        <div class="act-n">08</div>
-        <div>
-          <h3>Ask one question of the people you elect.</h3>
-          <p>What is our El Niño plan? Ask it in public, in writing, and again a month later. The answer, or the silence, tells you which of the actions above still needs doing.</p>
-          <div class="act-links"><a href="/">Share the forecast</a></div>
-        </div>
-        <span class="lever warnings">Warnings reach people</span>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="outro">
-  <div class="wrap">
-    <h2>Did one of these? Doing one now?</h2>
-    <p class="lede">Tell us. We are building the list of what people actually did, so the next person can copy it. And if you know an action that belongs here and isn&#x27;t, send that too.</p>
-    <a class="btn btn-heat he-all" href="/#ideas">Tell us what you did →</a>
+    <p class="eyebrow">/// COMING</p>
+    <h2>We're building a tool that tells you what to do <em>where you live</em>, and keeps you posted as the forecast changes.</h2>
+    <p class="lede">Type in your city, get the actions that matter there, for your family, your community, and your country. Sign up and we'll tell you the moment it's ready.</p>
+    <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" style="max-width:38rem">
+      <input type="hidden" name="form-name" value="get-involved">
+      <input type="hidden" name="message" value="Notify me when the actions tool is ready">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+      <button class="btn btn-heat" type="submit">Keep me posted</button>
+    </form>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
-    <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
+    <div>Kept by El Niño Ready volunteers. Events belong to their hosts; details, tickets, and changes live on the host's page. Know something we're missing? <a href="/#ideas">Tell us</a>.</div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>
 </footer>

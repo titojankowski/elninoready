@@ -10,9 +10,13 @@ This repo is the website at **https://elninoready.earth**. Read this before chan
 - `_redirects`, `fetch_signups.sh`, `.gitignore` — plumbing. Leave alone unless asked.
 - `events/` — the El Niño events index (`events/index.html`) and one thin page per event. **Generated; do not hand-edit.** Source of truth is the Google Sheet "El Niño events at NYCW" (Tito's airminers Drive). `./fetch_events.sh` pulls the sheet through the `googled` permission proxy into `events.csv` and runs `build_events.py`, which writes `events/`. The events pages copy their `<head>` from `index.html` at build time, so restyle the home page and rebuild. Columns are read by header name; add or reorder columns in the sheet freely. Commit `events.csv` and `events/` together.
 
-- `actions/` — the Actions page (`/actions/`): what to do at three scales (family, community, state/region/country). **Generated; do not hand-edit.** The words live in `actions_content.py`; `build_events.py` renders them with the same head, nav, and footer as the events pages. Edit the content file, run `python3 build_events.py`, commit both. Every action links to a source; keep it that way, and keep numeric claims off this page (they belong on the home page with cites).
+- `actions/` — the public Actions page (`/actions/`). **While the city tool is in beta this is a placeholder:** three universal actions plus a "keep me posted" signup (the `get-involved` Netlify form with a hidden `message`). **Generated; do not hand-edit.**
+- `actions-beta/` — the full Actions tool (`/actions-beta/`): type a city, get that region's usual El Niño season and the actions that match, at three scales (family, community, state/region/country). **Unlinked and `noindex` until Tito says it goes live.** Generated from `actions_content.py` (the 23 actions, each tagged with hazards), `regions.py` (18 region profiles: what an El Niño year usually brings, when, hazards, outlook link; first drafts that need a climate scientist's review), and `actions-beta/cities.json` (6,355 cities from GeoNames, built by `build_cities.py`; commit the JSON, not the dump). No backend: the picker is a fetch of the JSON and a filter. Region profiles must say "usually" / "tends to", never "will".
+- To take the tool live: in `build_events.py` write `render_actions()` to `actions/` instead of the placeholder, drop `noindex`, and move `cities.json` (or keep the beta path). One commit.
 
-There is no build step for the home page, no framework, no dependencies. The only generated parts are `events/` and `actions/` (stdlib Python).
+Edit content files, run `python3 build_events.py`, commit the generated output with them. Every action links to a source; keep it that way, and keep numeric claims off these pages (they belong on the home page with cites).
+
+There is no build step for the home page, no framework, no dependencies. The only generated parts are `events/`, `actions/`, and `actions-beta/` (stdlib Python).
 
 ## How a change ships
 

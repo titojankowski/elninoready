@@ -332,6 +332,34 @@
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
   /* actions page */
+  /* city picker */
+  .city-form { margin-top: 2rem; max-width: 40rem; }
+  .city-form label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D8DDE2; margin-bottom: 0.5rem; }
+  .city-row { display: flex; gap: 0.6rem; align-items: stretch; }
+  .city-box { position: relative; flex: 1 1 auto; }
+  #city { width: 100%; font: inherit; font-size: 1.05rem; padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff; border-radius: 0; -webkit-appearance: none; }
+  #city::placeholder { color: rgba(255,255,255,0.55); }
+  #city:focus { outline: 3px solid var(--heat); outline-offset: 0; }
+  .city-list { position: absolute; left: 0; right: 0; top: 100%; z-index: 30; list-style: none; margin: 0; padding: 0; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); max-height: 18rem; overflow-y: auto; }
+  .city-list li { padding: 0.55rem 1rem; font-size: 0.92rem; cursor: pointer; border-bottom: 1px solid var(--line-soft); }
+  .city-list li:last-child { border-bottom: 0; }
+  .city-list li:hover { background: var(--heat); color: #fff; }
+  .city-clear { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0 1rem; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+  .city-clear:hover { background: #fff; color: var(--ink); }
+  .city-note { font-size: 0.75rem; color: rgba(216,221,226,0.7); margin-top: 0.6rem; }
+  .region-card { background: var(--paper-2); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2.5rem 0; scroll-margin-top: 4rem; }
+  .region-card h2 { max-width: none; }
+  .rc-meta { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .rc-meta { grid-template-columns: 1fr 2fr; } }
+  .region-card .meta-item { border-left: 3px solid var(--heat); padding-left: 0.9rem; }
+  .region-card .meta-item .label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); display: block; margin-bottom: 0.15rem; }
+  .region-card .meta-item .value { font-size: 0.92rem; color: var(--ink); }
+  .rc-foot { font-size: 0.8rem; color: rgba(30,35,42,0.7); max-width: 70ch; }
+  .rc-foot a { font-weight: 700; color: var(--ink); }
+  .act.act-hidden { display: none; }
+  .has-city .act-match .act-n::after { content: " ●"; font-size: 0.7em; vertical-align: middle; }
+  .more-actions { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1.25rem; padding: 0.6rem 1rem; border: 2px dashed var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+  .more-actions:hover { border-style: solid; }
   .jump { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
   .jump-btn {
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
@@ -345,7 +373,7 @@
   .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
   .levers span::before { content: "[+] "; color: var(--heat); }
   .tier { border-top: 2px solid var(--ink); }
-  .tier:nth-of-type(even) { background: var(--paper-2); }
+  .tier.alt { background: var(--paper-2); }
   .tier .lede { margin-bottom: 0.5rem; }
   .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
@@ -436,7 +464,7 @@
 <footer>
   <div class="wrap">
     <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
-    <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
+    <div>Kept by El Niño Ready volunteers. Events belong to their hosts; details, tickets, and changes live on the host's page. Know something we're missing? <a href="/#ideas">Tell us</a>.</div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>
 </footer>

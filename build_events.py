@@ -189,6 +189,34 @@ EXTRA_CSS = """
   .single .host-note { font-size: 0.78rem; color: rgba(30,35,42,0.55); max-width: 68ch; margin-top: 1.25rem; }
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
   /* actions page */
+  /* city picker */
+  .city-form { margin-top: 2rem; max-width: 40rem; }
+  .city-form label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D8DDE2; margin-bottom: 0.5rem; }
+  .city-row { display: flex; gap: 0.6rem; align-items: stretch; }
+  .city-box { position: relative; flex: 1 1 auto; }
+  #city { width: 100%; font: inherit; font-size: 1.05rem; padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff; border-radius: 0; -webkit-appearance: none; }
+  #city::placeholder { color: rgba(255,255,255,0.55); }
+  #city:focus { outline: 3px solid var(--heat); outline-offset: 0; }
+  .city-list { position: absolute; left: 0; right: 0; top: 100%; z-index: 30; list-style: none; margin: 0; padding: 0; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); max-height: 18rem; overflow-y: auto; }
+  .city-list li { padding: 0.55rem 1rem; font-size: 0.92rem; cursor: pointer; border-bottom: 1px solid var(--line-soft); }
+  .city-list li:last-child { border-bottom: 0; }
+  .city-list li:hover { background: var(--heat); color: #fff; }
+  .city-clear { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0 1rem; border: 2px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+  .city-clear:hover { background: #fff; color: var(--ink); }
+  .city-note { font-size: 0.75rem; color: rgba(216,221,226,0.7); margin-top: 0.6rem; }
+  .region-card { background: var(--paper-2); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 2.5rem 0; scroll-margin-top: 4rem; }
+  .region-card h2 { max-width: none; }
+  .rc-meta { display: grid; gap: 1.25rem; grid-template-columns: 1fr; margin: 1.5rem 0; }
+  @media (min-width: 720px) { .rc-meta { grid-template-columns: 1fr 2fr; } }
+  .region-card .meta-item { border-left: 3px solid var(--heat); padding-left: 0.9rem; }
+  .region-card .meta-item .label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); display: block; margin-bottom: 0.15rem; }
+  .region-card .meta-item .value { font-size: 0.92rem; color: var(--ink); }
+  .rc-foot { font-size: 0.8rem; color: rgba(30,35,42,0.7); max-width: 70ch; }
+  .rc-foot a { font-weight: 700; color: var(--ink); }
+  .act.act-hidden { display: none; }
+  .has-city .act-match .act-n::after { content: " ●"; font-size: 0.7em; vertical-align: middle; }
+  .more-actions { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1.25rem; padding: 0.6rem 1rem; border: 2px dashed var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
+  .more-actions:hover { border-style: solid; }
   .jump { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
   .jump-btn {
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
@@ -202,7 +230,7 @@ EXTRA_CSS = """
   .levers { display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem; margin-top: 1.75rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #D8DDE2; }
   .levers span::before { content: "[+] "; color: var(--heat); }
   .tier { border-top: 2px solid var(--ink); }
-  .tier:nth-of-type(even) { background: var(--paper-2); }
+  .tier.alt { background: var(--paper-2); }
   .tier .lede { margin-bottom: 0.5rem; }
   .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
   @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
@@ -244,21 +272,23 @@ FOOTER = """
 <footer>
   <div class="wrap">
     <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
-    <div>This list is kept by El Niño Ready volunteers. Each event belongs to its host; details, tickets, and changes live on the host's page. Know one we're missing? <a href="/#ideas">Tell us</a>.</div>
+    <div>Kept by El Niño Ready volunteers. Events belong to their hosts; details, tickets, and changes live on the host's page. Know something we're missing? <a href="/#ideas">Tell us</a>.</div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>
 </footer>
 """
 
 
-def page(title, description, url, body, og_type="website", active="events"):
+def page(title, description, url, body, og_type="website", active="events", noindex=False):
     e = html.escape
-    return ("<!doctype html>\n<html lang=\"en\">\n<head>"
-            "<title>%s</title>\n<meta name=\"description\" content=\"%s\">\n"
+    meta = ("<title>%s</title>\n<meta name=\"description\" content=\"%s\">\n"
             "<meta property=\"og:title\" content=\"%s\">\n<meta property=\"og:description\" content=\"%s\">\n"
             "<meta property=\"og:type\" content=\"%s\">\n<meta property=\"og:url\" content=\"%s\">\n"
             "<link rel=\"canonical\" href=\"%s\">\n"
-            % (e(title), e(description), e(title), e(description), og_type, url, url)
+            % (e(title), e(description), e(title), e(description), og_type, url, url))
+    if noindex:
+        meta += '<meta name="robots" content="noindex, nofollow">\n'
+    return ("<!doctype html>\n<html lang=\"en\">\n<head>" + meta
             + site_head().replace("</style>", EXTRA_CSS + "</style>")
             + "</head>\n<body>\n" + nav(active) + body + FOOTER + "\n</body>\n</html>\n")
 
@@ -396,6 +426,129 @@ def render_home_block(rows):
 """ % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items))
 
 
+def city_picker_script():
+    """Data + JS for the city picker. Everything runs in the browser; cities.json is same-origin."""
+    import regions as R
+    data = {"regions": R.REGIONS, "countries": R.COUNTRY_REGION, "splits": R.SPLITS, "hazards": R.HAZARDS}
+    return """
+<script>
+(function () {
+  var D = %s;
+  var input = document.getElementById('city'), list = document.getElementById('city-list'),
+      clearBtn = document.getElementById('city-clear'), card = document.getElementById('region-card');
+  var cities = null, current = null;
+
+  function load(cb) {
+    if (cities) return cb();
+    fetch('/actions-beta/cities.json').then(function (r) { return r.json(); }).then(function (rows) {
+      cities = rows.map(function (r) {
+        var names = r[0].split('|');
+        return {name: names[0], ascii: (names[1] || names[0]).toLowerCase(), lc: names[0].toLowerCase(),
+                cc: r[1], admin1: r[2], lat: r[3], lon: r[4], pop: r[5]};
+      });
+      cb();
+    });
+  }
+  function regionFor(c) {
+    var s = D.splits[c.cc];
+    if (s) {
+      if (s.by_admin1 && s.by_admin1[c.admin1]) return s.by_admin1[c.admin1];
+      if (s.by_lat) for (var i = 0; i < s.by_lat.length; i++) if (c.lat < s.by_lat[i][0]) return s.by_lat[i][1];
+      return s['default'];
+    }
+    return D.countries[c.cc] || null;
+  }
+  function label(c) { return c.name + ', ' + (c.cc === 'US' && c.admin1 ? c.admin1 + ', US' : c.cc); }
+  function search(q) {
+    q = q.toLowerCase().trim();
+    if (q.length < 2) return [];
+    var starts = [], contains = [];
+    for (var i = 0; i < cities.length && starts.length < 8; i++) {
+      var c = cities[i];
+      if (c.lc.indexOf(q) === 0 || c.ascii.indexOf(q) === 0) starts.push(c);
+      else if (contains.length < 8 && (c.lc.indexOf(q) > 0 || c.ascii.indexOf(q) > 0)) contains.push(c);
+    }
+    return starts.concat(contains).slice(0, 8);
+  }
+  function showList(items) {
+    list.innerHTML = '';
+    if (!items.length) { list.hidden = true; return; }
+    items.forEach(function (c) {
+      var li = document.createElement('li');
+      li.textContent = label(c);
+      li.addEventListener('mousedown', function (ev) { ev.preventDefault(); choose(c); });
+      list.appendChild(li);
+    });
+    list.hidden = false;
+  }
+  function choose(c, silent) {
+    current = c;
+    input.value = label(c);
+    list.hidden = true;
+    clearBtn.hidden = false;
+    var rid = regionFor(c), r = rid && D.regions[rid];
+    if (!r) { card.hidden = true; filter(null); return; }
+    document.getElementById('rc-city').textContent = label(c);
+    document.getElementById('rc-name').textContent = r.name;
+    document.getElementById('rc-usually').textContent = r.usually;
+    document.getElementById('rc-when').textContent = r.when;
+    document.getElementById('rc-hazards').textContent = r.hazards.map(function (h) { return D.hazards[h]; }).join(' · ');
+    document.getElementById('rc-outlook').href = r.outlook;
+    card.hidden = false;
+    filter(r.hazards);
+    if (!silent) {
+      history.replaceState(null, '', '?city=' + encodeURIComponent(c.name) + '&cc=' + c.cc + (c.admin1 ? '&a1=' + encodeURIComponent(c.admin1) : ''));
+      card.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+  }
+  function filter(hazards) {
+    document.querySelectorAll('.tier').forEach(function (tier) {
+      var acts = tier.querySelectorAll('.act'), hidden = 0;
+      acts.forEach(function (a) {
+        var h = a.getAttribute('data-hazards').split(' ');
+        var match = !hazards || h.indexOf('all') >= 0 || h.some(function (x) { return hazards.indexOf(x) >= 0; });
+        a.classList.toggle('act-hidden', !match && !tier.classList.contains('show-all'));
+        a.classList.toggle('act-match', !!hazards && match && h.indexOf('all') < 0);
+        if (!match) hidden++;
+      });
+      var more = tier.querySelector('.more-actions');
+      if (!more) {
+        more = document.createElement('button');
+        more.type = 'button'; more.className = 'more-actions';
+        more.addEventListener('click', function () { tier.classList.toggle('show-all'); filter(hazards); });
+        tier.querySelector('.wrap').appendChild(more);
+      }
+      more.hidden = !hazards || hidden === 0;
+      more.textContent = tier.classList.contains('show-all') ? 'Show only the actions for my area' : 'Show ' + hidden + ' more action' + (hidden === 1 ? '' : 's');
+    });
+    document.body.classList.toggle('has-city', !!hazards);
+  }
+  function clear() {
+    current = null; input.value = ''; clearBtn.hidden = true; card.hidden = true;
+    document.querySelectorAll('.tier').forEach(function (t) { t.classList.remove('show-all'); });
+    filter(null);
+    history.replaceState(null, '', location.pathname);
+  }
+  input.addEventListener('focus', function () { load(function () { showList(search(input.value)); }); });
+  input.addEventListener('input', function () { load(function () { showList(search(input.value)); }); });
+  input.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') { ev.preventDefault(); var first = list.querySelector('li'); if (first && cities) choose(search(input.value)[0]); }
+    if (ev.key === 'Escape') list.hidden = true;
+  });
+  input.addEventListener('blur', function () { setTimeout(function () { list.hidden = true; }, 150); });
+  clearBtn.addEventListener('click', clear);
+  var p = new URLSearchParams(location.search);
+  if (p.get('city')) load(function () {
+    var name = p.get('city').toLowerCase(), cc = p.get('cc'), a1 = p.get('a1');
+    var hit = cities.filter(function (c) { return c.lc === name && (!cc || c.cc === cc) && (!a1 || c.admin1 === a1); })[0]
+           || cities.filter(function (c) { return c.lc === name; })[0];
+    if (hit) choose(hit, true);
+  });
+})();
+</script>
+""" % json.dumps(data, ensure_ascii=False)
+
+
 def render_actions():
     import actions_content as A
     e = html.escape
@@ -405,10 +558,33 @@ def render_actions():
     <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
     <h1>%s</h1>
     <p class="sub">%s</p>
+    <form class="city-form" id="city-form" autocomplete="off" onsubmit="return false">
+      <label for="city">Where do you live?</label>
+      <div class="city-row">
+        <div class="city-box">
+          <input id="city" type="text" placeholder="Type a city or town" aria-label="City or town" spellcheck="false">
+          <ul id="city-list" class="city-list" hidden></ul>
+        </div>
+        <button type="button" id="city-clear" class="city-clear" hidden>Clear</button>
+      </div>
+      <p class="city-note">Nothing you type leaves this page. Cities over 100,000 people plus every capital; if yours isn't listed, pick the nearest big one.</p>
+    </form>
     <div class="jump">%s</div>
     <div class="levers">%s</div>
   </div>
 </header>
+<section class="region-card" id="region-card" hidden>
+  <div class="wrap">
+    <p class="eyebrow">/// <span id="rc-city"></span></p>
+    <h2 id="rc-name"></h2>
+    <p class="lede" id="rc-usually"></p>
+    <div class="rc-meta">
+      <div class="meta-item"><span class="label">Usually when</span><span class="value" id="rc-when"></span></div>
+      <div class="meta-item"><span class="label">Prepare for</span><span class="value" id="rc-hazards"></span></div>
+    </div>
+    <p class="rc-foot">This is what El Niño years usually bring here, not a forecast for this one. <a id="rc-outlook" href="#" target="_blank" rel="noopener">Check the current outlook ↗</a>. The actions below are sorted to match; the rest are one click away.</p>
+  </div>
+</section>
 """ % (A.INTRO_TITLE, e(A.INTRO),
        "".join('<a class="jump-btn" href="#%s">%s</a>' % (t["id"], e(t["title"])) for t in A.TIERS),
        "".join("<span>%s</span>" % e(v) for v in A.LEVERS.values()))]
@@ -418,7 +594,7 @@ def render_actions():
             links = "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label))
                             for label, href in a["links"])
             items.append("""
-      <div class="act">
+      <div class="act" data-hazards="%s">
         <div class="act-n">%02d</div>
         <div>
           <h3>%s</h3>
@@ -426,9 +602,9 @@ def render_actions():
           <div class="act-links">%s</div>
         </div>
         <span class="lever %s">%s</span>
-      </div>""" % (i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
+      </div>""" % (e(a.get("hazards", "all")), i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
         parts.append("""
-<section class="tier" id="%s">
+<section class="tier%s" id="%s">
   <div class="wrap">
     <p class="eyebrow">%s</p>
     <h2>%s</h2>
@@ -436,7 +612,7 @@ def render_actions():
     <div>%s
     </div>
   </div>
-</section>""" % (t["id"], e(t["eyebrow"]), e(t["title"]), e(t["lede"]), "".join(items)))
+</section>""" % (" alt" if A.TIERS.index(t) % 2 else "", t["id"], e(t["eyebrow"]), e(t["title"]), e(t["lede"]), "".join(items)))
     parts.append("""
 <section class="outro">
   <div class="wrap">
@@ -446,8 +622,64 @@ def render_actions():
   </div>
 </section>
 """ % (e(A.OUTRO_TITLE), e(A.OUTRO)))
+    parts.append(city_picker_script())
     desc = "What to do about the 2026 El Niño at three scales: your family, your community, your state or country. Each action names the lever it pulls and links to a source."
-    return page("Actions · El Niño Ready", desc, SITE + "/actions/", "".join(parts), active="actions")
+    return page("Actions (beta) · El Niño Ready", desc, SITE + "/actions-beta/", "".join(parts), active="actions", noindex=True)
+
+
+def render_actions_placeholder():
+    """The public /actions/ page while the city tool is in beta: a few universal
+    actions and a signup. The full tool lives, unlinked, at /actions-beta/."""
+    import actions_content as A
+    e = html.escape
+    universal = [a for t in A.TIERS for a in t["actions"] if a.get("hazards") == "all" and t["id"] == "family"][:3]
+    items = []
+    for i, a in enumerate(universal, 1):
+        links = "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label))
+                        for label, href in a["links"])
+        items.append("""
+      <div class="act">
+        <div class="act-n">%02d</div>
+        <div>
+          <h3>%s</h3>
+          <p>%s</p>
+          <div class="act-links">%s</div>
+        </div>
+        <span class="lever %s">%s</span>
+      </div>""" % (i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
+    body = """
+<header class="hero slim" id="top">
+  <div class="wrap">
+    <p class="eyebrow">/// WHAT TO DO WITH THE FORECAST</p>
+    <h1>%s</h1>
+    <p class="sub">%s</p>
+  </div>
+</header>
+<section class="tier" id="start">
+  <div class="wrap">
+    <p class="eyebrow">/// START HERE</p>
+    <h2>Three things anyone can do this week.</h2>
+    <div>%s
+    </div>
+  </div>
+</section>
+<section class="outro" id="notify">
+  <div class="wrap">
+    <p class="eyebrow">/// COMING</p>
+    <h2>We're building a tool that tells you what to do <em>where you live</em>, and keeps you posted as the forecast changes.</h2>
+    <p class="lede">Type in your city, get the actions that matter there, for your family, your community, and your country. Sign up and we'll tell you the moment it's ready.</p>
+    <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" style="max-width:38rem">
+      <input type="hidden" name="form-name" value="get-involved">
+      <input type="hidden" name="message" value="Notify me when the actions tool is ready">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+      <button class="btn btn-heat" type="submit">Keep me posted</button>
+    </form>
+  </div>
+</section>
+""" % (A.INTRO_TITLE, e(A.INTRO), "".join(items))
+    desc = "What to do about the 2026 El Niño. Three things anyone can do this week, and a tool on the way that tells you what to do where you live."
+    return page("Actions · El Niño Ready", desc, SITE + "/actions/", body, active="actions")
 
 
 def update_home(rows):
@@ -486,8 +718,11 @@ def main(argv):
     print("events/index.html + %d event pages" % len(rows))
     os.makedirs(os.path.join(ROOT, "actions"), exist_ok=True)
     with open(os.path.join(ROOT, "actions", "index.html"), "w", encoding="utf-8") as f:
+        f.write(render_actions_placeholder())
+    os.makedirs(os.path.join(ROOT, "actions-beta"), exist_ok=True)
+    with open(os.path.join(ROOT, "actions-beta", "index.html"), "w", encoding="utf-8") as f:
         f.write(render_actions())
-    print("actions/index.html")
+    print("actions/index.html (placeholder) + actions-beta/index.html (city tool, noindex)")
     for r in rows:
         print("  %s %-8s %s" % (r["_date"], fmt_time(r["_start"]), r["_slug"]))
 

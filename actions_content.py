@@ -24,6 +24,7 @@ TIERS = [
         "actions": [
             {
                 "title": "Learn what this El Niño means where you live.",
+                "hazards": "all",
                 "body": "El Niño shifts rain and heat differently in every region: drought here, floods there, a hotter summer almost everywhere. Read the plain-language forecast for your part of the world before deciding what to prepare for.",
                 "lever": "warnings",
                 "links": [("NOAA ENSO blog", "https://www.climate.gov/news-features/blogs/enso"),
@@ -32,12 +33,14 @@ TIERS = [
             },
             {
                 "title": "Get warnings onto every phone in the house.",
+                "hazards": "all",
                 "body": "Turn on emergency alerts, sign up for your city or county's alert system, and follow your national weather service. A warning that reaches one person in a household reaches the household.",
                 "lever": "warnings",
                 "links": [("Ready.gov: alerts and warnings", "https://www.ready.gov/alerts")],
             },
             {
                 "title": "Make a heat plan before the first heat wave.",
+                "hazards": "heat",
                 "body": "Decide now who in your family is most at risk (babies, elders, anyone with a heart or kidney condition, anyone working outdoors), where each of them will cool off when power or air conditioning fails, and who checks on whom. Learn to read the daily HeatRisk forecast.",
                 "lever": "systems",
                 "links": [("NWS heat safety", "https://www.weather.gov/safety/heat"),
@@ -46,6 +49,7 @@ TIERS = [
             },
             {
                 "title": "If you live near fire or peat country, plan for smoke.",
+                "hazards": "smoke",
                 "body": "Pick one room you can seal and filter, buy the masks now, and know where to check the air quality index. Smoke travels hundreds of miles and kills quietly, weeks after the fire.",
                 "lever": "systems",
                 "links": [("EPA: wildfire smoke indoors", "https://www.epa.gov/indoor-air-quality-iaq/wildfires-and-indoor-air-quality-iaq"),
@@ -54,6 +58,7 @@ TIERS = [
             },
             {
                 "title": "Cover three days without power or tap water.",
+                "hazards": "outage heat flood cyclone",
                 "body": "Heat waves and storms take the grid down when demand peaks. Water, a way to keep food and medicine cold, a charged battery, and a plan for anyone on home medical equipment.",
                 "lever": "systems",
                 "links": [("Ready.gov: build a kit", "https://www.ready.gov/kit"),
@@ -61,6 +66,7 @@ TIERS = [
             },
             {
                 "title": "Know your water risk, both directions.",
+                "hazards": "flood drought",
                 "body": "Some regions get flooding, some get drought, some get one then the other. Learn which yours is, know your evacuation route if it's floods, and start using less water now if it's drought.",
                 "lever": "systems",
                 "links": [("Ready.gov: floods", "https://www.ready.gov/floods"),
@@ -68,6 +74,7 @@ TIERS = [
             },
             {
                 "title": "Where mosquitoes carry disease, get ahead of them.",
+                "hazards": "disease",
                 "body": "Dengue, malaria, and cholera have followed the shifted rains of every major El Niño. Empty standing water weekly, sleep under nets where malaria is present, and know the early symptoms so nobody waits too long to get treated.",
                 "lever": "warnings",
                 "links": [("WHO: dengue", "https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue"),
@@ -75,6 +82,7 @@ TIERS = [
             },
             {
                 "title": "Tell five people. In their language.",
+                "hazards": "all",
                 "body": "The cheapest warning system on Earth is a group chat. Send the forecast to family in affected regions, to the people who work outside, to whoever looks after someone frail. Attach one thing they can do.",
                 "lever": "warnings",
                 "links": [("The forecast, in one page", "/")],
@@ -89,12 +97,14 @@ TIERS = [
         "actions": [
             {
                 "title": "Put El Niño on the agenda of something that already meets.",
+                "hazards": "all",
                 "body": "You don't need a new event. Take two minutes at the start of the meeting, service, practice, or all-hands: the forecast, what it means here, one thing to do. This is the whole idea behind El Niño Climate Week.",
                 "lever": "warnings",
                 "links": [("Events at Climate Week", "/events/"), ("Add yours", "/#ideas")],
             },
             {
                 "title": "List who is most at risk, and who checks on them.",
+                "hazards": "heat",
                 "body": "Elders living alone, people on oxygen or dialysis, outdoor workers, families without cooling, people without housing. Heat kills the people nobody checks on. Pair every name with a person who will call or knock.",
                 "lever": "systems",
                 "links": [("Global Heat Health Information Network", "https://ghhin.org/"),
@@ -102,30 +112,35 @@ TIERS = [
             },
             {
                 "title": "Find or open a cooling place, and publish its hours.",
+                "hazards": "heat",
                 "body": "A library, a community center, a house of worship with air conditioning. Agree now that it opens on hot days, decide who holds the key, and make sure the people on your list know where it is.",
                 "lever": "systems",
                 "links": [("NWS heat safety", "https://www.weather.gov/safety/heat")],
             },
             {
                 "title": "Translate the warning.",
+                "hazards": "all",
                 "body": "Official alerts arrive in the official language. Your community may not live in it. Get the forecast and the alerts into the languages people actually speak, on the channels they actually use: local radio, messaging groups, the notice board.",
                 "lever": "warnings",
                 "links": [("Ready.gov: alerts and warnings", "https://www.ready.gov/alerts")],
             },
             {
                 "title": "Ask your local emergency manager three questions.",
+                "hazards": "all",
                 "body": "What is the heat plan, what is the flood or drought plan, and what event triggers each one? If the answers are vague, that is the finding. Plans that live in a drawer don't save anyone.",
                 "lever": "systems",
                 "links": [("Ready.gov: make a plan", "https://www.ready.gov/plan")],
             },
             {
                 "title": "Stock the food bank before prices move.",
+                "hazards": "food drought",
                 "body": "Harvest failures show up in food prices months after the drought. Give to food banks and mutual aid now, while a dollar buys more, and ask them what they will need in the spring.",
                 "lever": "money",
                 "links": [("FEWS NET food security outlook", "https://fews.net/")],
             },
             {
                 "title": "Host an event, or lend a piece of one.",
+                "hazards": "all",
                 "body": "A forecast briefing at your workplace. A readiness workshop at the school. An online session for family abroad. Bring an idea, a room, a speaker, or an audience and we will help assemble the rest.",
                 "lever": "warnings",
                 "links": [("Send us the idea", "/#ideas")],
