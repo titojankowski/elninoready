@@ -334,8 +334,8 @@ def tags_for(r):
 def cta(r, big=False):
     e = html.escape
     host = re.sub(r"^www\.", "", re.sub(r"^https?://", "", r["URL"]).split("/")[0])
-    return ('<a class="btn-go" href="%s" target="_blank" rel="noopener">%s ↗<small>on %s</small></a>'
-            % (e(r["URL"]), e(r["_cta"]), e(host)))
+    return ('<a class="btn-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗<small>on %s</small></a>'
+            % (e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"]), e(host)))
 
 
 def spotted_line(r):
@@ -480,9 +480,9 @@ def render_home_block(rows):
         items.append(
             '<div class="he-item"><span class="he-time">%s ET</span>'
             '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
-            '<a class="he-go" href="%s" target="_blank" rel="noopener">%s ↗</a></div>'
+            '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
             % (e(r["_when"]), r["_slug"], e(r["Title"]), e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
-               e(r["URL"]), e(r["_cta"])))
+               e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
     return """
 <section class="home-events" id="events">
   <div class="wrap">
@@ -569,6 +569,9 @@ def city_picker_script():
     document.getElementById('rc-outlook').href = r.outlook;
     card.hidden = false;
     filter(r.hazards);
+    if (!silent && window.goatcounter && goatcounter.count) {
+      goatcounter.count({path: 'city/' + rid, title: r.name, event: true});
+    }
     if (!silent) {
       history.replaceState(null, '', '?city=' + encodeURIComponent(c.name) + '&cc=' + c.cc + (c.admin1 ? '&a1=' + encodeURIComponent(c.admin1) : ''));
       card.scrollIntoView({behavior: 'smooth', block: 'start'});

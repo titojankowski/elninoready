@@ -17,6 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<!-- GoatCounter: cookieless, open-source page and click counts. The only script on the site.
+     Elements with data-goatcounter-click="..." are counted as events (Register buttons, city picks).
+     Dashboard: https://elninoready.goatcounter.com -->
+<script data-goatcounter="https://elninoready.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
   :root {
     --ink: #1E232A;      /* AirMiners "Almost Black": text, borders */
@@ -772,6 +776,9 @@
     document.getElementById('rc-outlook').href = r.outlook;
     card.hidden = false;
     filter(r.hazards);
+    if (!silent && window.goatcounter && goatcounter.count) {
+      goatcounter.count({path: 'city/' + rid, title: r.name, event: true});
+    }
     if (!silent) {
       history.replaceState(null, '', '?city=' + encodeURIComponent(c.name) + '&cc=' + c.cc + (c.admin1 ? '&a1=' + encodeURIComponent(c.admin1) : ''));
       card.scrollIntoView({behavior: 'smooth', block: 'start'});
