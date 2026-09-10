@@ -262,7 +262,7 @@ def nav(active):
       %s
       %s
       <a href="/#ideas">Add event</a>
-      <a class="nav-cta" href="/events/">Events</a>
+      <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
 </nav>
