@@ -4,10 +4,10 @@
 # MONEY moves early, SYSTEMS hold. Every action links to a source someone can
 # act on. No numeric claims live here; those stay on the home page with cites.
 
-INTRO_TITLE = "Forecast disasters are <em>preventable</em> ones."
-INTRO = ("The forecast exists. What kills people in an El Niño is the delay between the forecast and the action: "
+INTRO_TITLE = "You can see this one <em>coming</em>."
+INTRO = ("The forecast is in. What kills people in an El Niño is the gap between the forecast and the action: "
          "the warning that never arrived, the money that came after, the plan that stayed in the drawer. "
-         "Here is what to do with the forecast, at the scale you can reach.")
+         "Here is what to do with the forecast, at whatever scale you can reach.")
 
 LEVERS = {
     "warnings": "Warnings reach people",
