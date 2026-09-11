@@ -27,7 +27,7 @@ YEAR = 2026
 CSV = os.path.join(ROOT, "events.csv")
 OUT = os.path.join(ROOT, "events")
 COLUMNS = ["Title", "Date", "Start", "End", "URL", "Location", "Host", "Why go", "Summary",
-           "Format", "RSVP Type", "NYCW listed", "Spotted by"]
+           "Format", "RSVP Type", "NYCW listed", "Spotted by", "El Niño role"]
 
 
 # ----------------------------------------------------------------- data ----
@@ -120,6 +120,10 @@ def enrich(rows):
         r["_when"] = fmt_time(r["_start"]) + (" to " + fmt_time(r["_end"]) if r["_end"] else "")
         r["_day"] = r["_date"].strftime("%A, %B %-d")
         r["_official"] = r.get("NYCW listed", "").strip().lower() in ("yes", "y", "true", "listed")
+        # "El Niño role": "About El Niño" (the main list) or "Two minutes" (an event whose host has
+        # promised El Niño two minutes from the main microphone; listed separately, never counted as about).
+        role = (r.get("El Niño role") or "").strip().lower()
+        r["_pledge"] = ("two" in role) or ("minute" in role) or ("pledge" in role)
         rsvp = r.get("RSVP Type", "").strip()
         r["_rsvp"] = rsvp
         r["_cta"] = ("Apply to attend" if "apply" in rsvp.lower()
@@ -170,6 +174,22 @@ EXTRA_CSS = """
   .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.7rem; }
   .tag { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border: 1px solid var(--ink); }
   .tag.official { background: var(--deep); color: var(--sea-bright); }
+  .tag.pledge { background: var(--heat); color: #fff; border-color: var(--heat); }
+  /* A partner's own event: a compact strip, deliberately lighter than an El Niño event. */
+  .ev.pledge { padding: 0.7rem 0 0.75rem; align-items: baseline; background: linear-gradient(to right, rgba(254,91,65,0.07) 0%, rgba(254,91,65,0.06) 45%, rgba(254,91,65,0) 92%); }
+  .ev.pledge .ev-time { font-size: 0.78rem; color: rgba(30,35,42,0.7); }
+  .ev.pledge .pl-flag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heat); display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.15rem; }
+  .ev.pledge .pl-flag::before { content: ""; width: 7px; height: 7px; background: var(--heat); flex: 0 0 auto; }
+  .ev.pledge h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
+  .ev.pledge .who { font-size: 0.74rem; margin-bottom: 0; }
+  .btn-quiet { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; color: var(--ink); border-bottom: 2px solid var(--heat); padding-bottom: 1px; }
+  .btn-quiet:hover { color: var(--heat); }
+  .spotted.pledged::before { content: "✓"; }
+  .tm-points { list-style: none; counter-reset: tm; margin: 2rem 0; padding: 0; border-top: 2px solid var(--ink); }
+  .tm-points li { counter-increment: tm; display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line-soft); }
+  .tm-points li::before { content: counter(tm, decimal-leading-zero); font-weight: 700; color: var(--heat); font-size: 1.1rem; }
+  .tm-points li b { display: block; font-size: 1.05rem; margin-bottom: 0.3rem; }
+  .tm-points li p { font-size: 0.95rem; color: rgba(30,35,42,0.85); max-width: 60ch; }
   .ev-cta { align-self: start; }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
@@ -212,6 +232,12 @@ EXTRA_CSS = """
   .backlink { display: inline-block; margin-top: 2.5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
   /* actions page */
   /* city picker */
+  .hero-city { font-family: var(--sans); font-weight: 700; text-transform: uppercase; line-height: 1.2; font-size: clamp(1.3rem, 3.4vw, 2.2rem); margin-bottom: 1.5rem; }
+  .hero-city-label { display: block; font-size: 0.72rem; letter-spacing: 0.18em; color: #D8DDE2; margin-bottom: 0.4rem; }
+  .has-city header.hero.slim h1, .has-city header.hero.slim .sub, .has-city .city-note, .has-city .jump { display: none; }
+  .has-city header.hero.slim { padding: 2rem 0 2.25rem; }
+  .has-city .city-form { margin-top: 0; }
+  .has-city .city-form label { color: rgba(216,221,226,0.7); }
   .city-form { margin-top: 2rem; max-width: 40rem; }
   .city-form label { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #D8DDE2; margin-bottom: 0.5rem; }
   .city-row { display: flex; gap: 0.6rem; align-items: stretch; }
@@ -236,6 +262,45 @@ EXTRA_CSS = """
   .rc-foot { font-size: 0.8rem; color: rgba(30,35,42,0.7); max-width: 70ch; }
   .rc-foot a { font-weight: 700; color: var(--ink); }
   .act.act-hidden { display: none; }
+  .local-block { border-bottom: 2px solid var(--ink); padding: 3rem 0 2.5rem; }
+  .local-history { padding-top: 2.5rem; }
+  .more-head { background: var(--deep); color: #fff; padding: 2.5rem 0; border-bottom: 2px solid var(--ink); }
+  .more-head h2 { color: #fff; margin-bottom: 0.5rem; }
+  .more-head .lede { color: #D8DDE2; }
+  .local-history .local-h3 { margin-top: 0; }
+  .local-foot { padding: 1.5rem 0 2.5rem; border-bottom: 2px solid var(--ink); }
+  .local-sum { background: var(--deep); color: #fff; border-bottom: 2px solid var(--ink); padding: 2rem 0 2.25rem; }
+  .local-sum .local-kicker { color: var(--sea-bright); margin-bottom: 1rem; }
+  .local-sum .sum-grid { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+  @media (min-width: 720px) { .local-sum .sum-grid { grid-template-columns: 1.1fr 1fr; } }
+  .local-sum .sum-score { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.6rem; flex-wrap: wrap; }
+  .local-sum .sum-boxes { display: inline-flex; gap: 4px; }
+  .local-sum .sum-boxes i { display: block; width: 18px; height: 18px; border: 2px solid #fff; background: transparent; }
+  .local-sum .sum-boxes i.on { background: var(--heat); border-color: var(--heat); }
+  .local-sum .sum-n { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--heat-bright); }
+  .local-sum .sum-parts { font-family: var(--sans); font-size: 0.78rem; color: #D8DDE2; margin: -0.2rem 0 0.7rem; letter-spacing: 0.02em; }
+  .local-sum .sum-parts b { color: #fff; }
+  .local-sum .sum-short { font-size: clamp(1.05rem, 2vw, 1.3rem); font-weight: 700; line-height: 1.35; max-width: 34ch; margin-bottom: 0.75rem; }
+  .local-sum .sum-why { font-size: 0.88rem; color: #D8DDE2; max-width: 52ch; }
+  .local-sum .sum-label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat-bright); margin-bottom: 0.5rem; }
+  .local-sum ul { list-style: none; margin: 0; padding: 0; }
+  .local-sum li { font-size: 0.9rem; padding: 0.35rem 0 0.35rem 1.1rem; border-top: 1px solid rgba(216,221,226,0.25); position: relative; }
+  .local-sum li:last-child { border-bottom: 1px solid rgba(216,221,226,0.25); }
+  .local-sum li::before { content: ""; position: absolute; left: 0; top: 0.85rem; width: 8px; height: 8px; background: var(--heat); }
+  .local-sum .sum-foot { font-size: 0.74rem; color: rgba(216,221,226,0.7); margin-top: 1rem; max-width: 66ch; }
+  .local-outlook { border: 2px dashed var(--ink); padding: 1.25rem 1.5rem; margin-top: 1.75rem; max-width: 66ch; }
+  .local-outlook-label { display: block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); margin-bottom: 0.4rem; }
+  .local-outlook p { font-size: 0.92rem; }
+  .local-kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--heat); margin-bottom: 0.75rem; }
+  .local-block h2 { max-width: 40ch; }
+  .hist-map { margin: 1.25rem 0 0.5rem; border: 2px solid var(--ink); background: #fff; }
+  .hist-map img { display: block; width: 100%; height: auto; }
+  .hist-map figcaption { font-size: 0.72rem; color: rgba(30,35,42,0.6); padding: 0.5rem 0.9rem; border-top: 2px solid var(--ink); }
+  .local-h3 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 2.25rem 0 0.25rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--ink); }
+  .has-local .tier:not(.local-tier) { display: none; }
+  .has-local .jump { display: none; }
+  .has-local .tier:not(.local-tier).show-generic { display: block; }
+  .local-tier h2 { max-width: 40ch; }
   .has-city .act-match .act-n::after { content: " ●"; font-size: 0.7em; vertical-align: middle; }
   .more-actions { font: inherit; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1.25rem; padding: 0.6rem 1rem; border: 2px dashed var(--ink); background: transparent; color: var(--ink); cursor: pointer; }
   .more-actions:hover { border-style: solid; }
@@ -255,11 +320,15 @@ EXTRA_CSS = """
   .tier.alt { background: var(--paper-2); }
   .tier .lede { margin-bottom: 0.5rem; }
   .act { display: grid; gap: 0.4rem 2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--line-soft); grid-template-columns: 1fr; }
-  @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr 12rem; } }
+  @media (min-width: 760px) { .act { grid-template-columns: 2.5rem 1fr; } }
   .act:last-child { border-bottom: 0; }
   .act-n { font-weight: 700; font-size: 1.1rem; color: var(--heat); }
   .act h3 { font-size: 1rem; font-weight: 700; text-transform: uppercase; line-height: 1.35; margin-bottom: 0.4rem; }
   .act p { font-size: 0.92rem; max-width: 62ch; }
+  .act-btn { margin-top: 0.9rem; }
+  .btn-src { display: inline-block; font-size: 0.74rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 0.06em; background: var(--ink); color: #fff; padding: 0.55rem 0.9rem; border: 2px solid var(--ink); box-shadow: 3px 3px 0 rgba(30,35,42,0.35); transition: transform 0.1s, box-shadow 0.1s; }
+  .btn-src:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 rgba(30,35,42,0.35); }
+  .act-btn .btn-go { font-size: 0.74rem; padding: 0.55rem 0.9rem; white-space: normal; }
   .act-links { margin-top: 0.6rem; display: flex; flex-wrap: wrap; gap: 0.4rem 1.1rem; font-size: 0.78rem; }
   .act-links a { font-weight: 700; }
   .act-links a::after { content: " ↗"; }
@@ -268,6 +337,13 @@ EXTRA_CSS = """
   .lever.warnings { background: var(--ink); color: #D8DDE2; }
   .lever.money { background: var(--heat); color: #fff; border-color: var(--heat); }
   .outro { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); }
+  .miss { background: var(--paper-2); border-top: 2px solid var(--ink); }
+  .miss-form { display: grid; gap: 1rem; max-width: 38rem; margin-top: 1.5rem; }
+  .miss-form label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; display: grid; gap: 0.4rem; }
+  .miss-form input, .miss-form textarea { font: inherit; font-size: 0.9rem; padding: 0.7rem 0.85rem; border: 2px solid var(--ink); background: var(--paper); width: 100%; border-radius: 0; -webkit-appearance: none; }
+  .miss-form textarea { min-height: 5.5rem; resize: vertical; }
+  .miss-form input:focus, .miss-form textarea:focus { outline: 3px solid var(--heat); outline-offset: 0; }
+  .miss-form .btn { justify-self: start; border: 2px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; font-family: inherit; }
   .notify h2 em { font-style: normal; color: var(--heat); }
   .notify .hero-signup input[type="email"] { border-color: var(--ink); background: var(--paper); color: var(--ink); }
   .notify .hero-signup input[type="email"]::placeholder { color: rgba(30,35,42,0.5); }
@@ -286,13 +362,12 @@ def nav(active):
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       %s
-      %s
       <a href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
 </nav>
-""" % (link("/", "Home", "home"), link("/actions/", "Actions", "actions"))
+""" % (link("/", "Home", "home"),)
 
 FOOTER = """
 <footer>
@@ -324,6 +399,8 @@ def tags_for(r):
     out = []
     if r["_official"]:
         out.append('<span class="tag official">On the Climate Week NYC program</span>')
+    if r.get("_pledge"):
+        out.append('<span class="tag pledge">Two minutes for El Niño</span>')
     if r.get("Format"):
         out.append('<span class="tag">%s</span>' % e(r["Format"]))
     if r["_rsvp"]:
@@ -338,6 +415,16 @@ def cta(r, big=False):
     host = re.sub(r"^www\.", "", re.sub(r"^https?://", "", r["URL"]).split("/")[0])
     return ('<a class="btn-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗<small>on %s</small></a>'
             % (e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"]), e(host)))
+
+
+def split_rows(rows):
+    """(about-El-Niño events, two-minute pledges), both in date order."""
+    return [r for r in rows if not r["_pledge"]], [r for r in rows if r["_pledge"]]
+
+
+def pledged_line(r):
+    who = (r.get("Spotted by") or r.get("Host") or "").strip()
+    return '<p class="spotted pledged">Two minutes pledged by <b>%s</b></p>' % html.escape(who) if who else ""
 
 
 def spotted_line(r):
@@ -369,7 +456,8 @@ def spot_form():
 
 def render_index(rows):
     e = html.escape
-    n = len(rows)
+    about, pledged = split_rows(rows)
+    n = len(about)
     days = []
     for r in rows:
         if not days or days[-1][0] != r["_date"]:
@@ -381,6 +469,8 @@ def render_index(rows):
         if who and who not in spotters:
             spotters.append(who)
     spotted = (", <strong class=\"count\">spotted by %d %s</strong>" % (len(spotters), "person" if len(spotters) == 1 else "people")) if spotters else ""
+    if pledged:
+        spotted += ". <strong class=\"count\">%d</strong> more %s promised El Niño <a href=\"/two-minutes/\" style=\"color:#fff\">two minutes from the main microphone</a>; they are in the list with an orange tag" % (len(pledged), "has" if len(pledged) == 1 else "have")
     parts = []
     parts.append("""
 <header class="hero slim" id="top">
@@ -406,6 +496,23 @@ def render_index(rows):
         parts.append('<div class="day"><h2>%s <small>%d event%s</small></h2></div>' % (e(label), len(evs), "" if len(evs) == 1 else "s"))
         for r in evs:
             who = " · ".join(x for x in [r.get("Host"), r.get("Location")] if x)
+            if r["_pledge"]:
+                # A partner's own event, not an El Niño one. One compact strip: the pledge is the
+                # headline, the event is the credit, and it never wears the full card's weight.
+                pledger = (r.get("Spotted by") or r.get("Host") or "").strip()
+                parts.append("""
+    <article class="ev pledge" id="%s">
+      <div class="ev-time">%s<span class="tz">ET</span></div>
+      <div class="pl-body">
+        <p class="pl-flag">Two minutes for El Niño%s</p>
+        <h3><a href="/events/%s/">%s</a></h3>
+        <p class="who">%s</p>
+      </div>
+      <div class="ev-cta"><a class="btn-quiet" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>
+    </article>""" % (r["_slug"], e(r["_when"]),
+                     (" &middot; pledged by " + e(pledger)) if pledger else "",
+                     r["_slug"], e(r["Title"]), e(who), e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
+                continue
             parts.append("""
     <article class="ev" id="%s">
       <div class="ev-time">%s<span class="tz">ET</span></div>
@@ -417,7 +524,8 @@ def render_index(rows):
       </div>
       <div class="ev-cta">%s</div>
     </article>""" % (r["_slug"], e(r["_when"]), r["_slug"], e(r["Title"]), e(who),
-                     e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r), spotted_line(r), cta(r)))
+                     e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r),
+                     spotted_line(r), cta(r)))
     roll = ""
     if spotters:
         roll = '<div class="spotters"><h3>Spotters</h3><ul>%s<li class="you">you?</li></ul></div>' % "".join("<li>%s</li>" % e(s) for s in spotters)
@@ -470,6 +578,7 @@ def render_single(r):
 def render_home_block(rows):
     """The events section on the home page, dropped between the events:start/end markers."""
     e = html.escape
+    rows, pledged = split_rows(rows)
     n = len(rows)
     items, last_day = [], None
     for r in rows:
@@ -482,6 +591,23 @@ def render_home_block(rows):
             '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
             % (e(r["_when"]), r["_slug"], e(r["Title"]), e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
                e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
+    pledge_html = ""
+    if pledged:
+        pitems = []
+        for r in pledged:
+            pitems.append(
+                '<div class="he-item"><span class="he-time">%s<br><small>%s ET</small></span>'
+                '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
+                '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
+                % (e(r["_day"].split(", ")[0][:3] + " " + r["_day"].split(", ")[1]), e(r["_when"]), r["_slug"], e(r["Title"]),
+                   e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
+                   e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
+        pledge_html = """
+    <h3 class="he-sub"><em>%d</em> more %s promised El Niño two minutes from the main microphone.</h3>
+    <p class="lede he-sub-lede">Not about El Niño, but the host will give it two minutes from the stage. That is our only ask of every Climate Week event, and <a href="/two-minutes/" style="color:#fff">here is what to say</a>.</p>
+    <div class="he-list">
+%s
+    </div>""" % (len(pledged), "has" if len(pledged) == 1 else "have", "\n".join("      " + i for i in pitems))
     return """
 <section class="home-events" id="events">
   <div class="wrap">
@@ -489,18 +615,54 @@ def render_home_block(rows):
     <p class="lede">Here they are in the order they happen. Registration goes straight to each host.</p>
     <div class="he-list">
 %s
-    </div>
+    </div>%s
     <a class="btn btn-heat he-all" href="/events/">All El Niño events at Climate Week →</a>
     <p class="he-note">Hosting one, or know one we missed? <a href="#ideas" style="color:#fff">Tell us</a> and it goes on the list. And if your Climate Week event isn't about El Niño, our only ask is two minutes about it from the main microphone.</p>
   </div>
 </section>
-""" % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items))
+""" % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items), pledge_html)
+
+
+MISS_SECTION = '''
+<section class="miss" id="miss">
+  <div class="wrap">
+    <h2>Did we miss something?</h2>
+    <p class="lede">An action that worked, an article worth reading, a project you're leading in your town. Send it and it goes on the list.</p>
+    <form name="ideas" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-idea.html" class="miss-form">
+      <input type="hidden" name="form-name" value="ideas">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <label>What did we miss?
+        <textarea name="idea" required placeholder="An action, a link, a project, and the city it's for"></textarea>
+      </label>
+      <label>Email (if you want a reply)
+        <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+      </label>
+      <button class="btn btn-heat" type="submit">Send it</button>
+    </form>
+  </div>
+</section>
+'''
 
 
 def city_picker_script():
     """Data + JS for the city picker. Everything runs in the browser; cities.json is same-origin."""
     import regions as R
-    data = {"regions": R.REGIONS, "countries": R.COUNTRY_REGION, "splits": R.SPLITS, "hazards": R.HAZARDS}
+    try:
+        import local_cities                      # city profiles are kept out of the published repo for now
+    except ImportError:
+        local_cities = type("x", (), {"LOCAL": {}})
+    import actions_content as A
+    local = {}
+    for key, v in local_cities.LOCAL.items():
+        v = {k: x for k, x in v.items() if k != "map"}          # the map spec stays server-side
+        svg = os.path.join(ROOT, "actions-beta", "maps", re.sub(r"[^a-z0-9]+", "-", key.split("|")[0].lower()).strip("-") + ".svg")
+        if os.path.exists(svg):
+            import hashlib
+            stamp = hashlib.md5(open(svg, "rb").read()).hexdigest()[:8]
+            v["map_url"] = "/actions-beta/maps/" + os.path.basename(svg) + "?v=" + stamp   # cache-bust on every redraw
+        local[key] = v
+    data = {"regions": R.REGIONS, "countries": R.COUNTRY_REGION, "splits": R.SPLITS, "hazards": R.HAZARDS,
+            "levers": A.LEVERS, "local": local}
     return """
 <script>
 (function () {
@@ -565,8 +727,13 @@ def city_picker_script():
     document.getElementById('rc-when').textContent = r.when;
     document.getElementById('rc-hazards').textContent = r.hazards.map(function (h) { return D.hazards[h]; }).join(' · ');
     document.getElementById('rc-outlook').href = r.outlook;
-    card.hidden = false;
-    filter(r.hazards);
+    var loc = D.local[c.name + '|' + c.cc + '|' + c.admin1];
+    card.hidden = !!loc;   // a city with its own profile gets no generic region card
+    document.getElementById('hero-city-name').textContent = label(c);
+    document.getElementById('hero-city').hidden = false;
+    document.getElementById('city-label').textContent = 'Not you? Type another city';
+    renderLocal(loc, c);
+    filter(loc && loc.hazards ? loc.hazards : r.hazards);
     if (!silent && window.goatcounter && goatcounter.count) {
       goatcounter.count({path: 'city/' + rid, title: r.name, event: true});
     }
@@ -579,7 +746,7 @@ def city_picker_script():
     document.querySelectorAll('.tier').forEach(function (tier) {
       var acts = tier.querySelectorAll('.act'), hidden = 0;
       acts.forEach(function (a) {
-        var h = a.getAttribute('data-hazards').split(' ');
+        var h = (a.getAttribute('data-hazards') || 'all').split(' ');
         var match = !hazards || h.indexOf('all') >= 0 || h.some(function (x) { return hazards.indexOf(x) >= 0; });
         a.classList.toggle('act-hidden', !match && !tier.classList.contains('show-all'));
         a.classList.toggle('act-match', !!hazards && match && h.indexOf('all') < 0);
@@ -597,8 +764,74 @@ def city_picker_script():
     });
     document.body.classList.toggle('has-city', !!hazards);
   }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (ch) { return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[ch]; }); }
+  function plainLinks(list) {
+    return '<div class="act-links">' + list.map(function (l) {
+      var ext = l[1].indexOf('/') === 0 ? '' : ' target="_blank" rel="noopener"';
+      return '<a href="' + esc(l[1]) + '"' + ext + '>' + esc(l[0]) + '</a>';
+    }).join('') + '</div>';
+  }
+  function links(list, button, cls) {
+    var btn = button || (list && list.length ? list[0] : null);
+    var rest = button ? list : list.slice(1);
+    var h = '';
+    if (btn) {
+      var local = btn[1].indexOf('/') === 0, direct = /^(tel|mailto):/.test(btn[1]);
+      var bext = (local || direct) ? '' : ' target="_blank" rel="noopener"';
+      h += '<p class="act-btn"><a class="' + (cls || 'btn-go') + '" href="' + esc(btn[1]) + '"' + bext + '>' + esc(btn[0]) + (direct ? '' : (local ? ' →' : ' ↗')) + '</a></p>';
+    }
+    if (rest.length) h += '<div class="act-links">' + rest.map(function (l) {
+      var ext = l[1].indexOf('/') === 0 ? '' : ' target="_blank" rel="noopener"';
+      return '<a href="' + esc(l[1]) + '"' + ext + '>' + esc(l[0]) + '</a>';
+    }).join('') + '</div>';
+    return h;
+  }
+  function renderLocal(loc, c) {
+    var el = document.getElementById('local-block');
+    document.body.classList.toggle('has-local', !!loc);
+    if (!loc) { el.hidden = true; el.innerHTML = ''; return; }
+    function items(list, cls) {
+      return '<div>' + list.map(function (x, i) {
+        return '<div class="act ' + cls + '"><div class="act-n">' + (i < 9 ? '0' : '') + (i + 1) + '</div><div><h3>' + esc(x.title) + '</h3><p>' + esc(x.body) + '</p>' + links(x.links, x.button, cls === 'hist' ? 'btn-src' : 'btn-go') + '</div></div>';
+      }).join('') + '</div>';
+    }
+    var tiers = loc.tiers || [];
+    var h = '';
+    // The summary comes first: how much El Niño reaches this town, what it looks like here, in one line.
+    if (loc.summary) {
+      var sm = loc.summary, boxes = '';
+      // One score, impact counted twice and reliability once: how much El Niño matters here.
+      var score = Math.round((2 * sm.impact + sm.reliability) / 3);
+      for (var b = 1; b <= 5; b++) boxes += '<i class="' + (b <= score ? 'on' : '') + '"></i>';
+      h += '<section class="local-sum"><div class="wrap"><p class="local-kicker">El Ni\u00f1o and ' + esc(c.name) + '</p><div class="sum-grid"><div>'
+         + '<div class="sum-score"><span class="sum-boxes">' + boxes + '</span><span class="sum-n">' + score + ' of 5: how much El Ni\u00f1o matters in ' + esc(c.name) + '</span></div>'
+         + '<p class="sum-parts">Impact <b>' + sm.impact + '</b> of 5 &middot; Reliability <b>' + sm.reliability + '</b> of 5 &middot; impact weighs double</p>'
+         + '<p class="sum-short">' + esc(sm.short) + '</p><p class="sum-why">' + esc(sm.why) + '</p></div>'
+         + '<div><span class="sum-label">What it looks like here</span><ul>' + sm.impacts.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div></div>'
+         + '<p class="sum-foot">Impact is how hard El Ni\u00f1o years have hit people here, in the record below. Reliability is how consistently the signal shows up. The score is the average of impact, impact again, and reliability, because this El Ni\u00f1o is forecast to be the strongest ever measured whatever its pattern. Not a forecast for this winter.</p></div></section>';
+    }
+    // The household tier comes first: what to do, then why.
+    if (tiers[0]) h += '<section class="tier local-tier alt" id="local-' + esc(tiers[0].id) + '"><div class="wrap"><h2>' + esc(tiers[0].title) + '</h2><p class="lede">' + esc(tiers[0].lede) + '</p>' + items(tiers[0].actions, 'act-match') + '</div></section>';
+    h += '<section class="local-block local-history"><div class="wrap">';
+    h += '<h3 class="local-h3">What El Niño years have done in ' + esc(c.name) + '</h3>';
+    if (loc.outlook) h += '<div class="local-outlook"><span class="local-outlook-label">This winter</span><p>' + esc(loc.outlook.body) + '</p>' + plainLinks(loc.outlook.links) + '</div>';
+    if (loc.map_url) h += '<figure class="hist-map"><img src="' + esc(loc.map_url) + '" alt="Map of where El Niño years hit around ' + esc(c.name) + '" width="900" height="600"><figcaption>Numbers match the items below. Map data © OpenStreetMap contributors.</figcaption></figure>';
+    h += items(loc.history, 'hist');
+    h += '</div></section>';
+    if (tiers.length > 1) h += '<section class="more-head"><div class="wrap"><h2>More actions to make a difference</h2><p class="lede">Beyond your own front door: your block, and the people who run the city.</p></div></section>';
+    tiers.slice(1).forEach(function (t, i) {
+      h += '<section class="tier local-tier' + (i %% 2 ? '' : ' alt') + '" id="local-' + esc(t.id) + '"><div class="wrap">';
+      h += '<h2>' + esc(t.title) + '</h2><p class="lede">' + esc(t.lede) + '</p>' + items(t.actions, 'act-match');
+      h += '</div></section>';
+    });
+    h += '<section class="local-foot"><div class="wrap"><p class="rc-foot">Every line above links to where it came from: the city, the county, NOAA, USGS, the newspapers of record. Wrong or out of date? <a href="/#ideas">Tell us</a>.</p></div></section>';
+    el.innerHTML = h; el.hidden = false;
+  }
   function clear() {
     current = null; input.value = ''; clearBtn.hidden = true; card.hidden = true;
+    document.getElementById('hero-city').hidden = true;
+    document.getElementById('city-label').textContent = 'Where do you live?';
+    renderLocal(null);
     document.querySelectorAll('.tier').forEach(function (t) { t.classList.remove('show-all'); });
     filter(null);
     history.replaceState(null, '', location.pathname);
@@ -623,6 +856,21 @@ def city_picker_script():
 """ % json.dumps(data, ensure_ascii=False)
 
 
+def action_links(a):
+    """First link (or an explicit "button") renders as a button; the rest as text links."""
+    e = html.escape
+    btn = a.get("button") or (a["links"][0] if a.get("links") else None)
+    rest = a["links"] if a.get("button") else a["links"][1:]
+    out = ""
+    if btn:
+        direct = btn[1].startswith(("tel:", "mailto:"))
+        ext = "" if (btn[1].startswith("/") or direct) else ' target="_blank" rel="noopener"'
+        out += '<p class="act-btn"><a class="btn-go" href="%s"%s>%s%s</a></p>' % (e(btn[1]), ext, e(btn[0]), "" if direct else (" ↗" if ext else " →"))
+    if rest:
+        out += '<div class="act-links">%s</div>' % "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label)) for label, href in rest)
+    return out
+
+
 def render_actions():
     import actions_content as A
     e = html.escape
@@ -631,8 +879,9 @@ def render_actions():
   <div class="wrap">
     <h1>%s</h1>
     <p class="sub">%s</p>
+    <p class="hero-city" id="hero-city" hidden><span class="hero-city-label">El Niño actions for</span> <span id="hero-city-name"></span></p>
     <form class="city-form" id="city-form" autocomplete="off" onsubmit="return false">
-      <label for="city">Where do you live?</label>
+      <label for="city" id="city-label">Where do you live?</label>
       <div class="city-row">
         <div class="city-box">
           <input id="city" type="text" placeholder="Type a city or town" aria-label="City or town" spellcheck="false">
@@ -640,10 +889,9 @@ def render_actions():
         </div>
         <button type="button" id="city-clear" class="city-clear" hidden>Clear</button>
       </div>
-      <p class="city-note">Nothing you type leaves this page. Cities over 100,000 people plus every capital; if yours isn't listed, pick the nearest big one.</p>
+      <p class="city-note">Nothing you type leaves this page. Cities over 100,000 people (50,000 in the US) plus every capital; if yours isn&#39;t listed, pick the nearest big one.</p>
     </form>
     <div class="jump">%s</div>
-    <div class="levers">%s</div>
   </div>
 </header>
 <section class="region-card" id="region-card" hidden>
@@ -658,24 +906,22 @@ def render_actions():
     <p class="rc-foot">This is what El Niño years usually bring here, not a forecast for this one. <a id="rc-outlook" href="#" target="_blank" rel="noopener">Check the current outlook ↗</a>. The actions below are sorted to match; the rest are one click away.</p>
   </div>
 </section>
+<div id="local-block" hidden></div>
 """ % (A.INTRO_TITLE, e(A.INTRO),
-       "".join('<a class="jump-btn" href="#%s">%s</a>' % (t["id"], e(t["title"])) for t in A.TIERS),
-       "".join("<span>%s</span>" % e(v) for v in A.LEVERS.values()))]
+       "".join('<a class="jump-btn" href="#%s">%s</a>' % (t["id"], e(t["title"])) for t in A.TIERS))]
     for t in A.TIERS:
         items = []
         for i, a in enumerate(t["actions"], 1):
-            links = "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label))
-                            for label, href in a["links"])
+            links = action_links(a)
             items.append("""
       <div class="act" data-hazards="%s">
         <div class="act-n">%02d</div>
         <div>
           <h3>%s</h3>
           <p>%s</p>
-          <div class="act-links">%s</div>
+          %s
         </div>
-        <span class="lever %s">%s</span>
-      </div>""" % (e(a.get("hazards", "all")), i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
+      </div>""" % (e(a.get("hazards", "all")), i, e(a["title"]), e(a["body"]), links))
         parts.append("""
 <section class="tier%s" id="%s">
   <div class="wrap">
@@ -692,10 +938,11 @@ def render_actions():
   <div class="wrap">
     <h2>%s</h2>
     <p class="lede">%s</p>
-    <a class="btn btn-heat he-all" href="/#ideas">Tell us what you did →</a>
+    <a class="btn btn-heat he-all" href="#miss">Tell us what you did →</a>
   </div>
 </section>
 """ % (e(A.OUTRO_TITLE), e(A.OUTRO)))
+    parts.append(MISS_SECTION)
     parts.append(city_picker_script())
     desc = "What to do about the 2026 El Niño at three scales: your family, your community, your state or country. Each action names the lever it pulls and links to a source."
     return page("Actions (beta) · El Niño Ready", desc, SITE + "/actions-beta/", "".join(parts), active="actions", noindex=True)
@@ -709,18 +956,16 @@ def render_actions_placeholder():
     universal = [a for t in A.TIERS for a in t["actions"] if a.get("hazards") == "all" and t["id"] == "family"][:3]
     items = []
     for i, a in enumerate(universal, 1):
-        links = "".join('<a href="%s"%s>%s</a>' % (e(href), "" if href.startswith("/") else ' target="_blank" rel="noopener"', e(label))
-                        for label, href in a["links"])
+        links = action_links(a)
         items.append("""
       <div class="act">
         <div class="act-n">%02d</div>
         <div>
           <h3>%s</h3>
           <p>%s</p>
-          <div class="act-links">%s</div>
+          %s
         </div>
-        <span class="lever %s">%s</span>
-      </div>""" % (i, e(a["title"]), e(a["body"]), links, a["lever"], e(A.LEVERS[a["lever"]])))
+      </div>""" % (i, e(a["title"]), e(a["body"]), links))
     body = """
 <header class="hero slim" id="top">
   <div class="wrap">
@@ -748,9 +993,35 @@ def render_actions_placeholder():
     </form>
   </div>
 </section>
-""" % (A.INTRO_TITLE, e(A.INTRO), "".join(items))
+""" % (A.INTRO_TITLE, e(A.INTRO), "".join(items)) + MISS_SECTION
     desc = "What to do about the 2026 El Niño. Three things anyone can do this week, and a tool on the way that tells you what to do where you live."
     return page("Actions · El Niño Ready", desc, SITE + "/actions/", body, active="actions")
+
+
+def render_two_minutes():
+    body = """
+<header class="hero slim" id="top">
+  <div class="wrap">
+    <h1>Two minutes about <em>El Niño</em>, from the main microphone</h1>
+    <p class="sub">Our only ask of every Climate Week event: whoever holds the microphone gives El Niño two minutes, in their own words. Here are five things worth saying. Say the ones you believe.</p>
+  </div>
+</header>
+<section>
+  <div class="wrap">
+    <ol class="tm-points">
+      <li><div><b>The biggest El Niño in history is forming right now.</b><p>NOAA puts the odds at 69% that this becomes the strongest El Niño ever measured. It peaks in December, three months from this week. Hundreds of millions of people will feel it in their power, their water, and their livelihoods.</p></div></li>
+      <li><div><b>It reaches everywhere, and it has already started.</b><p>49 million more people are forecast to go hungry by the end of next year. Indonesia has had more fires this year than any year on record. 2027 is forecast to be the hottest year humans have ever lived through.</p></div></li>
+      <li><div><b>The deaths it causes are the preventable kind.</b><p>Smoke, hunger, disease, and heat kill on a delay, weeks to months after a forecast that already exists. People die when the warning doesn't reach them, when the money arrives after the disaster instead of before, when the plan stays in the drawer.</p></div></li>
+      <li><div><b>Three things save lives, and all three reward acting before the peak.</b><p>Warnings reach people, in time and in their language. Money moves early: a dollar of food, water treatment, or backup power staged before the disaster beats a dollar of relief after it. Systems hold: grids, water, and plans that have been rehearsed instead of filed.</p></div></li>
+      <li><div><b>Here is what to do before you leave this room.</b><p>Tell someone. If your organization touches power, water, food, health, insurance, or emergency response, ask what it is doing before December, not after. And sign up at elninoready.earth for the forecast and the actions where you live.</p></div></li>
+    </ol>
+    <p class="lede">Every number above is on the <a href="/">home page</a> with its source. When you've given the two minutes, <a href="/#ideas">tell us</a> and your event goes on the list, with your name on it.</p>
+    <p class="lede"><a class="btn btn-heat" href="/events/#two-minutes">Events that have promised two minutes →</a></p>
+  </div>
+</section>
+"""
+    desc = "Five things to say about the 2026 El Niño in two minutes from the main microphone at any Climate Week event."
+    return page("Two minutes about El Niño · El Niño Ready", desc, SITE + "/two-minutes/", body)
 
 
 def update_home(rows):
@@ -781,6 +1052,10 @@ def main(argv):
     os.makedirs(OUT)
     with open(os.path.join(OUT, "index.html"), "w", encoding="utf-8") as f:
         f.write(render_index(rows))
+    tm = os.path.join(ROOT, "two-minutes")
+    os.makedirs(tm, exist_ok=True)
+    with open(os.path.join(tm, "index.html"), "w", encoding="utf-8") as f:
+        f.write(render_two_minutes())
     for r in rows:
         d = os.path.join(OUT, r["_slug"])
         os.makedirs(d)

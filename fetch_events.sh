@@ -8,7 +8,9 @@
 # The sheet is read by column HEADER, so columns can be reordered or added in
 # the sheet without touching this script. Required headers: Title, Date, URL,
 # Start, End. Optional: Location, Host, Why go, Summary, Format, RSVP Type,
-# NYCW listed.
+# NYCW listed, Spotted by, El Niño role ("About El Niño" = the main list;
+# "Two minutes" = a host who promised El Niño two minutes from the main
+# microphone; listed separately, never counted as about El Niño).
 set -e
 cd "$(dirname "$0")"
 SHEET_ID="1_F9DN1s0dBg6acL9vrGqQhCcpcutjuVr2jhCIJY7AxE"
