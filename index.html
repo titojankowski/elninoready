@@ -106,6 +106,16 @@
     margin-bottom: 1.5rem;
   }
   .hero h1 em { font-style: normal; color: var(--heat-bright); }
+  .hero .subhead {
+    font-family: var(--sans);
+    font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin: -0.75rem 0 1.5rem;
+  }
   .hero .sub {
     font-size: clamp(0.92rem, 1.6vw, 1.05rem);
     color: #D8DDE2; max-width: 58ch; margin-bottom: 2.25rem;
@@ -304,7 +314,6 @@
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       <a href="/" class="active">Home</a>
-      <a href="/actions/">Actions</a>
       <a href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
@@ -314,6 +323,7 @@
 <header class="hero" id="top">
   <div class="wrap">
     <h1>The <em>biggest El&nbsp;Niño in history</em> is forming right now.</h1>
+    <p class="subhead">And we can save lives.</p>
     <p class="sub">NOAA puts the odds at 69% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with <strong>one idea at its core: to save lives through communication.</strong> A disaster you can see coming is a disaster you can prevent. Warnings reach people. Money moves early. Systems hold.</p>
     <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
@@ -354,6 +364,36 @@
       </ul>
       <p class="vig-src">Sources: <a href="https://www.carbonbrief.org/state-of-the-climate-rapidly-developing-el-nino-raises-chance-of-record-warm-2026" target="_blank" rel="noopener">Hausfather, Carbon Brief</a> &middot; <a href="https://news.un.org/en/story/2026/08/1168079" target="_blank" rel="noopener">WFP/FAO via UN News</a> &middot; <a href="https://www.piie.com/blogs/realtime-economics/2026/el-nino-could-drag-down-global-economy-almost-1-trillion-or-least-7" target="_blank" rel="noopener">Hendrix, PIIE</a> &middot; <a href="https://www.theclimatebrink.com/p/the-strongest-el-nino-ever" target="_blank" rel="noopener">The Climate Brink</a> &middot; <a href="https://news.mongabay.com/2026/07/indonesia-shows-elevated-fire-hotspot-activity-in-2026-as-super-el-nino-threat-looms/" target="_blank" rel="noopener">Mongabay</a> &middot; <a href="https://iopscience.iop.org/article/10.1088/1748-9326/11/9/094023" target="_blank" rel="noopener">Koplitz et&nbsp;al. 2016</a> &middot; <a href="https://news.mongabay.com/2026/08/world-must-look-to-the-past-to-prepare-for-likely-unprecedented-el-nino/" target="_blank" rel="noopener">WHO experts via Mongabay</a></p>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Together we can save lives.</h2>
+    <p class="lede">Between Climate Week and the El Niño peak there are roughly three months. That's not long enough to stop it — it's exactly long enough to prepare for it, and to prove that a climate event can be met with a plan instead of a shrug.</p>
+    <div class="window-list">
+      <div class="window-item">
+        <h3>Power systems</h3>
+        <p>Harden grids for heat and storms, stage backup power for critical services, and get demand-response plans in place before the stress arrives.</p>
+      </div>
+      <div class="window-item">
+        <h3>Water systems</h3>
+        <p>Pre-position storage and treatment where drought and flood risk is elevated, and get reservoir and well contingency plans out of the drawer.</p>
+      </div>
+      <div class="window-item">
+        <h3>Communication</h3>
+        <p>Forecasts only matter if they reach people in time, in their language, with something actionable attached. Build the channels now.</p>
+      </div>
+      <div class="window-item">
+        <h3>The conversation</h3>
+        <p>Use a live, global climate event to expand who talks about climate — from the people already at the conference to the people living the impacts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stakes">
+  <div class="wrap">
     <div class="card-grid">
       <div class="card">
         <span class="glyph">⚡</span>
@@ -407,32 +447,6 @@
   </div>
 </section>
 <!-- events:end -->
-
-<section>
-  <div class="wrap">
-    <h2>Together we can save lives.</h2>
-    <p class="lede">Between Climate Week and the El Niño peak there are roughly three months. That's not long enough to stop it — it's exactly long enough to prepare for it, and to prove that a climate event can be met with a plan instead of a shrug.</p>
-    <div class="window-list">
-      <div class="window-item">
-        <h3>Power systems</h3>
-        <p>Harden grids for heat and storms, stage backup power for critical services, and get demand-response plans in place before the stress arrives.</p>
-      </div>
-      <div class="window-item">
-        <h3>Water systems</h3>
-        <p>Pre-position storage and treatment where drought and flood risk is elevated, and get reservoir and well contingency plans out of the drawer.</p>
-      </div>
-      <div class="window-item">
-        <h3>Communication</h3>
-        <p>Forecasts only matter if they reach people in time, in their language, with something actionable attached. Build the channels now.</p>
-      </div>
-      <div class="window-item">
-        <h3>The conversation</h3>
-        <p>Use a live, global climate event to expand who talks about climate — from the people already at the conference to the people living the impacts.</p>
-      </div>
-    </div>
-    <p style="margin-top:2rem"><a class="btn btn-heat" href="/actions/" style="border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink);">What you can do: family, community, country →</a></p>
-  </div>
-</section>
 
 <section class="ideas-sec" id="ideas">
   <div class="wrap">
