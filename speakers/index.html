@@ -125,6 +125,9 @@
   .sitenav .nav-links a.nav-cta { background: var(--heat); color: #fff; letter-spacing: 0.06em; padding: 8.8px 17.6px; border: 2px solid var(--ink); line-height: 1; box-shadow: 3px 3px 0 var(--ink); transition: transform 0.1s, box-shadow 0.1s; }
   .sitenav .nav-links a.nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
   @media (max-width: 480px) { .sitenav .nav-links { gap: 12.8px; } .sitenav .nav-links a.nav-cta { padding: 8px 12px; } .sitenav .nav-links a.nav-home { display: none; } }
+  @media (max-width: 640px) { .sitenav .nav-links a.nav-add { display: none; } }
+  .sitenav .brand, .sitenav .nav-links a { white-space: nowrap; }
+  @media (max-width: 420px) { .sitenav .nav-inner { padding-left: 16px; padding-right: 16px; } .sitenav .brand { font-size: 12.48px; letter-spacing: 0.02em; } .sitenav .nav-links { gap: 9.6px; } .sitenav .nav-links a { font-size: 11.2px; letter-spacing: 0.04em; } .sitenav .nav-links a.nav-cta { padding: 7.2px 8.8px; } }
 
   /* ---------- screen: tabs instead of sheets of paper ---------- */
   @media screen {
@@ -146,10 +149,12 @@
     .tabs button[aria-selected="true"] .k { background: var(--ink); color: #fff; }
     .tabs .short { display: none; }
     .tabs button:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
-    .welcome-wrap { padding: 22px 16px; }
-    .welcome { max-width: 8.5in; margin: 0 auto; }
-    .welcome b { display: block; color: var(--ink); font-size: 13.5pt; line-height: 1.3; margin-bottom: 4px; }
-    .welcome p { font-size: 10.8pt; line-height: 1.5; color: #2f3742; max-width: 44em; }
+    /* page hero: same as header.hero.slim on the rest of the site (sizes in px; this page's root font is smaller) */
+    .pagehero { background: #2B323D; color: #fff; padding: 40px 0 48px; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .pagehero .wrap { max-width: 992px; margin: 0 auto; padding: 0 20px; }
+    .pagehero h1 { font-family: var(--mono); font-size: clamp(22.4px, 3.9vw, 41.6px); font-weight: 700; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.01em; max-width: 30ch; margin-bottom: 16px; }
+    .pagehero h1 em { font-style: normal; color: var(--heat); }
+    .pagehero .sub { font-size: clamp(14.72px, 1.6vw, 16.8px); color: #D8DDE2; max-width: 58ch; }
     main { padding: 24px 16px 48px; }
     .page { width: auto; max-width: 8.5in; height: auto; min-height: 0; margin: 0 auto; overflow: visible; background: #fff; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
     .page[hidden] { display: none; }
@@ -174,7 +179,7 @@
     .tabs button { padding: 10px 11px 8px; font-size: 7.8pt; }
     .tabs button .k { margin-right: 5px; }
   }
-  @media print { .tabs, .sitenav, .welcome-wrap { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
+  @media print { .tabs, .sitenav, .pagehero { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
 </style>
 </head>
 <body>
@@ -184,16 +189,18 @@
     <div class="nav-links">
       <a class="nav-home" href="/">Home</a>
       <a class="active" href="/speakers/">Speak</a>
-      <a href="/events/#add">Add event</a>
+      <a href="/actions/">Actions</a>
+      <a class="nav-add" href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
 </nav>
-<div class="welcome-wrap">
-<div class="welcome">
-  <p><b>Thank you for sharing El Niño Ready at your Climate Week NYC event.</b>Everything you need to give El Niño a minute from the main microphone is here: the forecast, what people can do, the El Niño events this week, and a short intro you can read as written. Print the PDF, or read it right from this page.</p>
-</div>
-</div>
+<header class="pagehero">
+  <div class="wrap">
+    <h1>Thank you for sharing <em>El&nbsp;Niño Ready</em> at your Climate Week NYC event.</h1>
+    <p class="sub">Everything you need to give El Niño a minute from the main microphone is here: the forecast, what people can do, the El Niño events this week, and a short intro you can read as written. Print the PDF, or read it right from this page.</p>
+  </div>
+</header>
 <nav class="tabs">
   <div class="in">
     <div class="top">

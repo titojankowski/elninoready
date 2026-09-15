@@ -9,6 +9,13 @@ INTRO = ("The forecast is in. What kills people in an El Niño is the gap betwee
          "the warning that never arrived, the money that came after, the plan that stayed in the drawer. "
          "Here is what to do with the forecast, at whatever scale you can reach.")
 
+# The three actions on the public /actions/ placeholder, by title, in order.
+PLACEHOLDER = [
+    "Learn what this El Niño means where you live.",
+    "Get warnings onto every phone in the house.",
+    "Cover three days without power or tap water.",
+]
+
 LEVERS = {
     "warnings": "Warnings reach people",
     "money": "Money moves early",
@@ -58,7 +65,7 @@ TIERS = [
             {
                 "title": "Cover three days without power or tap water.",
                 "hazards": "outage heat flood cyclone",
-                "body": "Heat waves and storms take the grid down when demand peaks. Water, a way to keep food and medicine cold, a charged battery, and a plan for anyone on home medical equipment.",
+                "body": "Floods, heat waves and storms all tend to knock out the same two things. Put water, food, medicine, a battery radio and phone power somewhere you can reach in the dark. Do it once and every hazard on the list gets easier.",
                 "lever": "systems",
                 "links": [("Ready.gov: build a kit", "https://www.ready.gov/kit"),
                           ("Ready.gov: power outages", "https://www.ready.gov/power-outages")],
@@ -85,6 +92,14 @@ TIERS = [
                 "body": "The cheapest warning system on Earth is a group chat. Send the forecast to family in affected regions, to the people who work outside, to whoever looks after someone frail. Attach one thing they can do.",
                 "lever": "warnings",
                 "links": [("The forecast, in one page", "/")],
+            },
+            {
+                "title": "In the US, sign the letter asking officials to prepare.",
+                "hazards": "all",
+                "countries": "US",
+                "body": "An open letter to governors, mayors, and first responders asks them to start now: shore up riverbanks, fund fire and rescue, harden the grid, open cooling centers and shelters, and warn the public. Add your name, then forward it to your own mayor.",
+                "lever": "warnings",
+                "links": [("Sign the El Niño warning letter", "https://yellowdotstudios.com/elninowarning/")],
             },
         ],
     },

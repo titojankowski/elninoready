@@ -364,12 +364,13 @@ def nav(active):
     <div class="nav-links">
       %s
       <a href="/speakers/">Speak</a>
-      <a href="/events/#add">Add event</a>
+      %s
+      <a class="nav-add" href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
 </nav>
-""" % (link("/", "Home", "home"),)
+""" % (link("/", "Home", "home"), link("/actions/", "Actions", "actions"))
 
 FOOTER = """
 <footer>
@@ -956,7 +957,8 @@ def render_actions_placeholder():
     actions and a signup. The full tool lives, unlinked, at /actions-beta/."""
     import actions_content as A
     e = html.escape
-    universal = [a for t in A.TIERS for a in t["actions"] if a.get("hazards") == "all" and t["id"] == "family"][:3]
+    by_title = {a["title"]: a for t in A.TIERS for a in t["actions"]}
+    universal = [by_title[title] for title in A.PLACEHOLDER]
     items = []
     for i, a in enumerate(universal, 1):
         links = action_links(a)
