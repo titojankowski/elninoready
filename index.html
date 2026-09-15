@@ -72,7 +72,7 @@
   .nav-links a.active { border-bottom-color: var(--ink); }
   .nav-links a.nav-cta { padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; }
   .nav-links a.nav-cta:hover { border-color: var(--ink); }
-  @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } }
+  @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } .nav-links a.nav-home { display: none; } }
   .nav-date { font-size: 0.78rem; color: rgba(30,35,42,0.6); display: none; letter-spacing: 0.04em; }
   @media (min-width: 700px) { .nav-date { display: block; } }
   .nav-cta {
@@ -85,6 +85,23 @@
   .nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
 
   /* ---------- hero ---------- */
+  /* countdown to the forecast peak (NOAA CPC outlook, issued 10 Sep 2026: OND is the peak season) */
+  /* forecast-peak countdown: a quiet line above the headline on phones, a stacked block beside the intro on wide screens */
+  .peak-count { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem; margin: 0 0 1.5rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sea-bright); }
+  .peak-count[hidden] { display: none; }
+  .peak-count .pc-label { font-weight: 700; color: var(--sea-bright); }
+  .peak-count .pc-days { font-size: 1.1rem; font-weight: 700; color: var(--heat); letter-spacing: 0.02em; }
+  .peak-count .pc-hms { font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+  .peak-count a { color: var(--sea-bright); }
+  @media (min-width: 900px) {
+    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 14rem; column-gap: 3rem; }
+    .hero h1, .hero .subhead, .hero .hero-signup { grid-column: 1 / -1; }
+    .hero h1 { grid-row: 1; } .hero .subhead { grid-row: 2; } .hero .sub { grid-column: 1; grid-row: 3; } .hero .hero-signup { grid-row: 4; }
+    .peak-count { grid-column: 2; grid-row: 3; align-self: start; flex-direction: column; align-items: flex-start; gap: 0; margin: 0.35rem 0 0; }
+    .peak-count .pc-days { font-size: 3rem; line-height: 1; margin: 0.6rem 0 0.35rem; }
+    .peak-count .pc-hms { font-size: 1.05rem; letter-spacing: 0.06em; }
+    .peak-count .pc-meta { margin-top: 0.9rem; padding-top: 0.75rem; border-top: 1px solid rgba(216,221,226,0.25); align-self: stretch; }
+  }
   header.hero {
     background: var(--deep);
     color: #fff;
@@ -313,7 +330,8 @@
   <div class="nav-inner">
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
-      <a href="/" class="active">Home</a>
+      <a href="/" class="active nav-home">Home</a>
+      <a href="/speakers/">Speak</a>
       <a href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
@@ -322,6 +340,27 @@
 
 <header class="hero" id="top">
   <div class="wrap">
+    <div class="peak-count" id="peak-count">
+      <span class="pc-label">Forecast peak in</span>
+      <span class="pc-days" id="pc-days">61 days</span>
+      <span class="pc-hms" id="pc-hms"></span>
+      <span class="pc-meta">mid-November · <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/roni/outlook/" target="_blank" rel="noopener">NOAA outlook</a></span>
+    </div>
+    <script>
+    (function () {
+      // NOAA CPC's 10 Sep 2026 outlook peaks in Oct-Dec (median RONI +2.67); Nov 15 is the middle of that season.
+      var peak = Date.UTC(2026, 10, 15, 12), days = document.getElementById('pc-days'), hms = document.getElementById('pc-hms');
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+      function tick() {
+        var t = Math.max(0, Math.floor((peak - Date.now()) / 1000));
+        if (t === 0) { document.getElementById('peak-count').hidden = true; return; }
+        var d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60;
+        days.textContent = d + (d === 1 ? ' day' : ' days');
+        hms.textContent = pad(h) + ':' + pad(m) + ':' + pad(sec);
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+    </script>
     <h1>The <em>biggest El&nbsp;Niño in history</em> is forming right now.</h1>
     <p class="subhead">And we can save lives.</p>
     <p class="sub">NOAA puts the odds at 75% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with <strong>one idea at its core: to save lives through communication.</strong> A disaster you can see coming is a disaster you can prevent. Warnings reach people. Money moves early. Systems hold.</p>

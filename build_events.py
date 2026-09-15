@@ -355,13 +355,15 @@ EXTRA_CSS = """
 def nav(active):
     """Keep in sync with the <nav> in index.html."""
     def link(href, label, key):
-        return '<a href="%s"%s>%s</a>' % (href, ' class="active"' if key == active else "", label)
+        cls = " ".join(c for c in ("active" if key == active else "", "nav-home" if key == "home" else "") if c)
+        return '<a href="%s"%s>%s</a>' % (href, ' class="%s"' % cls if cls else "", label)
     return """
 <nav>
   <div class="nav-inner">
     <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
     <div class="nav-links">
       %s
+      <a href="/speakers/">Speak</a>
       <a href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
