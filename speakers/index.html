@@ -113,6 +113,18 @@
   .script-meta { margin-top: 14px; display: flex; justify-content: space-between; gap: 16px; font-family: var(--mono); font-size: 8pt; letter-spacing: 0.04em; color: #4b5563; }
   .script-meta b { color: var(--ink); }
 
+  /* ---------- site nav (same as every other page) ---------- */
+  .sitenav { background: #fff; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; }
+  .sitenav .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 1.25rem; max-width: 62rem; margin: 0 auto; }
+  .sitenav .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; color: var(--ink); }
+  .sitenav .brand .nino { color: var(--heat); }
+  .sitenav .nav-links { display: flex; align-items: center; gap: 1.25rem; }
+  .sitenav .nav-links a { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink); padding: 0.3rem 0; border-bottom: 2px solid transparent; }
+  .sitenav .nav-links a:hover { border-bottom-color: var(--heat); }
+  .sitenav .nav-links a.nav-cta { background: var(--heat); color: #fff; letter-spacing: 0.06em; padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; box-shadow: 3px 3px 0 var(--ink); transition: transform 0.1s, box-shadow 0.1s; }
+  .sitenav .nav-links a.nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+  @media (max-width: 480px) { .sitenav .nav-links { gap: 0.8rem; } .sitenav .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } }
+
   /* ---------- screen: tabs instead of sheets of paper ---------- */
   @media screen {
     html, body { background: #D8DDE2; }
@@ -122,8 +134,9 @@
     .tabs .title { font-family: var(--mono); font-weight: 700; font-size: 9pt; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; }
     .tabs .title .by { color: var(--grey); font-weight: 500; }
     .tabs .title .nino { color: var(--heat); }
-    .tabs .pdf { font-family: var(--mono); font-weight: 700; font-size: 8pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
-    .tabs .pdf:hover { color: #fff; }
+    .tabs .top { align-items: center; }
+    .tabs .pdf { font-family: var(--mono); font-weight: 700; font-size: 9pt; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; background: var(--heat); border: 2px solid #fff; box-shadow: 4px 4px 0 rgba(255,255,255,0.35); padding: 9px 16px 8px; white-space: nowrap; transition: transform 0.1s, box-shadow 0.1s; }
+    .tabs .pdf:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 rgba(255,255,255,0.35); }
     .tabs .list { display: flex; overflow-x: auto; scrollbar-width: none; }
     .tabs button { font: inherit; font-family: var(--mono); font-weight: 700; font-size: 8.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: #2B323D; border: 0; margin-right: 4px; padding: 11px 16px 9px; cursor: pointer; white-space: nowrap; }
     .tabs button .k { display: inline-block; background: #3d4552; padding: 0 5px; margin-right: 7px; }
@@ -150,19 +163,30 @@
     .script { padding: 18px 16px; }
     .script p { font-size: 13.5pt; }
     .tabs .title .by { display: none; }
+    .tabs .pdf { padding: 7px 11px 6px; font-size: 8pt; }
     .tabs .long { display: none; } .tabs .short { display: inline; }
     .tabs button { padding: 10px 11px 8px; font-size: 7.8pt; }
     .tabs button .k { margin-right: 5px; }
   }
-  @media print { .tabs { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
+  @media print { .tabs, .sitenav { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
 </style>
 </head>
 <body>
+<nav class="sitenav">
+  <div class="nav-inner">
+    <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/events/#add">Add event</a>
+      <a class="nav-cta" href="/events/">NYCW Events</a>
+    </div>
+  </div>
+</nav>
 <nav class="tabs">
   <div class="in">
     <div class="top">
-      <span class="title">Handout for speakers<span class="by"> · El <span class="nino">Niño</span> Ready</span></span>
-      <a class="pdf" href="El-Nino-Ready-handout.pdf" data-goatcounter-click="speakers/pdf">PDF ↓</a>
+      <span class="title">Handout for speakers<span class="by"> · print it, or read it from here</span></span>
+      <a class="pdf" href="El-Nino-Ready-handout.pdf" download data-goatcounter-click="speakers/pdf"><span class="long">Download the PDF ↓</span><span class="short">PDF ↓</span></a>
     </div>
     <div class="list" role="tablist" aria-label="Handout for speakers">
     <button role="tab" id="tab-forecast" aria-controls="p-forecast" aria-selected="true"><span class="k">1</span><span class="long">The forecast</span><span class="short">Forecast</span></button>
