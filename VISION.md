@@ -9,7 +9,7 @@ El Niño Ready is a volunteer effort with one idea at its core: the 2026–27 El
 
 ## The big idea
 
-The strongest El Niño ever measured is forecast to peak in December. NOAA puts the odds at 69% that it breaks every record. Economists project a central cost of **$17.6 trillion** over the five years that follow.
+The strongest El Niño ever measured is forecast to peak in December. NOAA puts the odds at 75% that it breaks every record. Economists project a central cost of **$17.6 trillion** over the five years that follow.
 
 But the number that matters most isn't in dollars. When a super El Niño last dried out Indonesia's peat, an estimated **100,000 people died from the smoke**. This one is forecast to push **49 million more people into hunger**. Epidemics — malaria, dengue, cholera — have followed the shifted rains of every major El Niño. Then comes the heat: 2027 is forecast to be the hottest year humans have ever lived through.
 

@@ -440,6 +440,7 @@ def spot_form():
   <div class="wrap">
     <h2>Know a Climate Week event about El Niño? Send the link.</h2>
     <p class="lede">We check it, add it to the list, and credit you as the spotter. Events count when El Niño is the subject, or when the host has agreed to give it two minutes from the main microphone.</p>
+    <p class="lede">Speaking at one? Here's the <a href="/speakers/">handout for speakers</a>, with a one-minute intro you can read from the microphone.</p>
     <form class="addform" name="spot-event" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-spot.html">
       <input type="hidden" name="form-name" value="spot-event">
       <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
@@ -1009,7 +1010,7 @@ def render_two_minutes():
 <section>
   <div class="wrap">
     <ol class="tm-points">
-      <li><div><b>The biggest El Niño in history is forming right now.</b><p>NOAA puts the odds at 69% that this becomes the strongest El Niño ever measured. It peaks in December, three months from this week. Hundreds of millions of people will feel it in their power, their water, and their livelihoods.</p></div></li>
+      <li><div><b>The biggest El Niño in history is forming right now.</b><p>NOAA puts the odds at 75% that this becomes the strongest El Niño ever measured. It peaks in December, three months from this week. Hundreds of millions of people will feel it in their power, their water, and their livelihoods.</p></div></li>
       <li><div><b>It reaches everywhere, and it has already started.</b><p>49 million more people are forecast to go hungry by the end of next year. Indonesia has had more fires this year than any year on record. 2027 is forecast to be the hottest year humans have ever lived through.</p></div></li>
       <li><div><b>The deaths it causes are the preventable kind.</b><p>Smoke, hunger, disease, and heat kill on a delay, weeks to months after a forecast that already exists. People die when the warning doesn't reach them, when the money arrives after the disaster instead of before, when the plan stays in the drawer.</p></div></li>
       <li><div><b>Three things save lives, and all three reward acting before the peak.</b><p>Warnings reach people, in time and in their language. Money moves early: a dollar of food, water treatment, or backup power staged before the disaster beats a dollar of relief after it. Systems hold: grids, water, and plans that have been rehearsed instead of filed.</p></div></li>

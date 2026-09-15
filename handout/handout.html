@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>El Niño Ready handout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0; }
+  :root {
+    --ink: #1E232A;
+    --deep: #2B323D;
+    --grey: #D8DDE2;
+    --grey-2: #EEF1F4;
+    --heat: #FE5B41;
+    --heat-ink: #B23A25; /* darker orange: reads as mid-dark grey in B&W */
+    --paper: #fff;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --sans: "IBM Plex Sans", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: #fff; color: var(--ink); font-family: var(--sans); font-size: 10.4pt; line-height: 1.42; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 8.5in; height: 11in; padding: 0.55in 0.6in 0.5in; position: relative; overflow: hidden; page-break-after: always; display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---------- masthead ---------- */
+  .mast { background: var(--deep); color: #fff; margin: -0.55in -0.6in 0; padding: 0.36in 0.6in 0.3in; border-bottom: 6px solid var(--heat); }
+  .eyebrow { font-family: var(--mono); font-weight: 700; font-size: 7.8pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+  .mast .brand { font-family: var(--mono); font-weight: 700; font-size: 11pt; letter-spacing: 0.12em; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+  .mast .brand .dot { width: 12px; height: 12px; background: var(--heat); display: inline-block; }
+  .mast .brand .nino { color: var(--heat); }
+  .mast h1 { font-family: var(--sans); font-weight: 700; font-size: 24pt; line-height: 1.08; letter-spacing: -0.01em; margin: 12px 0 10px; max-width: 12.5em; }
+  .mast h1 em { font-style: normal; color: var(--heat); }
+  .mast .lede { font-size: 11pt; color: #E6EAEE; max-width: 44em; line-height: 1.45; }
+  .mast .lede strong { color: #fff; }
+  .tagline { font-family: var(--mono); font-size: 8.4pt; letter-spacing: 0.06em; color: var(--grey); margin-top: 12px; text-transform: uppercase; }
+
+  /* ---------- quote ---------- */
+  .quote { display: flex; gap: 14px; align-items: flex-start; margin: 14px 0 12px; padding: 0 0 0 14px; border-left: 5px solid var(--heat); }
+  .quote p { font-size: 12pt; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; }
+  .quote cite { display: block; font-style: normal; font-family: var(--mono); font-size: 8pt; letter-spacing: 0.04em; color: #4b5563; margin-top: 6px; }
+
+  h2 { font-family: var(--mono); font-weight: 700; font-size: 8.4pt; letter-spacing: 0.2em; text-transform: uppercase; color: var(--heat-ink); border-bottom: 2px solid var(--ink); padding-bottom: 5px; margin: 0 0 10px; display: flex; align-items: baseline; gap: 8px; }
+  h2 .n { color: #fff; background: var(--ink); padding: 1px 6px; font-size: 7.6pt; letter-spacing: 0.08em; }
+
+  /* ---------- stat grid ---------- */
+  .stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px 14px; }
+  .stat { border: 2px solid var(--ink); padding: 9px 11px 10px; box-shadow: 4px 4px 0 var(--ink); background: #fff; display: flex; flex-direction: column; }
+  .stat .big { font-family: var(--mono); font-weight: 700; font-size: 18pt; line-height: 1; color: var(--heat-ink); letter-spacing: -0.02em; margin-bottom: 6px; white-space: nowrap; }
+  .stat .big small { font-size: 11pt; letter-spacing: 0; }
+  .stat p { font-size: 8.5pt; line-height: 1.32; }
+  .stat p strong { font-weight: 700; }
+
+  /* ---------- why + levers ---------- */
+  .why { margin-top: 12px; display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: start; }
+  .why .prose p { font-size: 9.8pt; line-height: 1.42; }
+  .why .prose p + p { margin-top: 8px; }
+  .why .prose .lead { font-weight: 700; font-size: 11pt; }
+  .levers { background: var(--grey-2); border: 2px solid var(--ink); padding: 12px 14px 10px; }
+  .levers .eyebrow { color: var(--heat-ink); margin-bottom: 8px; }
+  .lever { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; padding: 5px 0; border-top: 1px solid var(--grey); }
+  .lever:first-of-type { border-top: 0; padding-top: 2px; }
+  .lever .num { font-family: var(--mono); font-weight: 700; font-size: 15pt; line-height: 1; color: var(--heat-ink); }
+  .lever b { display: block; font-size: 10.2pt; margin-bottom: 1px; }
+  .lever span { font-size: 8.6pt; line-height: 1.35; color: #2f3742; }
+
+  .foot { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--grey); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 7.6pt; letter-spacing: 0.04em; color: #4b5563; }
+  .foot .site { font-weight: 700; color: var(--ink); }
+  .foot .pg { color: #6b7280; }
+
+  /* ---------- page 2 ---------- */
+  .page-2 .top { display: grid; grid-template-columns: 1fr; gap: 0; }
+  .actions { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; }
+  .actions li { display: grid; grid-template-columns: 22px 1fr; gap: 9px; align-items: start; font-size: 9.6pt; line-height: 1.38; padding: 4px 0; }
+  .actions li .box { width: 14px; height: 14px; border: 2px solid var(--ink); margin-top: 2px; }
+  .actions li b { font-weight: 700; }
+  .actions li.wide { grid-column: 1 / -1; background: var(--deep); color: #fff; padding: 11px 14px; border-left: 6px solid var(--heat); grid-template-columns: 1fr; }
+  .actions li.wide b { color: var(--heat); }
+  .actions li.wide .url { font-family: var(--mono); font-weight: 700; font-size: 13pt; letter-spacing: 0.02em; color: #fff; display: block; margin-top: 2px; }
+
+  .events { margin-top: 18px; }
+  .events .intro { font-size: 10.5pt; margin-bottom: 10px; }
+  .events .intro strong { font-family: var(--mono); font-weight: 700; color: var(--heat-ink); font-size: 12pt; }
+  .day { font-family: var(--mono); font-weight: 700; font-size: 8.4pt; letter-spacing: 0.16em; text-transform: uppercase; background: var(--ink); color: #fff; display: inline-block; padding: 3px 9px; margin: 10px 0 6px; }
+  .day:first-of-type { margin-top: 0; }
+  .ev { display: grid; grid-template-columns: 1.3in 1fr; gap: 12px; padding: 7px 0 8px; border-top: 1px solid var(--grey); }
+  .ev .time { font-family: var(--mono); font-weight: 700; font-size: 8.8pt; line-height: 1.3; color: var(--heat-ink); padding-top: 1px; white-space: nowrap; }
+  .ev .time small { display: block; color: #6b7280; font-weight: 500; font-size: 7.6pt; }
+  .ev b { display: block; font-size: 10.3pt; line-height: 1.28; margin-bottom: 2px; }
+  .ev span { font-size: 8.8pt; color: #2f3742; line-height: 1.35; }
+  .ev span .host { font-weight: 600; color: var(--ink); }
+  .reg { margin-top: 10px; font-family: var(--mono); font-size: 8.6pt; padding: 9px 12px; border: 2px dashed var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .reg b { font-size: 11pt; letter-spacing: 0.02em; }
+
+  .legal { margin-top: auto; padding-top: 12px; border-top: 2px solid var(--ink); font-size: 7.9pt; line-height: 1.4; color: #4b5563; display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+  .legal b { color: var(--ink); }
+
+  /* ---------- page 3: talk track ---------- */
+  .page-3 .how { font-size: 10pt; line-height: 1.45; color: #2f3742; margin: 0 0 14px; max-width: 46em; }
+  .page-3 .how b { color: var(--ink); }
+  .script { border: 2px solid var(--ink); box-shadow: 5px 5px 0 var(--ink); padding: 28px 32px 24px; background: #fff; }
+  .script p { font-size: 16.5pt; line-height: 1.52; letter-spacing: -0.003em; }
+  .script p + p { margin-top: 16px; }
+  .script strong { color: var(--heat-ink); font-weight: 700; }
+  .script .open, .script .close { font-weight: 600; }
+  .beat { display: block; height: 0; }
+  .script-meta { margin-top: 14px; display: flex; justify-content: space-between; gap: 16px; font-family: var(--mono); font-size: 8pt; letter-spacing: 0.04em; color: #4b5563; }
+  .script-meta b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ============================== PAGE 1 ============================== -->
+<section class="page page-1">
+  <div class="mast">
+    <div class="brand"><span class="dot"></span>El <span class="nino">Niño</span> Ready</div>
+    <h1>The biggest El&nbsp;Niño in history is forming <em>right now.</em></h1>
+    <p class="lede">NOAA puts the odds at <strong>75%</strong> that this becomes the strongest El&nbsp;Niño ever measured. It peaks in <strong>December</strong>, about three months from today. Hundreds of millions of people will feel it in their power, their water, and their livelihoods.</p>
+    <p class="tagline">A disaster you can see coming is a disaster you can prevent.</p>
+  </div>
+
+  <div class="quote">
+    <div>
+      <p>“The models are forecasting something outside the envelope of anything we have ever observed.”</p>
+      <cite>Zeke Hausfather · climate scientist, Berkeley Earth · July 2026</cite>
+    </div>
+  </div>
+
+  <h2><span class="n">01</span> What the forecasts say</h2>
+  <div class="stats">
+    <div class="stat">
+      <div class="big">+4.0<small> °C</small></div>
+      <p>The Pacific is forecast to hit <strong>+4.0 °C or more</strong>, nearly a full degree beyond anything ever measured. 91 of every 100 model runs break the all-time record.</p>
+    </div>
+    <div class="stat">
+      <div class="big">49<small> million</small></div>
+      <p><strong>More people without enough to eat</strong> by the end of next year, joining 225 million already going hungry. Central America is hit hardest.</p>
+    </div>
+    <div class="stat">
+      <div class="big">100,000</div>
+      <p><strong>Indonesia is already burning</strong>, with more fires this year than any year on record. The last time a super El&nbsp;Niño dried out the peat, an estimated 100,000 people died from the smoke.</p>
+    </div>
+    <div class="stat">
+      <div class="big">Epidemics</div>
+      <p><strong>They follow the shifted rains.</strong> Malaria, dengue, and cholera have come after every major El&nbsp;Niño.</p>
+    </div>
+    <div class="stat">
+      <div class="big">2027</div>
+      <p>Forecast to be <strong>the hottest year humans have ever lived through</strong>, by a wide margin.</p>
+    </div>
+    <div class="stat">
+      <div class="big">$17.6<small> trillion</small></div>
+      <p><strong>The projected cost to the world</strong> over the five years that follow. Most of it is still preventable.</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="prose">
+      <h2><span class="n">02</span> Why this is different</h2>
+      <p class="lead">These deaths are the preventable kind.</p>
+      <p>Smoke, hunger, disease, and heat kill on a delay, weeks to months after a forecast that already exists. People die when the warning doesn’t reach them, when the money arrives after the disaster instead of before, and when the plan stays in the drawer.</p>
+      <p>Between Climate Week and the peak there are roughly three months. That is not long enough to stop it. It is exactly long enough to prepare for it.</p>
+    </div>
+    <div class="levers">
+      <div class="eyebrow">Three things save lives. All three reward acting before the peak.</div>
+      <div class="lever"><div class="num">1</div><div><b>Warnings reach people.</b><span>In time, in their language, with something to do attached.</span></div></div>
+      <div class="lever"><div class="num">2</div><div><b>Money moves early.</b><span>A dollar of food, water treatment, or backup power staged before the disaster beats a dollar of relief after it.</span></div></div>
+      <div class="lever"><div class="num">3</div><div><b>Systems hold.</b><span>Grids hardened for heat, water stored where drought and flood risk is rising, contingency plans rehearsed instead of filed.</span></div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span class="site">elninoready.earth</span>
+    <span>Sources and the Climate Week event list on the back</span>
+    <span class="pg">1&nbsp;/&nbsp;3</span>
+  </div>
+</section>
+
+<!-- ============================== PAGE 2 ============================== -->
+<section class="page page-2">
+  <h2><span class="n">03</span> What you can do before you leave this room</h2>
+  <ul class="actions">
+    <li><span class="box"></span><div><b>Tell someone.</b> Post the forecast. Put it in your newsletter. Bring it up at the next event you attend this week. Every share is a warning reaching someone it hadn’t reached.</div></li>
+    <li><span class="box"></span><div><b>If you work in power, water, food, health, insurance, or emergency response:</b> your organization has three months. Ask what it is doing before December, not after.</div></li>
+    <li><span class="box"></span><div><b>If you host an event this week:</b> give El&nbsp;Niño two minutes from the main microphone. Sign up and we’ll send you five talking points.</div></li>
+    <li><span class="box"></span><div><b>Have an idea, a contact, a venue, or an hour?</b> Drop it in the ideas form on the site. It goes straight to the organizers.</div></li>
+    <li class="wide"><div><b>Sign up for updates and the running list of El&nbsp;Niño events</b><span class="url">elninoready.earth</span></div></li>
+  </ul>
+
+  <div class="events">
+    <h2><span class="n">04</span> El Niño at Climate Week NYC</h2>
+    <p class="intro">Climate Week has more than a thousand events. <strong>Four</strong> are about El&nbsp;Niño. Here they are in the order they happen.</p>
+
+    <div class="day">Wednesday, September 23</div>
+    <div class="ev">
+      <div class="time">12–1 pm<small>ET · in person + Zoom</small></div>
+      <div><b>El Niño 2026: How Big Could It Get?</b><span><span class="host">Center for Climate Systems Research, Columbia Climate School</span> · Hogan Hall, Room Hogan A, 566 W 114th St. The quarterly ENSO briefing from the people who make the forecast: how strong this gets, and which regions face drought, floods, and heat next.</span></div>
+    </div>
+    <div class="ev">
+      <div class="time">1–2 pm<small>ET · in person</small></div>
+      <div><b>A Postcard from the Future: The Heat Toll of the 2026–27 Super El Niño and What We Can Still Do</b><span><span class="host">University of Chicago Institute for Climate &amp; Sustainable Growth, with C2ES</span> · Glasshouse on Bryant Park, 9th floor, 54 W 40th St. First look at Climate Impact Lab’s projection of how many people this El Niño’s heat could kill, where, and what still saves lives.</span></div>
+    </div>
+
+    <div class="day">Thursday, September 24</div>
+    <div class="ev">
+      <div class="time">8–9:30 am<small>ET · in person</small></div>
+      <div><b>Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate</b><span><span class="host">Climate Action for Smallholders Coalition</span> · 200 Park Ave (MetLife Building). How El Niño is hitting smallholder farmers in Africa, Asia, and Latin America, and what agribusiness is doing to keep those supply chains standing.</span></div>
+    </div>
+    <div class="ev">
+      <div class="time">2–3:30 pm<small>ET · in person</small></div>
+      <div><b>Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</b><span><span class="host">Columbia Climate School</span> · The Forum at Columbia University, 601 W 125th St. What happens after the forecast: why people and institutions act on the same warning so differently, and what makes a community ready. Reception follows.</span></div>
+    </div>
+
+    <div class="reg"><span>Registration links, and any events added after this was printed:</span><b>elninoready.earth</b></div>
+  </div>
+
+  <div class="legal">
+    <div><b>El Niño Ready</b> is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University. Questions or ideas: use the ideas form on the site, or reply to any email from us.</div>
+    <div><b>Sources.</b> Hausfather, Carbon Brief · WFP/FAO via UN News · Hendrix, PIIE · Hausfather, The Climate Brink · Mongabay · Koplitz et al. 2016, Environmental Research Letters · WHO experts via Mongabay.</div>
+  </div>
+</section>
+
+<!-- ============================== PAGE 3 ============================== -->
+<section class="page page-3">
+  <h2><span class="n">05</span> A one-minute intro, from the main microphone</h2>
+  <p class="how"><b>For whoever opens the event.</b> This takes about a minute at a normal speaking pace. Read it as written, or put it in your own words. Every fact in it is on the front page, and the sources are on page&nbsp;2.</p>
+
+  <div class="script">
+    <p class="open">Before we start, one minute on El&nbsp;Niño. Climate Week has more than a thousand events, and only a handful are about it.</p>
+    <p>The biggest El&nbsp;Niño in history is forming right now. NOAA puts the odds at <strong>75&nbsp;percent</strong> that this becomes the strongest El&nbsp;Niño ever measured. It peaks in <strong>December</strong>, about three months from today.</p>
+    <p>Hundreds of millions of people will feel it. <strong>49&nbsp;million</strong> more people are forecast to go hungry by the end of next year.</p>
+    <p>People die when the warning doesn’t reach them, when the money arrives late, when the plan stays in the drawer. These are preventable deaths. They come weeks to months after a forecast that already exists.</p>
+    <p>Three months is not enough time to stop it. It is exactly enough time to prepare.</p>
+    <p>Spread the message to be El&nbsp;Niño Ready. If your organization works in power, water, food, or health, ask what it is doing before December. And sign up at <strong>elninoready.earth</strong>.</p>
+    <p class="close">Thank you.</p>
+  </div>
+
+  <div class="script-meta">
+    <span style="white-space:nowrap"><b>≈ 165 words</b> · about 60 seconds</span>
+    <span>Gave the minute? Tell us at elninoready.earth and your event goes on the list.</span>
+  </div>
+
+  <div class="foot">
+    <span class="site">elninoready.earth</span>
+    <span>A disaster you can see coming is a disaster you can prevent.</span>
+    <span class="pg">3&nbsp;/&nbsp;3</span>
+  </div>
+</section>
+
+</body>
+</html>
