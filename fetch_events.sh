@@ -10,7 +10,8 @@
 # Start, End. Optional: Location, Host, Why go, Summary, Format, RSVP Type,
 # NYCW listed, Spotted by, El Niño role ("About El Niño" = the main list;
 # "Two minutes" = a host who promised El Niño two minutes from the main
-# microphone; listed separately, never counted as about El Niño).
+# microphone; listed separately, never counted as about El Niño; "Past" or
+# "Hidden" = keep the row in the sheet but drop it from the site).
 set -e
 cd "$(dirname "$0")"
 SHEET_ID="1_F9DN1s0dBg6acL9vrGqQhCcpcutjuVr2jhCIJY7AxE"

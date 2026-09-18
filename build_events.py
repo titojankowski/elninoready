@@ -107,6 +107,10 @@ def fmt_time(t):
 
 
 def enrich(rows):
+    # An "El Niño role" of "Past" (or "Hidden") drops the row from every page without
+    # deleting it from the sheet: the sheet keeps the record, the site moves on.
+    rows = [r for r in rows
+            if not any(w in (r.get("El Niño role") or "").strip().lower() for w in ("past", "hidden", "hide", "skip"))]
     seen = set()
     for r in rows:
         r["_date"] = parse_date(r["Date"])

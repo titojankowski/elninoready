@@ -131,7 +131,6 @@
 
   /* ---------- screen: tabs instead of sheets of paper ---------- */
   @media screen {
-    :root { --heat-ink: var(--heat); } /* on screen use the site orange; the darker one is only for black-and-white print */
     html, body { background: #D8DDE2; }
     :root { --heat-ink: var(--heat); } /* on screen use the site orange; the darker one is only for black-and-white print */
     .tabs { position: sticky; top: 0; z-index: 10; background: var(--ink); border-bottom: 4px solid var(--heat); }
@@ -150,12 +149,6 @@
     .tabs button[aria-selected="true"] .k { background: var(--ink); color: #fff; }
     .tabs .short { display: none; }
     .tabs button:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
-    /* page hero: same as header.hero.slim on the rest of the site (sizes in px; this page's root font is smaller) */
-    .pagehero { background: #2B323D; color: #fff; padding: 40px 0 48px; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; -webkit-font-smoothing: antialiased; }
-    .pagehero .wrap { max-width: 992px; margin: 0 auto; padding: 0 20px; }
-    .pagehero h1 { font-family: var(--mono); font-size: clamp(22.4px, 3.9vw, 41.6px); font-weight: 700; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.01em; max-width: 30ch; margin-bottom: 16px; }
-    .pagehero h1 em { font-style: normal; color: var(--heat); }
-    .pagehero .sub { font-size: clamp(14.72px, 1.6vw, 16.8px); color: #D8DDE2; max-width: 58ch; }
     main { padding: 24px 16px 48px; }
     .page { width: auto; max-width: 8.5in; height: auto; min-height: 0; margin: 0 auto; overflow: visible; background: #fff; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
     .page[hidden] { display: none; }
@@ -181,7 +174,6 @@
     .script { padding: 18px 16px; }
     .script p { font-size: 13.5pt; }
     .tabs .title .by { display: none; }
-    .tabs .pdf { padding: 7px 11px 6px; font-size: 8pt; }
     .tabs .long { display: none; } .tabs .short { display: inline; }
     .tabs button { padding: 10px 11px 8px; font-size: 7.8pt; }
     .tabs button .k { margin-right: 5px; }
@@ -235,11 +227,6 @@
     <p>Three months is not enough time to stop it. It is exactly enough time to prepare.</p>
     <p>Spread the message to be El&nbsp;Niño Ready. If your organization works in power, water, food, or health, ask what it is doing before December. And sign up at <strong>elninoready.earth</strong>.</p>
     <p class="close">Thank you.</p>
-  </div>
-
-  <div class="script-meta">
-    <span style="white-space:nowrap"><b>≈ 165 words</b> · about 60 seconds</span>
-    <span>Gave the minute? Tell us at elninoready.earth and your event goes on the list.</span>
   </div>
 
   <div class="foot">

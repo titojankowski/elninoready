@@ -21,6 +21,10 @@ pages[0] = pages[0].replace("Sources and the Climate Week event list on the back
                             "Sources and the Climate Week events are in tab 3")
 pages[2] = pages[2].replace("the sources are on page&nbsp;2", "the sources are in tab&nbsp;3")
 
+# The word count / "gave the minute?" line under the script is print-only.
+import re as _re
+pages = [_re.sub(r'\n\s*<div class="script-meta">[\s\S]*?</div>\n', '\n', pg) for pg in pages]
+
 # On screen the one-minute intro comes first: it is what a speaker opens this page
 # for. The PDF keeps its print order (forecast, what to do, intro).
 pages = [pages[2], pages[0], pages[1]]
