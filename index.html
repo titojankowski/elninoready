@@ -73,7 +73,8 @@
   .nav-links a.nav-cta { padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; }
   .nav-links a.nav-cta:hover { border-color: var(--ink); }
   @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } .nav-links a.nav-home { display: none; } }
-  @media (max-width: 640px) { .nav-links a.nav-add { display: none; } }
+  @media (max-width: 760px) { .nav-links a.nav-add { display: none; } }
+  @media (max-width: 560px) { .nav-links a.nav-about { display: none; } }  /* phones reach About from the footer */
   .brand, .nav-links a { white-space: nowrap; }
   @media (max-width: 420px) { .nav-inner { padding-left: 1rem; padding-right: 1rem; } .brand { font-size: 0.78rem; letter-spacing: 0.02em; } .nav-links { gap: 0.6rem; } .nav-links a { font-size: 0.7rem; letter-spacing: 0.04em; } .nav-links a.nav-cta { padding: 0.45rem 0.55rem; } }
   .nav-date { font-size: 0.78rem; color: rgba(30,35,42,0.6); display: none; letter-spacing: 0.04em; }
@@ -336,6 +337,7 @@
       <a href="/" class="active nav-home">Home</a>
       <a href="/speakers/">Speak</a>
       <a href="/actions/">Actions</a>
+      <a class="nav-about" href="/about/">About</a>
       <a class="nav-add" href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
@@ -515,6 +517,7 @@
   <div class="wrap">
     <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
     <div>An open, volunteer-organized initiative. Questions or ideas: drop them in the ideas form above, or reply to any email from us.</div>
+    <div><a href="/about/">About El Niño Ready</a></div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University.</p>
   </div>
 </footer>

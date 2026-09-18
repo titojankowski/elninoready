@@ -354,12 +354,15 @@ EXTRA_CSS = """
   .notify .hero-signup .btn-heat { border-color: var(--ink); box-shadow: 4px 4px 0 var(--ink); }
   .outro h2 { color: #fff; }
   .outro .lede { color: #D8DDE2; }
+  /* signup form on a light section (about page) */
+  .ideas-sec .hero-signup input[type="email"] { border-color: var(--ink); background: var(--paper); color: var(--ink); }
+  .ideas-sec .hero-signup input[type="email"]::placeholder { color: rgba(30,35,42,0.45); }
 """
 
 def nav(active):
     """Keep in sync with the <nav> in index.html."""
     def link(href, label, key):
-        cls = " ".join(c for c in ("active" if key == active else "", "nav-home" if key == "home" else "") if c)
+        cls = " ".join(c for c in ("active" if key == active else "", "nav-home" if key == "home" else "", "nav-about" if key == "about" else "") if c)
         return '<a href="%s"%s>%s</a>' % (href, ' class="%s"' % cls if cls else "", label)
     return """
 <nav>
@@ -369,18 +372,20 @@ def nav(active):
       %s
       <a href="/speakers/">Speak</a>
       %s
+      %s
       <a class="nav-add" href="/events/#add">Add event</a>
       <a class="nav-cta" href="/events/">NYCW Events</a>
     </div>
   </div>
 </nav>
-""" % (link("/", "Home", "home"), link("/actions/", "Actions", "actions"))
+""" % (link("/", "Home", "home"), link("/actions/", "Actions", "actions"), link("/about/", "About", "about"))
 
 FOOTER = """
 <footer>
   <div class="wrap">
     <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
     <div>Kept by El Niño Ready volunteers. Events belong to their hosts; details, tickets, and changes live on the host's page. Know something we're missing? <a href="/#ideas">Tell us</a>.</div>
+    <div><a href="/about/">About El Niño Ready</a></div>
     <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, Columbia University, or any event host listed here.</p>
   </div>
 </footer>
@@ -1033,6 +1038,117 @@ def render_two_minutes():
     return page("Two minutes about El Niño · El Niño Ready", desc, SITE + "/two-minutes/", body)
 
 
+def render_about():
+    """/about/: why getting ready for El Niño matters, and what it changes about
+    the climate conversation. No numeric claims here; the home page carries those with their cites."""
+    body = """
+<header class="hero slim" id="top">
+  <div class="wrap">
+    <h1>El <em>Niño</em> Ready</h1>
+    <p class="sub">El Niño Ready is a volunteer effort to save lives during what is forecast to be the strongest El Niño ever measured. Underneath that is a bigger question: <strong>can people see trouble coming at global scale and take action together?</strong> We think yes. This is where we prove it.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Why act</p>
+    <h2>El Niño gives us something most disasters don't: a warning.</h2>
+    <p class="lede">Most disasters arrive without notice. This one came with a forecast, months ahead. Scientists can watch the Pacific warming right now, and they know from past El Niño years what tends to follow: drought in some places, floods in others, heat, smoke, failed harvests, outbreaks of disease.</p>
+    <p class="lede">The harm comes on a delay, weeks to months after the forecast. That delay is the opening. People get hurt when the warning doesn't reach them, when help arrives after the disaster instead of before, when the plan stays in the drawer. Every one of those is something people can fix.</p>
+    <p class="lede">The forecast itself, and every number behind it, is on the <a href="/">home page</a> with its source.</p>
+  </div>
+</section>
+
+<section class="stakes">
+  <div class="wrap">
+    <p class="eyebrow">How we get prepared</p>
+    <h2>Getting ready happens at every scale, <em style="font-style:normal;color:var(--heat)">and the power is in doing it together.</em></h2>
+    <p class="lede">Some of this is what one person can do in an afternoon. Most of the power is in what people do together: a block, a congregation, a city, a state, a nation. El Niño is a different event in every place, a wet winter in one town and a failed rainy season in another, so each scale starts by finding out what El Niño years have usually done where it is. Then each one can do things the scale below it can't.</p>
+    <div class="window-list">
+      <div class="window-item">
+        <h3>Your household</h3>
+        <p>Sign up for your local alerts. Know what El Niño years have done on your street. Have the water, the food and the medicine on hand before the season instead of during it. This is the smallest part, and it is what frees you up for the rest. <a href="/actions/">Start with the actions page.</a></p>
+      </div>
+      <div class="window-item">
+        <h3>Your block</h3>
+        <p>Trade phone numbers. Know who would need a ride, who is on oxygen, who lives alone. Clear the street drains together. Start the group chat that carries the warning to the people the official alert doesn't reach.</p>
+      </div>
+      <div class="window-item">
+        <h3>Your community</h3>
+        <p>Every school, congregation, club, union and business already has a room, a list of people, and their trust. That is a warning system and a relief network waiting to be switched on: a room that opens when the power is out, supplies staged ahead, and <a href="/two-minutes/">two minutes from the microphone</a> so everyone in it knows what is coming.</p>
+      </div>
+      <div class="window-item">
+        <h3>Your city</h3>
+        <p>Cities can take the plan out of the drawer and rehearse it. Clear the culverts and open the sandbag yard before the rains, or line up the water before the dry season. Send the warning in every language the town speaks. Check first on the neighborhoods that got hit last time.</p>
+      </div>
+      <div class="window-item">
+        <h3>Your state and nation</h3>
+        <p>This is where the biggest lever is: money that moves before the disaster instead of after it. Food, water treatment and backup power staged ahead of time do more good than the same help sent afterward. Grids and water systems made ready for the season. Forecasts paid for and carried all the way to the people who need them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How we get strong</p>
+    <h2>You being strong is how <em style="font-style:normal;color:var(--heat)">we</em> get strong.</h2>
+    <p class="lede">Getting ready can sound like looking out for yourself. It is the opposite. When you are taken care of, when the alerts are on, the drain is clear, and the water and the medicine are in the cupboard, you are not the emergency. You are the person who can help.</p>
+    <p class="lede">You can check on the neighbor. You can take in the family from the flooded block. You can show up at the school, the clinic, the food bank with your hands free. Every household that is ready is one fewer that needs rescuing and one more that can do the rescuing.</p>
+    <p class="lede">So this was never only about you not facing the impacts. It is about you being strong so that we can be strong. A community where enough people are taken care of can carry the ones who aren't. And a community that goes through one hard season that way is different afterward. It knows who does what. It has done it once. That strength is still there for whatever comes next.</p>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="wrap">
+    <p class="eyebrow">Something deeper</p>
+    <h2>This isn't just another climate disaster. <em style="font-style:normal;color:var(--heat-bright)">It's our chance to take action together, before it arrives.</em></h2>
+    <p class="lede" style="color:#D8DDE2">For a long time the climate story has been told as something that happens to us. Too big, too far away, somebody else's job. People learned to watch it. The conversation became doom and gloom: honest about how bad things could get, and leaving most people with nothing to do. They feel worried, then helpless, then tired, and they stop listening.</p>
+    <p class="lede" style="color:#D8DDE2">El Niño breaks that story. It is close. It has a date. It has a forecast and a list of things that help, and what each of us does before it arrives changes how it goes. For once the distance between knowing and doing is short enough to cross.</p>
+    <p class="lede" style="color:#D8DDE2">So what is really on offer here is a change in who we are in this story: from the audience to the people who got ready, and then turned around to help someone else. You don't need to be a climate scientist. An electrician, a nurse, a teacher, a farmer, a city clerk, the person who runs the neighborhood group chat: each already has a skill this needs. The question stops being &ldquo;how worried should I be?&rdquo; and becomes &ldquo;what am I good at, and where does it help?&rdquo;</p>
+    <p class="lede" style="color:#D8DDE2">That is the conversation we want to start: here is how we take action together, here is how we use what we know to prevent the next disaster instead of reading about it afterward.</p>
+    <p class="pull" style="color:#fff">We want people to come out of this El Niño saying: we saw it coming, we got ready together, and it worked.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What comes after</p>
+    <h2>This won't be the last one.</h2>
+    <p class="lede">El Niño will pass. Climate change won't. There will be more communities facing disasters, and more communities living with a changed climate. What we learn in the next few months matters long after this season: which warnings reached people and which didn't, what help arrived early enough, which plans held and which stayed in the drawer.</p>
+    <p class="lede">We intend to write that down and hand it on, to the next town, the next season, the next event that comes with a forecast. Getting ready for this El Niño is practice for everything after it. The skills are the same every time: see it coming, tell people, move early, look after each other.</p>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="wrap">
+    <p class="eyebrow">After El Niño</p>
+    <h2>We can come out of this stronger, <em style="font-style:normal;color:var(--heat-bright)">and ready for the bigger job.</em></h2>
+    <p class="lede" style="color:#D8DDE2">Picture the other side of this El Niño. Neighbors who know each other's names. Schools, congregations and businesses that have opened their doors once and know how. Cities that rehearsed a plan and watched it work. States and nations that moved money early and saw what it saved. That is a stronger place than the one we started in.</p>
+    <p class="lede" style="color:#D8DDE2">It is also exactly what the bigger job needs. Getting ready for a season does not stop the climate from changing. That takes big changes: how we make and use energy, how we build, how we grow food, and cleaning up the carbon dioxide already in the air. Those changes have been slow for the same reason people tune out. They feel too big for anyone to start.</p>
+    <p class="lede" style="color:#D8DDE2">People who have just taken action together, and seen it work, don't feel that way. They have the relationships, the habits and the proof. Our hope is that the communities that come together for El Niño stay together, and turn that strength toward the long work of stopping climate change at its source, so that fewer communities ever have to face a season like this one.</p>
+  </div>
+</section>
+
+<section class="ideas-sec">
+  <div class="wrap">
+    <p class="eyebrow">Join in</p>
+    <h2>Bring what you're good at.</h2>
+    <p class="lede">El Niño Ready is open and volunteer-organized. Sign up and we'll send you the forecast as it changes and the actions that matter where you live. Have a skill, an idea, or an hour? <a href="/#ideas">Tell us.</a></p>
+    <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html" style="max-width:38rem">
+      <input type="hidden" name="form-name" value="get-involved">
+      <input type="hidden" name="message" value="Signed up from the About page">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
+      <button class="btn btn-heat" type="submit">Sign up for email updates</button>
+    </form>
+  </div>
+</section>
+"""
+    desc = "Why getting ready for El Niño matters: a disaster with a forecast is one we can prepare for, together, and what we learn carries to every community that faces the next one."
+    return page("About · El Niño Ready", desc, SITE + "/about/", body, active="about")
+
+
 def update_home(rows):
     path = os.path.join(ROOT, "index.html")
     src = open(path, encoding="utf-8").read()
@@ -1065,6 +1181,10 @@ def main(argv):
     os.makedirs(tm, exist_ok=True)
     with open(os.path.join(tm, "index.html"), "w", encoding="utf-8") as f:
         f.write(render_two_minutes())
+    ab = os.path.join(ROOT, "about")
+    os.makedirs(ab, exist_ok=True)
+    with open(os.path.join(ab, "index.html"), "w", encoding="utf-8") as f:
+        f.write(render_about())
     for r in rows:
         d = os.path.join(OUT, r["_slug"])
         os.makedirs(d)
