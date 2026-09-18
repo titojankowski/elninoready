@@ -18,26 +18,48 @@ assert len(pages) == 3, f"expected 3 pages, found {len(pages)}"
 
 # Print-only wording that means nothing on a screen.
 pages[0] = pages[0].replace("Sources and the Climate Week event list on the back",
-                            "Sources and the Climate Week events are in tab 2")
-pages[2] = pages[2].replace("the sources are on page&nbsp;2", "the sources are in tab&nbsp;2")
+                            "Sources and the Climate Week events are in tab 3")
+pages[2] = pages[2].replace("the sources are on page&nbsp;2", "the sources are in tab&nbsp;3")
+
+# On screen the one-minute intro comes first: it is what a speaker opens this page
+# for. The PDF keeps its print order (forecast, what to do, intro).
+pages = [pages[2], pages[0], pages[1]]
 
 # (hash, number, label, short label for phones)
-TABS = [("forecast", "1", "The forecast", "Forecast"),
-        ("what-to-do", "2", "What to do + events", "Events"),
-        ("intro", "3", "One-minute intro", "Intro")]
+TABS = [("intro", "1", "One-minute intro", "Intro"),
+        ("forecast", "2", "The forecast", "Forecast"),
+        ("what-to-do", "3", "What to do + events", "Events")]
 
 screen_css = """
+  /* ---------- site nav (same as every other page) ---------- */
+  .sitenav { background: #fff; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; }
+  .sitenav .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 11.2px 20px; max-width: 992px; margin: 0 auto; }
+  .sitenav .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 14.4px; text-decoration: none; color: var(--ink); }
+  .sitenav .brand .nino { color: var(--heat); }
+  .sitenav .nav-links { display: flex; align-items: center; gap: 20px; }
+  .sitenav .nav-links a { font-size: 12.48px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--ink); padding: 4.8px 0; border-bottom: 2px solid transparent; }
+  .sitenav .nav-links a:hover { border-bottom-color: var(--heat); }
+  .sitenav .nav-links a.active { border-bottom-color: var(--ink); }
+  .sitenav .nav-links a.nav-cta { background: var(--heat); color: #fff; letter-spacing: 0.06em; padding: 8.8px 17.6px; border: 2px solid var(--ink); line-height: 1; box-shadow: 3px 3px 0 var(--ink); transition: transform 0.1s, box-shadow 0.1s; }
+  .sitenav .nav-links a.nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+  @media (max-width: 480px) { .sitenav .nav-links { gap: 12.8px; } .sitenav .nav-links a.nav-cta { padding: 8px 12px; } .sitenav .nav-links a.nav-home { display: none; } }
+  @media (max-width: 640px) { .sitenav .nav-links a.nav-add { display: none; } }
+  .sitenav .brand, .sitenav .nav-links a { white-space: nowrap; }
+  @media (max-width: 420px) { .sitenav .nav-inner { padding-left: 16px; padding-right: 16px; } .sitenav .brand { font-size: 12.48px; letter-spacing: 0.02em; } .sitenav .nav-links { gap: 9.6px; } .sitenav .nav-links a { font-size: 11.2px; letter-spacing: 0.04em; } .sitenav .nav-links a.nav-cta { padding: 7.2px 8.8px; } }
+
   /* ---------- screen: tabs instead of sheets of paper ---------- */
   @media screen {
     html, body { background: #D8DDE2; }
+    :root { --heat-ink: var(--heat); } /* on screen use the site orange; the darker one is only for black-and-white print */
     .tabs { position: sticky; top: 0; z-index: 10; background: var(--ink); border-bottom: 4px solid var(--heat); }
     .tabs .in { max-width: calc(8.5in + 32px); margin: 0 auto; padding: 0 16px; }
     .tabs .top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0 10px; }
     .tabs .title { font-family: var(--mono); font-weight: 700; font-size: 9pt; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; }
     .tabs .title .by { color: var(--grey); font-weight: 500; }
     .tabs .title .nino { color: var(--heat); }
-    .tabs .pdf { font-family: var(--mono); font-weight: 700; font-size: 8pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
-    .tabs .pdf:hover { color: #fff; }
+    .tabs .top { align-items: center; }
+    .tabs .pdf { font-family: var(--mono); font-weight: 700; font-size: 9pt; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; background: var(--heat); border: 2px solid #fff; box-shadow: 4px 4px 0 rgba(255,255,255,0.35); padding: 9px 16px 8px; white-space: nowrap; transition: transform 0.1s, box-shadow 0.1s; }
+    .tabs .pdf:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 rgba(255,255,255,0.35); }
     .tabs .list { display: flex; overflow-x: auto; scrollbar-width: none; }
     .tabs button { font: inherit; font-family: var(--mono); font-weight: 700; font-size: 8.4pt; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: #2B323D; border: 0; margin-right: 4px; padding: 11px 16px 9px; cursor: pointer; white-space: nowrap; }
     .tabs button .k { display: inline-block; background: #3d4552; padding: 0 5px; margin-right: 7px; }
@@ -51,6 +73,12 @@ screen_css = """
     .foot .pg { display: none; }
     .page > *, .stats > *, .why > *, .actions > *, .ev > * { min-width: 0; }
     .foot, .legal { margin-top: 22px; }
+    /* page hero: same as header.hero.slim on the rest of the site (sizes in px; this page's root font is smaller) */
+    .pagehero { background: #2B323D; color: #fff; padding: 40px 0 48px; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .pagehero .wrap { max-width: 992px; margin: 0 auto; padding: 0 20px; }
+    .pagehero h1 { font-family: var(--mono); font-size: clamp(22.4px, 3.9vw, 41.6px); font-weight: 700; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.01em; max-width: 30ch; margin-bottom: 16px; }
+    .pagehero h1 em { font-style: normal; color: var(--heat); }
+    .pagehero .sub { font-size: clamp(14.72px, 1.6vw, 16.8px); color: #D8DDE2; max-width: 58ch; }
   }
   @media screen and (max-width: 700px) {
     html, body { font-size: 11pt; }
@@ -67,8 +95,9 @@ screen_css = """
     .tabs .long { display: none; } .tabs .short { display: inline; }
     .tabs button { padding: 10px 11px 8px; font-size: 7.8pt; }
     .tabs button .k { margin-right: 5px; }
+    .tabs .pdf { padding: 7px 11px 6px; font-size: 8pt; }
   }
-  @media print { .tabs { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
+  @media print { .tabs, .sitenav, .pagehero { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
 """
 
 buttons = "\n".join(
@@ -97,11 +126,29 @@ html = f"""<!doctype html>
 <style>{css}{screen_css}</style>
 </head>
 <body>
+<nav class="sitenav">
+  <div class="nav-inner">
+    <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
+    <div class="nav-links">
+      <a class="nav-home" href="/">Home</a>
+      <a class="active" href="/speakers/">Speak</a>
+      <a href="/actions/">Actions</a>
+      <a class="nav-add" href="/events/#add">Add event</a>
+      <a class="nav-cta" href="/events/">NYCW Events</a>
+    </div>
+  </div>
+</nav>
+<header class="pagehero">
+  <div class="wrap">
+    <h1>Thank you for sharing <em>El&nbsp;Niño Ready</em> at your Climate Week NYC event.</h1>
+    <p class="sub">Everything you need to give El Niño a minute from the main microphone is here: the forecast, what people can do, the El Niño events this week, and a short intro you can read as written. Print the PDF, or read it right from this page.</p>
+  </div>
+</header>
 <nav class="tabs">
   <div class="in">
     <div class="top">
-      <span class="title">Handout for speakers<span class="by"> · El <span class="nino">Niño</span> Ready</span></span>
-      <a class="pdf" href="El-Nino-Ready-handout.pdf" data-goatcounter-click="speakers/pdf">PDF ↓</a>
+      <span class="title">Handout for speakers<span class="by"> · print it, or read it from here</span></span>
+      <a class="pdf" href="El-Nino-Ready-handout.pdf" download data-goatcounter-click="speakers/pdf"><span class="long">Download the PDF ↓</span><span class="short">PDF ↓</span></a>
     </div>
     <div class="list" role="tablist" aria-label="Handout for speakers">
 {buttons}

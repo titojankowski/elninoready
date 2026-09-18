@@ -133,6 +133,7 @@
   @media screen {
     :root { --heat-ink: var(--heat); } /* on screen use the site orange; the darker one is only for black-and-white print */
     html, body { background: #D8DDE2; }
+    :root { --heat-ink: var(--heat); } /* on screen use the site orange; the darker one is only for black-and-white print */
     .tabs { position: sticky; top: 0; z-index: 10; background: var(--ink); border-bottom: 4px solid var(--heat); }
     .tabs .in { max-width: calc(8.5in + 32px); margin: 0 auto; padding: 0 16px; }
     .tabs .top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 12px 0 10px; }
@@ -161,6 +162,12 @@
     .foot .pg { display: none; }
     .page > *, .stats > *, .why > *, .actions > *, .ev > * { min-width: 0; }
     .foot, .legal { margin-top: 22px; }
+    /* page hero: same as header.hero.slim on the rest of the site (sizes in px; this page's root font is smaller) */
+    .pagehero { background: #2B323D; color: #fff; padding: 40px 0 48px; border-bottom: 2px solid var(--ink); font-family: var(--mono); line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .pagehero .wrap { max-width: 992px; margin: 0 auto; padding: 0 20px; }
+    .pagehero h1 { font-family: var(--mono); font-size: clamp(22.4px, 3.9vw, 41.6px); font-weight: 700; text-transform: uppercase; line-height: 1.2; letter-spacing: 0.01em; max-width: 30ch; margin-bottom: 16px; }
+    .pagehero h1 em { font-style: normal; color: var(--heat); }
+    .pagehero .sub { font-size: clamp(14.72px, 1.6vw, 16.8px); color: #D8DDE2; max-width: 58ch; }
   }
   @media screen and (max-width: 700px) {
     html, body { font-size: 11pt; }
@@ -178,6 +185,7 @@
     .tabs .long { display: none; } .tabs .short { display: inline; }
     .tabs button { padding: 10px 11px 8px; font-size: 7.8pt; }
     .tabs button .k { margin-right: 5px; }
+    .tabs .pdf { padding: 7px 11px 6px; font-size: 8pt; }
   }
   @media print { .tabs, .sitenav, .pagehero { display: none; } .page[hidden] { display: flex; } main { padding: 0; } }
 </style>
@@ -208,14 +216,39 @@
       <a class="pdf" href="El-Nino-Ready-handout.pdf" download data-goatcounter-click="speakers/pdf"><span class="long">Download the PDF ↓</span><span class="short">PDF ↓</span></a>
     </div>
     <div class="list" role="tablist" aria-label="Handout for speakers">
-    <button role="tab" id="tab-forecast" aria-controls="p-forecast" aria-selected="true"><span class="k">1</span><span class="long">The forecast</span><span class="short">Forecast</span></button>
-    <button role="tab" id="tab-what-to-do" aria-controls="p-what-to-do" aria-selected="false"><span class="k">2</span><span class="long">What to do + events</span><span class="short">Events</span></button>
-    <button role="tab" id="tab-intro" aria-controls="p-intro" aria-selected="false"><span class="k">3</span><span class="long">One-minute intro</span><span class="short">Intro</span></button>
+    <button role="tab" id="tab-intro" aria-controls="p-intro" aria-selected="true"><span class="k">1</span><span class="long">One-minute intro</span><span class="short">Intro</span></button>
+    <button role="tab" id="tab-forecast" aria-controls="p-forecast" aria-selected="false"><span class="k">2</span><span class="long">The forecast</span><span class="short">Forecast</span></button>
+    <button role="tab" id="tab-what-to-do" aria-controls="p-what-to-do" aria-selected="false"><span class="k">3</span><span class="long">What to do + events</span><span class="short">Events</span></button>
     </div>
   </div>
 </nav>
 <main>
-<section role="tabpanel" id="p-forecast" aria-labelledby="tab-forecast" class="page page-1">
+<section role="tabpanel" id="p-intro" aria-labelledby="tab-intro" class="page page-3">
+  <h2><span class="n">05</span> A one-minute intro, from the main microphone</h2>
+  <p class="how"><b>For whoever opens the event.</b> This takes about a minute at a normal speaking pace. Read it as written, or put it in your own words. Every fact in it is on the front page, and the sources are in tab&nbsp;3.</p>
+
+  <div class="script">
+    <p class="open">Before we start, one minute on El&nbsp;Niño. Climate Week has more than a thousand events, and only a handful are about it.</p>
+    <p>The biggest El&nbsp;Niño in history is forming right now. NOAA puts the odds at <strong>75&nbsp;percent</strong> that this becomes the strongest El&nbsp;Niño ever measured. It peaks in <strong>December</strong>, about three months from today.</p>
+    <p>Hundreds of millions of people will feel it. <strong>49&nbsp;million</strong> more people are forecast to go hungry by the end of next year.</p>
+    <p>People die when the warning doesn’t reach them, when the money arrives late, when the plan stays in the drawer. These are preventable deaths. They come weeks to months after a forecast that already exists.</p>
+    <p>Three months is not enough time to stop it. It is exactly enough time to prepare.</p>
+    <p>Spread the message to be El&nbsp;Niño Ready. If your organization works in power, water, food, or health, ask what it is doing before December. And sign up at <strong>elninoready.earth</strong>.</p>
+    <p class="close">Thank you.</p>
+  </div>
+
+  <div class="script-meta">
+    <span style="white-space:nowrap"><b>≈ 165 words</b> · about 60 seconds</span>
+    <span>Gave the minute? Tell us at elninoready.earth and your event goes on the list.</span>
+  </div>
+
+  <div class="foot">
+    <span class="site">elninoready.earth</span>
+    <span>A disaster you can see coming is a disaster you can prevent.</span>
+    <span class="pg">3&nbsp;/&nbsp;3</span>
+  </div>
+</section>
+<section role="tabpanel" id="p-forecast" aria-labelledby="tab-forecast" hidden class="page page-1">
   <div class="mast">
     <div class="brand"><span class="dot"></span>El <span class="nino">Niño</span> Ready</div>
     <h1>The biggest El&nbsp;Niño in history is forming <em>right now.</em></h1>
@@ -275,7 +308,7 @@
 
   <div class="foot">
     <span class="site">elninoready.earth</span>
-    <span>Sources and the Climate Week events are in tab 2</span>
+    <span>Sources and the Climate Week events are in tab 3</span>
     <span class="pg">1&nbsp;/&nbsp;3</span>
   </div>
 </section>
@@ -319,31 +352,6 @@
   <div class="legal">
     <div><b>El Niño Ready</b> is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University. Questions or ideas: use the ideas form on the site, or reply to any email from us.</div>
     <div><b>Sources.</b> Hausfather, Carbon Brief · WFP/FAO via UN News · Hendrix, PIIE · Hausfather, The Climate Brink · Mongabay · Koplitz et al. 2016, Environmental Research Letters · WHO experts via Mongabay.</div>
-  </div>
-</section>
-<section role="tabpanel" id="p-intro" aria-labelledby="tab-intro" hidden class="page page-3">
-  <h2><span class="n">05</span> A one-minute intro, from the main microphone</h2>
-  <p class="how"><b>For whoever opens the event.</b> This takes about a minute at a normal speaking pace. Read it as written, or put it in your own words. Every fact in it is on the front page, and the sources are in tab&nbsp;2.</p>
-
-  <div class="script">
-    <p class="open">Before we start, one minute on El&nbsp;Niño. Climate Week has more than a thousand events, and only a handful are about it.</p>
-    <p>The biggest El&nbsp;Niño in history is forming right now. NOAA puts the odds at <strong>75&nbsp;percent</strong> that this becomes the strongest El&nbsp;Niño ever measured. It peaks in <strong>December</strong>, about three months from today.</p>
-    <p>Hundreds of millions of people will feel it. <strong>49&nbsp;million</strong> more people are forecast to go hungry by the end of next year.</p>
-    <p>People die when the warning doesn’t reach them, when the money arrives late, when the plan stays in the drawer. These are preventable deaths. They come weeks to months after a forecast that already exists.</p>
-    <p>Three months is not enough time to stop it. It is exactly enough time to prepare.</p>
-    <p>Spread the message to be El&nbsp;Niño Ready. If your organization works in power, water, food, or health, ask what it is doing before December. And sign up at <strong>elninoready.earth</strong>.</p>
-    <p class="close">Thank you.</p>
-  </div>
-
-  <div class="script-meta">
-    <span style="white-space:nowrap"><b>≈ 165 words</b> · about 60 seconds</span>
-    <span>Gave the minute? Tell us at elninoready.earth and your event goes on the list.</span>
-  </div>
-
-  <div class="foot">
-    <span class="site">elninoready.earth</span>
-    <span>A disaster you can see coming is a disaster you can prevent.</span>
-    <span class="pg">3&nbsp;/&nbsp;3</span>
   </div>
 </section>
 </main>
