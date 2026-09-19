@@ -625,7 +625,6 @@ def render_home_block(rows):
 <section class="home-events" id="events">
   <div class="wrap">
     <h2>Climate Week has more than a thousand events. <em>%d</em> %s about El Niño.</h2>
-    <p class="lede">Here they are in the order they happen. Registration goes straight to each host.</p>
     <div class="he-list">
 %s
     </div>%s
