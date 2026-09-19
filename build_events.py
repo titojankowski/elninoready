@@ -483,13 +483,13 @@ def render_index(rows):
             spotters.append(who)
     spotted = (", <strong class=\"count\">spotted by %d %s</strong>" % (len(spotters), "person" if len(spotters) == 1 else "people")) if spotters else ""
     if pledged:
-        spotted += ". <strong class=\"count\">%d</strong> more %s promised El Niño <a href=\"/two-minutes/\" style=\"color:#fff\">two minutes from the main microphone</a>; they are in the list with an orange tag" % (len(pledged), "has" if len(pledged) == 1 else "have")
+        spotted += ". <strong class=\"count\">%d</strong> more %s promised El Niño <a href=\"/two-minutes/\" style=\"color:#fff\">two minutes from the main microphone</a>" % (len(pledged), "has" if len(pledged) == 1 else "have")
     parts = []
     parts.append("""
 <header class="hero slim" id="top">
   <div class="wrap">
     <h1>Every <em>El Niño</em> event at Climate Week NYC</h1>
-    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño%s. They are listed here in the order they happen, with registration going straight to each host. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
+    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">%d</strong> of them are about El Niño%s. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
     <form class="hero-signup ev-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <input type="hidden" name="form-name" value="get-involved">
       <input type="hidden" name="message" value="Notify me about new El Niño events at Climate Week">
