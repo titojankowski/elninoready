@@ -20,12 +20,14 @@ import os
 import re
 import shutil
 import sys
+import zoneinfo
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = "https://elninoready.earth"
 YEAR = 2026
 CSV = os.path.join(ROOT, "events.csv")
 OUT = os.path.join(ROOT, "events")
+NY = zoneinfo.ZoneInfo("America/New_York")
 COLUMNS = ["Title", "Date", "Start", "End", "URL", "Location", "Host", "Why go", "Summary",
            "Format", "RSVP Type", "NYCW listed", "Spotted by", "El Niño role"]
 
@@ -123,6 +125,13 @@ def enrich(rows):
         r["_slug"] = slug
         r["_when"] = fmt_time(r["_start"]) + (" to " + fmt_time(r["_end"]) if r["_end"] else "")
         r["_day"] = r["_date"].strftime("%A, %B %-d")
+        r["_short"] = r["_date"].strftime("%a %b %-d")
+        # Over at its end time, New York time (no end time: the end of that day). A past event is not
+        # dropped: it moves to a short greyed "Already happened" list and still counts in every stat.
+        # The pages re-check this in the browser from data-ends, so nothing needs a deploy each day.
+        ends = datetime.datetime.combine(r["_date"], r["_end"] or datetime.time(23, 59), tzinfo=NY)
+        r["_ends_iso"] = ends.isoformat()
+        r["_past"] = ends < datetime.datetime.now(NY)
         r["_official"] = r.get("NYCW listed", "").strip().lower() in ("yes", "y", "true", "listed")
         # "El Niño role": "About El Niño" (the main list) or "Two minutes" (an event whose host has
         # promised El Niño two minutes from the main microphone; listed separately, never counted as about).
@@ -195,6 +204,16 @@ EXTRA_CSS = """
   .tm-points li b { display: block; font-size: 1.05rem; margin-bottom: 0.3rem; }
   .tm-points li p { font-size: 0.95rem; color: rgba(30,35,42,0.85); max-width: 60ch; }
   .ev-cta { align-self: start; }
+  /* already happened: brief and grey, at the bottom; still counted in every stat */
+  .ev .ev-date { display: none; }
+  .ev.is-past { padding: 0.55rem 0; opacity: 0.55; background: none; align-items: baseline; }
+  .ev.is-past .ev-date { display: block; }
+  .ev.is-past .ev-time { font-size: 0.74rem; }
+  .ev.is-past h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
+  .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
+  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta { display: none; }
+  .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
+  .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
     display: inline-block; font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
@@ -434,6 +453,46 @@ def split_rows(rows):
     return [r for r in rows if not r["_pledge"]], [r for r in rows if r["_pledge"]]
 
 
+# An event moves itself to "Already happened" once its end time passes, so the list is right
+# between deploys. Build time does the same sort; this only catches what has passed since.
+HAPPENED_JS = """
+<script>
+(function () {
+  var now = Date.now(), list = document.getElementById('happened-list'), head = document.getElementById('happened');
+  if (!list || !head) return;
+  [].slice.call(document.querySelectorAll('.ev[data-ends]:not(.is-past)')).forEach(function (a) {
+    if (Date.parse(a.getAttribute('data-ends')) < now) { a.classList.add('is-past'); list.appendChild(a); }
+  });
+  function count(el, n) { el.querySelector('small').textContent = n + (n === 1 ? ' event' : ' events'); }
+  [].slice.call(document.querySelectorAll('.day[data-day]')).forEach(function (d) {
+    var n = document.querySelectorAll('.ev[data-day="' + d.getAttribute('data-day') + '"]:not(.is-past)').length;
+    if (n) count(d, n); else d.hidden = true;
+  });
+  if (list.children.length) { head.hidden = false; count(head, list.children.length); }
+})();
+</script>
+"""
+
+HOME_HAPPENED_JS = """
+    <script>
+    (function () {
+      var now = Date.now();
+      [].slice.call(document.querySelectorAll('.home-events .he-list')).forEach(function (list) {
+        var moved = [].slice.call(list.querySelectorAll('.he-item[data-ends]:not(.is-past)')).filter(function (i) {
+          return Date.parse(i.getAttribute('data-ends')) < now;
+        });
+        if (!moved.length) return;
+        var head = list.querySelector('.he-happened');
+        if (!head) { head = document.createElement('div'); head.className = 'he-day he-happened'; head.textContent = 'Already happened'; list.appendChild(head); }
+        moved.forEach(function (i) { i.classList.add('is-past'); list.appendChild(i); });
+        [].slice.call(list.querySelectorAll('.he-day[data-day]')).forEach(function (d) {
+          if (!list.querySelector('.he-item[data-day="' + d.getAttribute('data-day') + '"]:not(.is-past)')) d.hidden = true;
+        });
+      });
+    })();
+    </script>"""
+
+
 def pledged_line(r):
     who = (r.get("Spotted by") or r.get("Host") or "").strip()
     return '<p class="spotted pledged">Two minutes pledged by <b>%s</b></p>' % html.escape(who) if who else ""
@@ -472,12 +531,14 @@ def render_index(rows):
     about, pledged = split_rows(rows)
     n = len(about)
     days = []
-    for r in rows:
+    for r in [x for x in rows if not x["_past"]]:
         if not days or days[-1][0] != r["_date"]:
             days.append((r["_date"], r["_day"], []))
         days[-1][2].append(r)
+    # Spotters are individual people who sent us an El Niño event. A partner we reached out to is
+    # not a spotter: on a "Two minutes" row the "Spotted by" cell is the pledge credit, nothing more.
     spotters = []
-    for r in rows:
+    for r in about:
         who = (r.get("Spotted by") or "").strip()
         if who and who not in spotters:
             spotters.append(who)
@@ -505,30 +566,30 @@ def render_index(rows):
 <section style="padding-top:0.5rem">
   <div class="wrap">
 """ % (n, spotted))
-    for _, label, evs in days:
-        parts.append('<div class="day"><h2>%s <small>%d event%s</small></h2></div>' % (e(label), len(evs), "" if len(evs) == 1 else "s"))
-        for r in evs:
-            who = " · ".join(x for x in [r.get("Host"), r.get("Location")] if x)
-            if r["_pledge"]:
-                # A partner's own event, not an El Niño one. One compact strip: the pledge is the
-                # headline, the event is the credit, and it never wears the full card's weight.
-                pledger = (r.get("Spotted by") or r.get("Host") or "").strip()
-                parts.append("""
-    <article class="ev pledge" id="%s">
-      <div class="ev-time">%s<span class="tz">ET</span></div>
+    def article(r):
+        who = " · ".join(x for x in [r.get("Host"), r.get("Location")] if x)
+        attrs = ' data-ends="%s" data-day="%s"' % (r["_ends_iso"], r["_date"].isoformat())
+        gone = " is-past" if r["_past"] else ""
+        when = '<span class="ev-date">%s</span>%s<span class="tz">ET</span>' % (e(r["_short"]), e(r["_when"]))
+        if r["_pledge"]:
+            # A partner's own event, not an El Niño one. One compact strip: the pledge is the
+            # headline, the event is the credit, and it never wears the full card's weight.
+            pledger = (r.get("Spotted by") or r.get("Host") or "").strip()
+            return """
+    <article class="ev pledge%s" id="%s"%s>
+      <div class="ev-time">%s</div>
       <div class="pl-body">
         <p class="pl-flag">Two minutes for El Niño%s</p>
         <h3><a href="/events/%s/">%s</a></h3>
         <p class="who">%s</p>
       </div>
       <div class="ev-cta"><a class="btn-quiet" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>
-    </article>""" % (r["_slug"], e(r["_when"]),
+    </article>""" % (gone, r["_slug"], attrs, when,
                      (" &middot; pledged by " + e(pledger)) if pledger else "",
-                     r["_slug"], e(r["Title"]), e(who), e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
-                continue
-            parts.append("""
-    <article class="ev" id="%s">
-      <div class="ev-time">%s<span class="tz">ET</span></div>
+                     r["_slug"], e(r["Title"]), e(who), e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"]))
+        return """
+    <article class="ev%s" id="%s"%s>
+      <div class="ev-time">%s</div>
       <div>
         <h3><a href="/events/%s/">%s</a></h3>
         <p class="who">%s</p>
@@ -536,9 +597,19 @@ def render_index(rows):
         %s%s
       </div>
       <div class="ev-cta">%s</div>
-    </article>""" % (r["_slug"], e(r["_when"]), r["_slug"], e(r["Title"]), e(who),
+    </article>""" % (gone, r["_slug"], attrs, when, r["_slug"], e(r["Title"]), e(who),
                      e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r),
-                     spotted_line(r), cta(r)))
+                     spotted_line(r), cta(r))
+
+    for date, label, evs in days:
+        parts.append('<div class="day" data-day="%s"><h2>%s <small>%d event%s</small></h2></div>'
+                     % (date.isoformat(), e(label), len(evs), "" if len(evs) == 1 else "s"))
+        parts.extend(article(r) for r in evs)
+    gone_rows = [r for r in rows if r["_past"]]
+    parts.append('<div class="day happened" id="happened"%s><h2>Already happened <small>%d event%s</small></h2></div>\n<div id="happened-list">'
+                 % ("" if gone_rows else " hidden", len(gone_rows), "" if len(gone_rows) == 1 else "s"))
+    parts.extend(article(r) for r in gone_rows)
+    parts.append("</div>" + HAPPENED_JS)
     roll = ""
     if spotters:
         roll = '<div class="spotters"><h3>Spotters</h3><ul>%s<li class="you">you?</li></ul></div>' % "".join("<li>%s</li>" % e(s) for s in spotters)
@@ -583,7 +654,9 @@ def render_single(r):
 """ % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html,
        '<p class="why">%s</p>' % e(r["Why go"]) if r.get("Why go") else "",
        '<p class="desc">%s</p>' % e(r["Summary"]) if r.get("Summary") else "",
-       tags_for(r), '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True), spotted_line(r))
+       tags_for(r),
+       ('<p class="happened-note">This event has happened. <a href="%s" target="_blank" rel="noopener">Host\'s page ↗</a></p>' % e(r["URL"])) if r["_past"]
+       else '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True), spotted_line(r))
     desc = "%s · %s ET. %s" % (r["_day"], r["_when"], r.get("Why go") or "")
     return page("%s · El Niño Ready" % r["Title"], desc.strip(), url, body, og_type="article")
 
@@ -593,28 +666,33 @@ def render_home_block(rows):
     e = html.escape
     rows, pledged = split_rows(rows)
     n = len(rows)
-    items, last_day = [], None
-    for r in rows:
-        if r["_date"] != last_day:
-            items.append('<div class="he-day">%s</div>' % e(r["_day"]))
-            last_day = r["_date"]
-        items.append(
-            '<div class="he-item"><span class="he-time">%s ET</span>'
-            '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
-            '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
-            % (e(r["_when"]), r["_slug"], e(r["Title"]), e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
-               e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
-    pledge_html = ""
-    if pledged:
-        pitems = []
-        for r in pledged:
-            pitems.append(
-                '<div class="he-item"><span class="he-time">%s<br><small>%s ET</small></span>'
+    def he_item(r, dated):
+        t = ('%s<br><small>%s ET</small>' % (e(r["_short"]), e(r["_when"]))) if (dated or r["_past"]) else (
+            '<span class="he-date">%s<br></span>%s ET' % (e(r["_short"]), e(r["_when"])))
+        return ('<div class="he-item%s" data-ends="%s" data-day="%s"><span class="he-time">%s</span>'
                 '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
                 '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
-                % (e(r["_day"].split(", ")[0][:3] + " " + r["_day"].split(", ")[1]), e(r["_when"]), r["_slug"], e(r["Title"]),
+                % (" is-past" if r["_past"] else "", r["_ends_iso"], r["_date"].isoformat(), t, r["_slug"], e(r["Title"]),
                    e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
                    e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
+
+    def he_list(rs, dated):
+        out, last_day = [], None
+        for r in [x for x in rs if not x["_past"]]:
+            if not dated and r["_date"] != last_day:
+                out.append('<div class="he-day" data-day="%s">%s</div>' % (r["_date"].isoformat(), e(r["_day"])))
+                last_day = r["_date"]
+            out.append(he_item(r, dated))
+        gone = [x for x in rs if x["_past"]]
+        if gone:
+            out.append('<div class="he-day he-happened">Already happened</div>')
+            out.extend(he_item(r, dated) for r in gone)
+        return out
+
+    items = he_list(rows, False)
+    pledge_html = ""
+    if pledged:
+        pitems = he_list(pledged, True)
         pledge_html = """
     <h3 class="he-sub"><em>%d</em> more %s promised El Niño two minutes from the main microphone.</h3>
     <p class="lede he-sub-lede">Not about El Niño, but the host will give it two minutes from the stage. That is our only ask of every Climate Week event, and <a href="/two-minutes/" style="color:#fff">here is what to say</a>.</p>
@@ -629,10 +707,10 @@ def render_home_block(rows):
 %s
     </div>%s
     <a class="btn btn-heat he-all" href="/events/">All El Niño events at Climate Week →</a>
-    <p class="he-note">Hosting one, or know one we missed? <a href="#ideas" style="color:#fff">Tell us</a> and it goes on the list. And if your Climate Week event isn't about El Niño, our only ask is two minutes about it from the main microphone.</p>
+    <p class="he-note">Hosting one, or know one we missed? <a href="#ideas" style="color:#fff">Tell us</a> and it goes on the list. And if your Climate Week event isn't about El Niño, our only ask is two minutes about it from the main microphone.</p>%s
   </div>
 </section>
-""" % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items), pledge_html)
+""" % (n, "is" if n == 1 else "are", "\n".join("      " + i for i in items), pledge_html, HOME_HAPPENED_JS)
 
 
 MISS_SECTION = '''

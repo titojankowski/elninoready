@@ -275,6 +275,12 @@
   .he-go { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; border: 2px solid #fff; padding: 0.35rem 0.75rem; white-space: nowrap; justify-self: start; }
   @media (min-width: 760px) { .he-go { justify-self: end; } }
   .he-go:hover { background: var(--heat); border-color: var(--heat); }
+  /* already happened: greyed at the end of each list, no Register button; still counted in the headline */
+  .he-date { display: none; }
+  .he-item.is-past { opacity: 0.5; }
+  .he-item.is-past .he-date { display: inline; }
+  .he-item.is-past .he-go { display: none; }
+  .he-day.he-happened { color: rgba(216,221,226,0.6); }
   .he-all { display: inline-block; margin-top: 1.75rem; }
   .he-sub { margin-top: 3rem; font-size: clamp(1.05rem, 2.2vw, 1.35rem); text-transform: uppercase; font-weight: 700; line-height: 1.3; max-width: 34ch; }
   .he-sub em { font-style: normal; color: var(--heat-bright); }
@@ -369,6 +375,16 @@
   .tm-points li b { display: block; font-size: 1.05rem; margin-bottom: 0.3rem; }
   .tm-points li p { font-size: 0.95rem; color: rgba(30,35,42,0.85); max-width: 60ch; }
   .ev-cta { align-self: start; }
+  /* already happened: brief and grey, at the bottom; still counted in every stat */
+  .ev .ev-date { display: none; }
+  .ev.is-past { padding: 0.55rem 0; opacity: 0.55; background: none; align-items: baseline; }
+  .ev.is-past .ev-date { display: block; }
+  .ev.is-past .ev-time { font-size: 0.74rem; }
+  .ev.is-past h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
+  .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
+  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta { display: none; }
+  .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
+  .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
     display: inline-block; font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;

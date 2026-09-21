@@ -275,6 +275,12 @@
   .he-go { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; border: 2px solid #fff; padding: 0.35rem 0.75rem; white-space: nowrap; justify-self: start; }
   @media (min-width: 760px) { .he-go { justify-self: end; } }
   .he-go:hover { background: var(--heat); border-color: var(--heat); }
+  /* already happened: greyed at the end of each list, no Register button; still counted in the headline */
+  .he-date { display: none; }
+  .he-item.is-past { opacity: 0.5; }
+  .he-item.is-past .he-date { display: inline; }
+  .he-item.is-past .he-go { display: none; }
+  .he-day.he-happened { color: rgba(216,221,226,0.6); }
   .he-all { display: inline-block; margin-top: 1.75rem; }
   .he-sub { margin-top: 3rem; font-size: clamp(1.05rem, 2.2vw, 1.35rem); text-transform: uppercase; font-weight: 700; line-height: 1.3; max-width: 34ch; }
   .he-sub em { font-style: normal; color: var(--heat-bright); }
@@ -369,6 +375,16 @@
   .tm-points li b { display: block; font-size: 1.05rem; margin-bottom: 0.3rem; }
   .tm-points li p { font-size: 0.95rem; color: rgba(30,35,42,0.85); max-width: 60ch; }
   .ev-cta { align-self: start; }
+  /* already happened: brief and grey, at the bottom; still counted in every stat */
+  .ev .ev-date { display: none; }
+  .ev.is-past { padding: 0.55rem 0; opacity: 0.55; background: none; align-items: baseline; }
+  .ev.is-past .ev-date { display: block; }
+  .ev.is-past .ev-time { font-size: 0.74rem; }
+  .ev.is-past h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
+  .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
+  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta { display: none; }
+  .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
+  .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
     display: inline-block; font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
@@ -552,7 +568,7 @@
 <header class="hero slim" id="top">
   <div class="wrap">
     <h1>Every <em>El Niño</em> event at Climate Week NYC</h1>
-    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">4</strong> of them are about El Niño, <strong class="count">spotted by 6 people</strong>. <strong class="count">3</strong> more have promised El Niño <a href="/two-minutes/" style="color:#fff">two minutes from the main microphone</a>. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
+    <p class="sub">Climate Week NYC has more than a thousand events. <strong class="count">4</strong> of them are about El Niño, <strong class="count">spotted by 3 people</strong>. <strong class="count">5</strong> more have promised El Niño <a href="/two-minutes/" style="color:#fff">two minutes from the main microphone</a>. Know one we're missing? <a href="#add" style="color:#fff">Spot it and get credit</a>.</p>
     <form class="hero-signup ev-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
       <input type="hidden" name="form-name" value="get-involved">
       <input type="hidden" name="message" value="Notify me about new El Niño events at Climate Week">
@@ -567,18 +583,9 @@
 </header>
 <section style="padding-top:0.5rem">
   <div class="wrap">
-<div class="day"><h2>Friday, September 18 <small>1 event</small></h2></div>
-    <article class="ev pledge" id="nyph-regenerative-metropolis-symposium-2026">
-      <div class="ev-time">9am to 7pm<span class="tz">ET</span></div>
-      <div class="pl-body">
-        <p class="pl-flag">Two minutes for El Niño &middot; pledged by New York Passive House team</p>
-        <h3><a href="/events/nyph-regenerative-metropolis-symposium-2026/">NYPH Regenerative Metropolis Symposium 2026</a></h3>
-        <p class="who">New York Passive House · 63 Fifth Ave, Manhattan</p>
-      </div>
-      <div class="ev-cta"><a class="btn-quiet" href="https://www.climateweeknyc.org/event-search/nyph-regenerative-metropolis-symposium-2026" target="_blank" rel="noopener" data-goatcounter-click="register/nyph-regenerative-metropolis-symposium-2026" data-goatcounter-title="NYPH Regenerative Metropolis Symposium 2026">Register ↗</a></div>
-    </article><div class="day"><h2>Wednesday, September 23 <small>3 events</small></h2></div>
-    <article class="ev pledge" id="10th-nyc-green-school-conference-2026">
-      <div class="ev-time">8:30am to 5pm<span class="tz">ET</span></div>
+<div class="day" data-day="2026-09-23"><h2>Wednesday, September 23 <small>4 events</small></h2></div>
+    <article class="ev pledge" id="10th-nyc-green-school-conference-2026" data-ends="2026-09-23T17:00:00-04:00" data-day="2026-09-23">
+      <div class="ev-time"><span class="ev-date">Wed Sep 23</span>8:30am to 5pm<span class="tz">ET</span></div>
       <div class="pl-body">
         <p class="pl-flag">Two minutes for El Niño &middot; pledged by Green Mentors team</p>
         <h3><a href="/events/10th-nyc-green-school-conference-2026/">10th NYC Green School Conference 2026</a></h3>
@@ -586,8 +593,17 @@
       </div>
       <div class="ev-cta"><a class="btn-quiet" href="https://www.nycgreenschoolconference.world/" target="_blank" rel="noopener" data-goatcounter-click="register/10th-nyc-green-school-conference-2026" data-goatcounter-title="10th NYC Green School Conference 2026">Register ↗</a></div>
     </article>
-    <article class="ev" id="el-nino-2026-how-big-could-it-get">
-      <div class="ev-time">12pm to 1pm<span class="tz">ET</span></div>
+    <article class="ev pledge" id="in-their-own-hands-youth-and-community-leadership-for" data-ends="2026-09-23T13:00:00-04:00" data-day="2026-09-23">
+      <div class="ev-time"><span class="ev-date">Wed Sep 23</span>11:30am to 1pm<span class="tz">ET</span></div>
+      <div class="pl-body">
+        <p class="pl-flag">Two minutes for El Niño &middot; pledged by Willis Ochieng, Creats International</p>
+        <h3><a href="/events/in-their-own-hands-youth-and-community-leadership-for/">In Their Own Hands: Youth and Community Leadership for Climate Action</a></h3>
+        <p class="who">Creats International · 134 W 29th St, 2nd Floor, Manhattan (+ online)</p>
+      </div>
+      <div class="ev-cta"><a class="btn-quiet" href="https://www.climateweeknyc.org/event-search/in-their-own-hands-youth-and-community-leadership-for-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/in-their-own-hands-youth-and-community-leadership-for" data-goatcounter-title="In Their Own Hands: Youth and Community Leadership for Climate Action">Register ↗</a></div>
+    </article>
+    <article class="ev" id="el-nino-2026-how-big-could-it-get" data-ends="2026-09-23T13:00:00-04:00" data-day="2026-09-23">
+      <div class="ev-time"><span class="ev-date">Wed Sep 23</span>12pm to 1pm<span class="tz">ET</span></div>
       <div>
         <h3><a href="/events/el-nino-2026-how-big-could-it-get/">El Niño 2026: How Big Could It Get?</a></h3>
         <p class="who">Center for Climate Systems Research, Columbia Climate School · Hogan Hall, Room Hogan A, 566 W 114th St (+ Zoom)</p>
@@ -596,8 +612,8 @@
       </div>
       <div class="ev-cta"><a class="btn-go" href="https://events.columbia.edu/cal/event/eventView.do?b=de&amp;calPath=%2Fpublic%2Fcals%2FMainCal&amp;guid=CAL-00bbdb70-a05bff40-01a0-5e443bd0-00004731events@columbia.edu&amp;recurrenceId=" target="_blank" rel="noopener" data-goatcounter-click="register/el-nino-2026-how-big-could-it-get" data-goatcounter-title="El Niño 2026: How Big Could It Get?">Register ↗<small>on events.columbia.edu</small></a></div>
     </article>
-    <article class="ev" id="a-postcard-from-the-future-the-heat-toll-of-the-2026-27">
-      <div class="ev-time">1pm to 2pm<span class="tz">ET</span></div>
+    <article class="ev" id="a-postcard-from-the-future-the-heat-toll-of-the-2026-27" data-ends="2026-09-23T14:00:00-04:00" data-day="2026-09-23">
+      <div class="ev-time"><span class="ev-date">Wed Sep 23</span>1pm to 2pm<span class="tz">ET</span></div>
       <div>
         <h3><a href="/events/a-postcard-from-the-future-the-heat-toll-of-the-2026-27/">A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do</a></h3>
         <p class="who">University of Chicago Institute for Climate &amp; Sustainable Growth, with C2ES · Glasshouse on Bryant Park, 9th Floor, 54 W 40th St</p>
@@ -605,9 +621,9 @@
         <div class="tags"><span class="tag official">On the Climate Week NYC program</span><span class="tag">Panel</span><span class="tag">Public</span></div><p class="spotted">Spotted by <b>Jack S., Texas</b></p>
       </div>
       <div class="ev-cta"><a class="btn-go" href="https://www.climateweeknyc.org/event-search/a-postcard-from-the-future-the-heat-toll-of-the-202627-super-el-nino-and-what-we-can-still-do" target="_blank" rel="noopener" data-goatcounter-click="register/a-postcard-from-the-future-the-heat-toll-of-the-2026-27" data-goatcounter-title="A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do">Register ↗<small>on climateweeknyc.org</small></a></div>
-    </article><div class="day"><h2>Thursday, September 24 <small>2 events</small></h2></div>
-    <article class="ev" id="frontline-resilience-adapting-smallholder-agriculture-to-el">
-      <div class="ev-time">8am to 9:30am<span class="tz">ET</span></div>
+    </article><div class="day" data-day="2026-09-24"><h2>Thursday, September 24 <small>2 events</small></h2></div>
+    <article class="ev" id="frontline-resilience-adapting-smallholder-agriculture-to-el" data-ends="2026-09-24T09:30:00-04:00" data-day="2026-09-24">
+      <div class="ev-time"><span class="ev-date">Thu Sep 24</span>8am to 9:30am<span class="tz">ET</span></div>
       <div>
         <h3><a href="/events/frontline-resilience-adapting-smallholder-agriculture-to-el/">Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate</a></h3>
         <p class="who">Climate Action for Smallholders Coalition · 200 Park Ave (MetLife Building)</p>
@@ -616,8 +632,8 @@
       </div>
       <div class="ev-cta"><a class="btn-go" href="https://www.climateweeknyc.org/event-search/frontline-resilience-adapting-smallholder-agriculture-to-el-nino-extreme-climate" target="_blank" rel="noopener" data-goatcounter-click="register/frontline-resilience-adapting-smallholder-agriculture-to-el" data-goatcounter-title="Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate">Register ↗<small>on climateweeknyc.org</small></a></div>
     </article>
-    <article class="ev" id="beyond-the-forecast-what-el-nino-reveals-about-science">
-      <div class="ev-time">2pm to 3:30pm<span class="tz">ET</span></div>
+    <article class="ev" id="beyond-the-forecast-what-el-nino-reveals-about-science" data-ends="2026-09-24T15:30:00-04:00" data-day="2026-09-24">
+      <div class="ev-time"><span class="ev-date">Thu Sep 24</span>2pm to 3:30pm<span class="tz">ET</span></div>
       <div>
         <h3><a href="/events/beyond-the-forecast-what-el-nino-reveals-about-science/">Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</a></h3>
         <p class="who">Columbia Climate School · The Forum at Columbia University, Auditorium, 601 W 125th St</p>
@@ -625,9 +641,9 @@
         <div class="tags"><span class="tag">Panel</span><span class="tag">Public</span></div><p class="spotted">Spotted by <b>Marie D., California</b></p>
       </div>
       <div class="ev-cta"><a class="btn-go" href="https://www.climate.columbia.edu/events/beyond-forecast-el-nino-society-and-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/beyond-the-forecast-what-el-nino-reveals-about-science" data-goatcounter-title="Beyond the Forecast: What El Niño Reveals About Science, Society, and Action">Register ↗<small>on climate.columbia.edu</small></a></div>
-    </article><div class="day"><h2>Friday, September 25 <small>1 event</small></h2></div>
-    <article class="ev pledge" id="climate-comedy-and-methane-myth-busting">
-      <div class="ev-time">10am to 12pm<span class="tz">ET</span></div>
+    </article><div class="day" data-day="2026-09-25"><h2>Friday, September 25 <small>2 events</small></h2></div>
+    <article class="ev pledge" id="climate-comedy-and-methane-myth-busting" data-ends="2026-09-25T12:00:00-04:00" data-day="2026-09-25">
+      <div class="ev-time"><span class="ev-date">Fri Sep 25</span>10am to 12pm<span class="tz">ET</span></div>
       <div class="pl-body">
         <p class="pl-flag">Two minutes for El Niño &middot; pledged by Methane Mitigation Council team</p>
         <h3><a href="/events/climate-comedy-and-methane-myth-busting/">Climate Comedy &amp; Methane Myth-busting</a></h3>
@@ -635,7 +651,42 @@
       </div>
       <div class="ev-cta"><a class="btn-quiet" href="https://www.climateweeknyc.org/event-search/methane-curious-in-person-qa-with-special-guests-fundraiser" target="_blank" rel="noopener" data-goatcounter-click="register/climate-comedy-and-methane-myth-busting" data-goatcounter-title="Climate Comedy &amp; Methane Myth-busting">Register ↗</a></div>
     </article>
-    <div class="spotters"><h3>Spotters</h3><ul><li>New York Passive House team</li><li>Green Mentors team</li><li>Marie D., California</li><li>Jack S., Texas</li><li>Angus S., Massachusetts</li><li>Methane Mitigation Council team</li><li class="you">you?</li></ul></div>
+    <article class="ev pledge" id="shaping-corporate-transparency-together" data-ends="2026-09-25T11:15:00-04:00" data-day="2026-09-25">
+      <div class="ev-time"><span class="ev-date">Fri Sep 25</span>10am to 11:15am<span class="tz">ET</span></div>
+      <div class="pl-body">
+        <p class="pl-flag">Two minutes for El Niño &middot; pledged by Impatico team</p>
+        <h3><a href="/events/shaping-corporate-transparency-together/">Shaping Corporate Transparency Together</a></h3>
+        <p class="who">Impatico · Online</p>
+      </div>
+      <div class="ev-cta"><a class="btn-quiet" href="https://www.climateweeknyc.org/event-search/shaping-corporate-transparency-together-a-multi-stakeholder-session-on-corporate-sustainability-accountability-impact" target="_blank" rel="noopener" data-goatcounter-click="register/shaping-corporate-transparency-together" data-goatcounter-title="Shaping Corporate Transparency Together">Register ↗</a></div>
+    </article><div class="day happened" id="happened"><h2>Already happened <small>1 event</small></h2></div>
+<div id="happened-list">
+    <article class="ev pledge is-past" id="nyph-regenerative-metropolis-symposium-2026" data-ends="2026-09-18T19:00:00-04:00" data-day="2026-09-18">
+      <div class="ev-time"><span class="ev-date">Fri Sep 18</span>9am to 7pm<span class="tz">ET</span></div>
+      <div class="pl-body">
+        <p class="pl-flag">Two minutes for El Niño &middot; pledged by New York Passive House team</p>
+        <h3><a href="/events/nyph-regenerative-metropolis-symposium-2026/">NYPH Regenerative Metropolis Symposium 2026</a></h3>
+        <p class="who">New York Passive House · 63 Fifth Ave, Manhattan</p>
+      </div>
+      <div class="ev-cta"><a class="btn-quiet" href="https://www.climateweeknyc.org/event-search/nyph-regenerative-metropolis-symposium-2026" target="_blank" rel="noopener" data-goatcounter-click="register/nyph-regenerative-metropolis-symposium-2026" data-goatcounter-title="NYPH Regenerative Metropolis Symposium 2026">Register ↗</a></div>
+    </article></div>
+<script>
+(function () {
+  var now = Date.now(), list = document.getElementById('happened-list'), head = document.getElementById('happened');
+  if (!list || !head) return;
+  [].slice.call(document.querySelectorAll('.ev[data-ends]:not(.is-past)')).forEach(function (a) {
+    if (Date.parse(a.getAttribute('data-ends')) < now) { a.classList.add('is-past'); list.appendChild(a); }
+  });
+  function count(el, n) { el.querySelector('small').textContent = n + (n === 1 ? ' event' : ' events'); }
+  [].slice.call(document.querySelectorAll('.day[data-day]')).forEach(function (d) {
+    var n = document.querySelectorAll('.ev[data-day="' + d.getAttribute('data-day') + '"]:not(.is-past)').length;
+    if (n) count(d, n); else d.hidden = true;
+  });
+  if (list.children.length) { head.hidden = false; count(head, list.children.length); }
+})();
+</script>
+
+    <div class="spotters"><h3>Spotters</h3><ul><li>Marie D., California</li><li>Jack S., Texas</li><li>Angus S., Massachusetts</li><li class="you">you?</li></ul></div>
   </div>
 </section>
 
