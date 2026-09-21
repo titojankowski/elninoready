@@ -155,7 +155,7 @@
   /* hero email signup — the primary CTA */
   .hero-signup { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
   .hero-signup input[type="email"] {
-    flex: 1 1 16rem; min-width: 0;
+    flex: 0 1 22rem; min-width: 0;   /* about half the hero's width; the button sits right beside it */
     font-family: inherit; font-size: 0.95rem;
     padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff;
   }
@@ -279,7 +279,7 @@
   .he-date { display: none; }
   .he-item.is-past { opacity: 0.5; }
   .he-item.is-past .he-date { display: inline; }
-  .he-item.is-past .he-go { display: none; }
+  .he-item.is-past .he-go, .he-item.is-past a.perf { display: none; }
   .he-day.he-happened { color: rgba(216,221,226,0.6); }
   .he-all { display: inline-block; margin-top: 1.75rem; }
   .he-sub { margin-top: 3rem; font-size: clamp(1.05rem, 2.2vw, 1.35rem); text-transform: uppercase; font-weight: 700; line-height: 1.3; max-width: 34ch; }
@@ -324,6 +324,31 @@
   .form-note { font-size: 0.75rem; color: rgba(30,35,42,0.55); text-transform: none; letter-spacing: 0; }
 
   .ideas-sec { background: var(--paper-2); border-top: 2px solid var(--ink); }
+
+  /* the El Niño song: badge on an event where it is performed live, the home strip, the video box */
+  a.perf { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; margin: 0.55rem 0 0.35rem; padding: 0.4rem 0.7rem; background: var(--heat); color: #fff; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); text-decoration: none; text-transform: none; line-height: 1.35; }
+  a.perf b { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  a.perf span { font-size: 0.78rem; font-weight: 400; }
+  a.perf:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+  .home-events a.perf { border-color: #fff; box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
+  .song-strip { background: var(--heat); border-bottom: 2px solid var(--ink); padding: 0; }
+  .song-strip .ss-grid { display: grid; gap: 1.5rem 2.75rem; align-items: center; grid-template-columns: 1fr; padding: 2.25rem 0 2.5rem; }
+  @media (min-width: 760px) { .song-strip .ss-grid { grid-template-columns: 13.5rem minmax(0, 1fr); } }
+  .song-strip .song-video { margin: 0; max-width: 13.5rem; box-shadow: 6px 6px 0 rgba(30,35,42,0.55); }
+  .song-strip .ss-kicker { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.6rem; }
+  .song-strip .ss-title { display: block; color: #fff; font-weight: 700; text-transform: uppercase; font-size: clamp(1.2rem, 2.9vw, 1.95rem); line-height: 1.25; letter-spacing: 0.01em; max-width: 28ch; }
+  .song-strip .ss-sub { color: #fff; font-size: 0.95rem; max-width: 52ch; margin-top: 0.9rem; }
+  .song-strip .ss-go { display: inline-block; margin-top: 1.4rem; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; padding: 0.8rem 1.3rem; background: var(--ink); color: #fff; border: 2px solid #fff; box-shadow: 4px 4px 0 rgba(30,35,42,0.45); white-space: nowrap; transition: transform 0.1s, box-shadow 0.1s; }
+  .song-strip .ss-go:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(30,35,42,0.45); }
+  .song-video { position: relative; max-width: 46rem; aspect-ratio: 16 / 9; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); background: var(--deep); margin-top: 0.5rem; }
+  .song-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .song-video.vertical { aspect-ratio: 9 / 16; max-width: 19rem; }
+  .song-play { display: block; position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: #000; cursor: pointer; font: inherit; -webkit-appearance: none; appearance: none; }
+  .song-play img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+  .song-play .sp-btn { position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); white-space: nowrap; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.65rem 1rem; background: var(--heat); color: #fff; border: 2px solid #fff; box-shadow: 3px 3px 0 rgba(0,0,0,0.55); }
+  .song-play:hover .sp-btn { background: var(--ink); }
+  .song-strip .ss-fund { display: block; margin-top: 1.1rem; color: #fff; font-size: 0.82rem; font-weight: 700; }
+  .song-strip [hidden] { display: none; }
 
   /* footer */
   footer { background: var(--deep); color: rgba(216,221,226,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
@@ -382,7 +407,7 @@
   .ev.is-past .ev-time { font-size: 0.74rem; }
   .ev.is-past h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
   .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
-  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta { display: none; }
+  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta, .ev.is-past a.perf { display: none; }
   .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
   .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
@@ -574,6 +599,7 @@
 <section class="single">
   <div class="wrap">
     <div class="meta-grid"><div class="meta-item"><span class="label">When</span><span class="value">Wednesday, September 23 · 12pm to 1pm ET</span></div><div class="meta-item"><span class="label">Where</span><span class="value">Hogan Hall, Room Hogan A, 566 W 114th St (+ Zoom)</span></div><div class="meta-item"><span class="label">Host</span><span class="value">Center for Climate Systems Research, Columbia Climate School</span></div><div class="meta-item"><span class="label">Format</span><span class="value">Briefing · Public</span></div></div>
+    
     <p class="why">The quarterly ENSO briefing from the people who make the forecast: how strong this gets, and which regions face drought, floods, and heat next.</p>
     <p class="desc">Center for Climate Systems Research (Columbia Climate School) ENSO and Climate Quarterly Briefing on the rapidly strengthening 2026 El Niño: the latest ENSO observations and forecasts as it approaches peak intensity, and which regions face heightened risk of drought, heavy rainfall, flooding, heat, and other extremes in the coming seasons. The science companion to Columbia&#x27;s Beyond the Forecast panel the next day. Open to the public, in person or on Zoom via the event page.</p>
     <div class="tags"><span class="tag">Briefing</span><span class="tag">Public</span><span class="tag">Online option</span></div>

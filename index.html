@@ -154,7 +154,7 @@
   /* hero email signup — the primary CTA */
   .hero-signup { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
   .hero-signup input[type="email"] {
-    flex: 1 1 16rem; min-width: 0;
+    flex: 0 1 22rem; min-width: 0;   /* about half the hero's width; the button sits right beside it */
     font-family: inherit; font-size: 0.95rem;
     padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff;
   }
@@ -278,7 +278,7 @@
   .he-date { display: none; }
   .he-item.is-past { opacity: 0.5; }
   .he-item.is-past .he-date { display: inline; }
-  .he-item.is-past .he-go { display: none; }
+  .he-item.is-past .he-go, .he-item.is-past a.perf { display: none; }
   .he-day.he-happened { color: rgba(216,221,226,0.6); }
   .he-all { display: inline-block; margin-top: 1.75rem; }
   .he-sub { margin-top: 3rem; font-size: clamp(1.05rem, 2.2vw, 1.35rem); text-transform: uppercase; font-weight: 700; line-height: 1.3; max-width: 34ch; }
@@ -323,6 +323,31 @@
   .form-note { font-size: 0.75rem; color: rgba(30,35,42,0.55); text-transform: none; letter-spacing: 0; }
 
   .ideas-sec { background: var(--paper-2); border-top: 2px solid var(--ink); }
+
+  /* the El Niño song: badge on an event where it is performed live, the home strip, the video box */
+  a.perf { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; margin: 0.55rem 0 0.35rem; padding: 0.4rem 0.7rem; background: var(--heat); color: #fff; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); text-decoration: none; text-transform: none; line-height: 1.35; }
+  a.perf b { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  a.perf span { font-size: 0.78rem; font-weight: 400; }
+  a.perf:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+  .home-events a.perf { border-color: #fff; box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
+  .song-strip { background: var(--heat); border-bottom: 2px solid var(--ink); padding: 0; }
+  .song-strip .ss-grid { display: grid; gap: 1.5rem 2.75rem; align-items: center; grid-template-columns: 1fr; padding: 2.25rem 0 2.5rem; }
+  @media (min-width: 760px) { .song-strip .ss-grid { grid-template-columns: 13.5rem minmax(0, 1fr); } }
+  .song-strip .song-video { margin: 0; max-width: 13.5rem; box-shadow: 6px 6px 0 rgba(30,35,42,0.55); }
+  .song-strip .ss-kicker { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.6rem; }
+  .song-strip .ss-title { display: block; color: #fff; font-weight: 700; text-transform: uppercase; font-size: clamp(1.2rem, 2.9vw, 1.95rem); line-height: 1.25; letter-spacing: 0.01em; max-width: 28ch; }
+  .song-strip .ss-sub { color: #fff; font-size: 0.95rem; max-width: 52ch; margin-top: 0.9rem; }
+  .song-strip .ss-go { display: inline-block; margin-top: 1.4rem; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; padding: 0.8rem 1.3rem; background: var(--ink); color: #fff; border: 2px solid #fff; box-shadow: 4px 4px 0 rgba(30,35,42,0.45); white-space: nowrap; transition: transform 0.1s, box-shadow 0.1s; }
+  .song-strip .ss-go:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(30,35,42,0.45); }
+  .song-video { position: relative; max-width: 46rem; aspect-ratio: 16 / 9; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); background: var(--deep); margin-top: 0.5rem; }
+  .song-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .song-video.vertical { aspect-ratio: 9 / 16; max-width: 19rem; }
+  .song-play { display: block; position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: #000; cursor: pointer; font: inherit; -webkit-appearance: none; appearance: none; }
+  .song-play img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+  .song-play .sp-btn { position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); white-space: nowrap; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.65rem 1rem; background: var(--heat); color: #fff; border: 2px solid #fff; box-shadow: 3px 3px 0 rgba(0,0,0,0.55); }
+  .song-play:hover .sp-btn { background: var(--ink); }
+  .song-strip .ss-fund { display: block; margin-top: 1.1rem; color: #fff; font-size: 0.82rem; font-weight: 700; }
+  .song-strip [hidden] { display: none; }
 
   /* footer */
   footer { background: var(--deep); color: rgba(216,221,226,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
@@ -383,6 +408,25 @@
     </form>
   </div>
 </header>
+
+<section class="song-strip" id="song">
+  <div class="wrap">
+    <div class="ss-grid">
+      <div class="song-video vertical"><a class="song-play" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home-video" data-goatcounter-title="Song crowdfund (home band, play button)" aria-label="Play the El Niño song on its crowdfunding page"><img src="/song/poster.jpg" alt="Baba Brinkman and Rowan performing the El Niño song live" width="405" height="720"><span class="sp-btn">▶ Play the song</span></a></div>
+      <div>
+        <span class="ss-kicker">♪ <span class="ss-week">New at Climate Week · </span>The El Niño song</span>
+        <span class="ss-title">A 12-year-old opera singer and his rapper uncle wrote a song about El Niño.</span>
+        <p class="ss-sub">Rowan is 12 and sings opera. His uncle, Baba Brinkman, is a science rapper. Hear the live version, and help us make the full track: a hip hop anthem about El Niño with a boys chorus singing the hook.</p>
+        <a class="ss-go" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home" data-goatcounter-title="Song crowdfund (home band)">▶ Play the song</a>
+        <a class="ss-fund ss-week" href="#ideas" data-goatcounter-click="song/invite-home" data-goatcounter-title="Song invite (home band)">Rowan is in New York this week only. Invite him to perform at your event →</a>
+      </div>
+    </div>
+  </div>
+  <script>
+  // Rowan is in New York for Climate Week only: the 'this week' bits hide themselves once the week is over.
+  if (Date.now() > Date.parse('2026-09-28T00:00:00-04:00')) [].slice.call(document.querySelectorAll('.ss-week')).forEach(function (el) { el.hidden = true; });
+  </script>
+</section>
 
 <section class="ask">
   <div class="wrap">
@@ -485,7 +529,7 @@
       <div class="he-item" data-ends="2026-09-23T14:00:00-04:00" data-day="2026-09-23"><span class="he-time"><span class="he-date">Wed Sep 23<br></span>1pm to 2pm ET</span><span class="he-title"><a href="/events/a-postcard-from-the-future-the-heat-toll-of-the-2026-27/">A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do</a><span class="he-host">University of Chicago Institute for Climate &amp; Sustainable Growth, with C2ES · Glasshouse on Bryant Park, 9th Floor, 54 W 40th St</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/a-postcard-from-the-future-the-heat-toll-of-the-202627-super-el-nino-and-what-we-can-still-do" target="_blank" rel="noopener" data-goatcounter-click="register/a-postcard-from-the-future-the-heat-toll-of-the-2026-27" data-goatcounter-title="A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do">Register ↗</a></div>
       <div class="he-day" data-day="2026-09-24">Thursday, September 24</div>
       <div class="he-item" data-ends="2026-09-24T09:30:00-04:00" data-day="2026-09-24"><span class="he-time"><span class="he-date">Thu Sep 24<br></span>8am to 9:30am ET</span><span class="he-title"><a href="/events/frontline-resilience-adapting-smallholder-agriculture-to-el/">Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate</a><span class="he-host">Climate Action for Smallholders Coalition · 200 Park Ave (MetLife Building)</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/frontline-resilience-adapting-smallholder-agriculture-to-el-nino-extreme-climate" target="_blank" rel="noopener" data-goatcounter-click="register/frontline-resilience-adapting-smallholder-agriculture-to-el" data-goatcounter-title="Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-24T15:30:00-04:00" data-day="2026-09-24"><span class="he-time"><span class="he-date">Thu Sep 24<br></span>2pm to 3:30pm ET</span><span class="he-title"><a href="/events/beyond-the-forecast-what-el-nino-reveals-about-science/">Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</a><span class="he-host">Columbia Climate School · The Forum at Columbia University, Auditorium, 601 W 125th St</span></span><a class="he-go" href="https://www.climate.columbia.edu/events/beyond-forecast-el-nino-society-and-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/beyond-the-forecast-what-el-nino-reveals-about-science" data-goatcounter-title="Beyond the Forecast: What El Niño Reveals About Science, Society, and Action">Register ↗</a></div>
+      <div class="he-item" data-ends="2026-09-24T15:30:00-04:00" data-day="2026-09-24"><span class="he-time"><span class="he-date">Thu Sep 24<br></span>2pm to 3:30pm ET</span><span class="he-title"><a href="/events/beyond-the-forecast-what-el-nino-reveals-about-science/">Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</a><span class="he-host">Columbia Climate School · The Forum at Columbia University, Auditorium, 601 W 125th St</span><a class="perf" href="/#song" data-goatcounter-click="song/badge-home" data-goatcounter-title="Song badge (home)"><b>♪ The El Niño song, live</b><span>Rowan and Baba Brinkman perform</span></a></span><a class="he-go" href="https://www.climate.columbia.edu/events/beyond-forecast-el-nino-society-and-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/beyond-the-forecast-what-el-nino-reveals-about-science" data-goatcounter-title="Beyond the Forecast: What El Niño Reveals About Science, Society, and Action">Register ↗</a></div>
     </div>
     <h3 class="he-sub"><em>5</em> more have promised El Niño two minutes from the main microphone.</h3>
     <p class="lede he-sub-lede">Not about El Niño, but the host will give it two minutes from the stage. That is our only ask of every Climate Week event, and <a href="/two-minutes/" style="color:#fff">here is what to say</a>.</p>

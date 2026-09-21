@@ -29,7 +29,7 @@ CSV = os.path.join(ROOT, "events.csv")
 OUT = os.path.join(ROOT, "events")
 NY = zoneinfo.ZoneInfo("America/New_York")
 COLUMNS = ["Title", "Date", "Start", "End", "URL", "Location", "Host", "Why go", "Summary",
-           "Format", "RSVP Type", "NYCW listed", "Spotted by", "El Niño role"]
+           "Format", "RSVP Type", "NYCW listed", "Spotted by", "El Niño role", "Performance"]
 
 
 # ----------------------------------------------------------------- data ----
@@ -137,6 +137,9 @@ def enrich(rows):
         # promised El Niño two minutes from the main microphone; listed separately, never counted as about).
         role = (r.get("El Niño role") or "").strip().lower()
         r["_pledge"] = ("two" in role) or ("minute" in role) or ("pledge" in role)
+        # "Performance": who performs the El Niño song at this event (blank = nobody). Drives the
+        # orange badge on every listing of the event (it links to the song band on the home page).
+        r["_perf"] = (r.get("Performance") or "").strip()
         rsvp = r.get("RSVP Type", "").strip()
         r["_rsvp"] = rsvp
         r["_cta"] = ("Apply to attend" if "apply" in rsvp.lower()
@@ -211,7 +214,7 @@ EXTRA_CSS = """
   .ev.is-past .ev-time { font-size: 0.74rem; }
   .ev.is-past h3 { font-size: 0.85rem; text-transform: none; letter-spacing: 0; margin-bottom: 0.1rem; }
   .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
-  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta { display: none; }
+  .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta, .ev.is-past a.perf { display: none; }
   .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
   .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
@@ -493,6 +496,14 @@ HOME_HAPPENED_JS = """
     </script>"""
 
 
+def perf_badge(r, where):
+    """Orange badge on an event where the El Niño song is performed live. Links to the song band on the home page."""
+    if not r.get("_perf"):
+        return ""
+    return ('<a class="perf" href="/#song" data-goatcounter-click="song/badge-%s" data-goatcounter-title="Song badge (%s)">'
+            '<b>♪ The El Niño song, live</b><span>%s</span></a>' % (where, where, html.escape(r["_perf"])))
+
+
 def pledged_line(r):
     who = (r.get("Spotted by") or r.get("Host") or "").strip()
     return '<p class="spotted pledged">Two minutes pledged by <b>%s</b></p>' % html.escape(who) if who else ""
@@ -582,22 +593,24 @@ def render_index(rows):
         <p class="pl-flag">Two minutes for El Niño%s</p>
         <h3><a href="/events/%s/">%s</a></h3>
         <p class="who">%s</p>
+        %s
       </div>
       <div class="ev-cta"><a class="btn-quiet" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>
     </article>""" % (gone, r["_slug"], attrs, when,
                      (" &middot; pledged by " + e(pledger)) if pledger else "",
-                     r["_slug"], e(r["Title"]), e(who), e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"]))
+                     r["_slug"], e(r["Title"]), e(who), perf_badge(r, "events"), e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"]))
         return """
     <article class="ev%s" id="%s"%s>
       <div class="ev-time">%s</div>
       <div>
         <h3><a href="/events/%s/">%s</a></h3>
         <p class="who">%s</p>
+        %s
         <p class="why">%s</p>
         %s%s
       </div>
       <div class="ev-cta">%s</div>
-    </article>""" % (gone, r["_slug"], attrs, when, r["_slug"], e(r["Title"]), e(who),
+    </article>""" % (gone, r["_slug"], attrs, when, r["_slug"], e(r["Title"]), e(who), perf_badge(r, "events"),
                      e(r.get("Why go") or (r.get("Summary") or "").split(". ")[0]), tags_for(r),
                      spotted_line(r), cta(r))
 
@@ -647,11 +660,12 @@ def render_single(r):
     %s
     %s
     %s
+    %s
     <p class="host-note">This page exists so the event has a link. Details, tickets, and any changes are on the host's page; El Niño Ready volunteers keep this listing and are not the organizer.</p>
     <a class="backlink" href="/events/">← All El Niño events at Climate Week</a>
   </div>
 </section>
-""" % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html,
+""" % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html, perf_badge(r, "event-page"),
        '<p class="why">%s</p>' % e(r["Why go"]) if r.get("Why go") else "",
        '<p class="desc">%s</p>' % e(r["Summary"]) if r.get("Summary") else "",
        tags_for(r),
@@ -670,10 +684,10 @@ def render_home_block(rows):
         t = ('%s<br><small>%s ET</small>' % (e(r["_short"]), e(r["_when"]))) if (dated or r["_past"]) else (
             '<span class="he-date">%s<br></span>%s ET' % (e(r["_short"]), e(r["_when"])))
         return ('<div class="he-item%s" data-ends="%s" data-day="%s"><span class="he-time">%s</span>'
-                '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span></span>'
+                '<span class="he-title"><a href="/events/%s/">%s</a><span class="he-host">%s</span>%s</span>'
                 '<a class="he-go" href="%s" target="_blank" rel="noopener" data-goatcounter-click="register/%s" data-goatcounter-title="%s">%s ↗</a></div>'
                 % (" is-past" if r["_past"] else "", r["_ends_iso"], r["_date"].isoformat(), t, r["_slug"], e(r["Title"]),
-                   e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)),
+                   e(" · ".join(x for x in [r.get("Host"), r.get("Location")] if x)), perf_badge(r, "home"),
                    e(r["URL"]), r["_slug"], e(r["Title"]), e(r["_cta"])))
 
     def he_list(rs, dated):
@@ -1106,11 +1120,17 @@ def render_two_minutes():
       <li><div><b>Three things save lives, and all three reward acting before the peak.</b><p>Warnings reach people, in time and in their language. Money moves early: a dollar of food, water treatment, or backup power staged before the disaster beats a dollar of relief after it. Systems hold: grids, water, and plans that have been rehearsed instead of filed.</p></div></li>
       <li><div><b>Here is what to do before you leave this room.</b><p>Tell someone. If your organization touches power, water, food, health, insurance, or emergency response, ask what it is doing before December, not after. And sign up at elninoready.earth for the forecast and the actions where you live.</p></div></li>
     </ol>
+    <!--song-line-->
     <p class="lede">Every number above is on the <a href="/">home page</a> with its source. When you've given the two minutes, <a href="/#ideas">tell us</a> and your event goes on the list, with your name on it.</p>
     <p class="lede"><a class="btn btn-heat" href="/events/#two-minutes">Events that have promised two minutes →</a></p>
   </div>
 </section>
 """
+    # Rowan is in New York for Climate Week only; after Sept 27 the line drops out on the next build.
+    sung = ('<p class="lede"><strong>Want the two minutes sung?</strong> This week only, Rowan, a 12-year-old opera singer, and his uncle, '
+            'the science rapper Baba Brinkman, can take them with <a href="/#song">their song about El Niño</a>. '
+            '<a href="/#ideas">Invite them to perform at your event.</a></p>')
+    body = body.replace("<!--song-line-->", sung if datetime.datetime.now(NY).date() <= datetime.date(YEAR, 9, 27) else "")
     desc = "Five things to say about the 2026 El Niño in two minutes from the main microphone at any Climate Week event."
     return page("Two minutes about El Niño · El Niño Ready", desc, SITE + "/two-minutes/", body)
 
