@@ -412,17 +412,26 @@
 <section class="song-strip" id="song">
   <div class="wrap">
     <div class="ss-grid">
-      <div class="song-video vertical"><a class="song-play" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home-video" data-goatcounter-title="Song crowdfund (home band, play button)" aria-label="Play the El Niño song on its crowdfunding page"><img src="/song/poster.jpg" alt="Baba Brinkman and Rowan performing the El Niño song live" width="405" height="720"><span class="sp-btn">▶ Play the song</span></a></div>
+      <div class="song-video vertical"><button type="button" class="song-play" data-yt="xU980boiZXY" data-goatcounter-click="song/play-home" data-goatcounter-title="Song play (home band)" aria-label="Play the El Niño song"><img src="/song/poster.jpg" alt="Baba Brinkman and Rowan performing the El Niño song live" width="405" height="720"><span class="sp-btn">▶ Play the song</span></button></div>
       <div>
         <span class="ss-kicker">♪ <span class="ss-week">New at Climate Week · </span>The El Niño song</span>
         <span class="ss-title">A 12-year-old opera singer and his rapper uncle wrote a song about El Niño.</span>
         <p class="ss-sub">Rowan is 12 and sings opera. His uncle, Baba Brinkman, is a science rapper. Hear the live version, and help us make the full track: a hip hop anthem about El Niño with a boys chorus singing the hook.</p>
-        <a class="ss-go" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home" data-goatcounter-title="Song crowdfund (home band)">▶ Play the song</a>
+        <a class="ss-go" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home" data-goatcounter-title="Song crowdfund (home band)">Help make the full track ↗</a>
         <a class="ss-fund ss-week" href="#ideas" data-goatcounter-click="song/invite-home" data-goatcounter-title="Song invite (home band)">Rowan is in New York this week only. Invite him to perform at your event →</a>
       </div>
     </div>
   </div>
   <script>
+  // The player loads from youtube-nocookie.com only when someone presses play: nothing from YouTube before that.
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest ? ev.target.closest('.song-play') : null;
+    if (!b) return;
+    var f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&playsinline=1&rel=0';
+    f.title = 'The El Niño song'; f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
+    b.parentNode.replaceChild(f, b);
+  });
   // Rowan is in New York for Climate Week only: the 'this week' bits hide themselves once the week is over.
   if (Date.now() > Date.parse('2026-09-28T00:00:00-04:00')) [].slice.call(document.querySelectorAll('.ss-week')).forEach(function (el) { el.hidden = true; });
   </script>
