@@ -216,6 +216,8 @@ EXTRA_CSS = """
   .ev.is-past .who { font-size: 0.74rem; margin-bottom: 0; }
   .ev.is-past .why, .ev.is-past .tags, .ev.is-past .spotted, .ev.is-past .ev-cta, .ev.is-past a.perf { display: none; }
   .day.happened h2 { color: rgba(30,35,42,0.55); border-bottom-color: rgba(30,35,42,0.35); }
+  .single-cta { margin: 1.5rem 0 2rem; }
+  .single .happened-note { margin: 1.5rem 0 2rem; }
   .happened-note { margin-top: 1.75rem; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(30,35,42,0.6); }
   @media (min-width: 760px) { .ev-cta { justify-self: end; } }
   .btn-go {
@@ -665,12 +667,14 @@ def render_single(r):
     <a class="backlink" href="/events/">← All El Niño events at Climate Week</a>
   </div>
 </section>
-""" % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html, perf_badge(r, "event-page"),
+""" % (e(r["Title"]), e(r["_day"]), e(r["_when"]), meta_html,
+       # Register sits right under the when/where/host/format block, above the fold (Tito).
+       ('<p class="happened-note">This event has happened. <a href="%s" target="_blank" rel="noopener">Host\'s page ↗</a></p>' % e(r["URL"])) if r["_past"]
+       else '<p class="single-cta">%s</p>' % cta(r, big=True),
+       perf_badge(r, "event-page"),
        '<p class="why">%s</p>' % e(r["Why go"]) if r.get("Why go") else "",
        '<p class="desc">%s</p>' % e(r["Summary"]) if r.get("Summary") else "",
-       tags_for(r),
-       ('<p class="happened-note">This event has happened. <a href="%s" target="_blank" rel="noopener">Host\'s page ↗</a></p>' % e(r["URL"])) if r["_past"]
-       else '<p style="margin-top:1.75rem">%s</p>' % cta(r, big=True), spotted_line(r))
+       tags_for(r), spotted_line(r))
     desc = "%s · %s ET. %s" % (r["_day"], r["_when"], r.get("Why go") or "")
     return page("%s · El Niño Ready" % r["Title"], desc.strip(), url, body, og_type="article")
 
