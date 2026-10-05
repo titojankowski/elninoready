@@ -196,8 +196,8 @@ houses, water supply, smoke, crops); if everything here is one kind of harm, tha
 record, and you do not pad it. Nine items reads as a wall. For each:
 
 - The title says **what happened to people, with the numbers the source gives**, in the
-  past tense: "roofs torn off 54 homes", "the highway shut for ten hours", "23 districts
-  ran short of water". Never "storm impacts" or "flooding issues". If the source has no
+  past tense: "roofs torn off 54 homes", "the highway shut for ten hours", "the dam's
+  output fell to zero". Never "storm impacts" or "flooding issues". If the source has no
   duration or end date, do not supply one.
 - Name the place, and name the people when the reporter did.
 - Label it with its season and month.
@@ -362,7 +362,7 @@ Name the street, the yard, the creek, the dam, the storm, the program.
 - Wrong: "Three days without power: water, a battery."
 - Right: "Be ready for twenty hours without power, like Westborough Boulevard in February 2024."
 - Wrong: "Store water."
-- Right: "Store water before the district's supply drops, as it did across 23 districts in April 2024."
+- Right: "Store water before the district's supply drops, as it did when Buhisan Dam ran dry in April 2024."
 
 Plain beats clever. "Sign up for SMC Alert" is a good title because it says exactly what
 to do. "Know before it hits" is worse.
