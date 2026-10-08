@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Niño Ready: your El Niño report</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Tell us where you live and we'll email you what the strongest El Niño ever measured is likely to bring there, and what to do before it arrives.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script data-goatcounter="https://elninoready.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<style>
+  :root {
+    --ink: #1E232A;
+    --paper: #ffffff;
+    --paper-2: #D8DDE2;
+    --sea: #687993;
+    --heat: #FE5B41;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--mono); color: var(--ink); background: var(--paper);
+    line-height: 1.6; font-size: 15px; -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
+  }
+  ::selection { background: var(--heat); color: #fff; }
+  nav { border-bottom: 2px solid var(--ink); }
+  .nav-inner { max-width: 40rem; margin: 0 auto; padding: 0.8rem 1.25rem; }
+  .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; color: inherit; }
+  .brand .nino { color: var(--heat); }
+
+  main { flex: 1; display: flex; align-items: center; }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 3.5rem 1.25rem 4rem; width: 100%; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--heat); }
+  h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.15; margin: 0.6rem 0 1rem; letter-spacing: -0.01em; }
+  .lede { font-size: 1.02rem; color: rgba(30,35,42,0.82); max-width: 34rem; }
+
+  form { margin-top: 2.25rem; display: grid; gap: 1.25rem; }
+  label { display: grid; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  input {
+    font: inherit; font-size: 1rem; text-transform: none; letter-spacing: 0; font-weight: 400;
+    padding: 0.85rem 0.9rem; border: 2px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
+    width: 100%;
+  }
+  input:focus { outline: none; border-color: var(--heat); box-shadow: 4px 4px 0 var(--ink); }
+  .hint { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sea); }
+  .hint b { color: var(--ink); font-weight: 500; }
+  button {
+    font: inherit; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 1.4rem; border: 2px solid var(--ink); background: var(--heat); color: #fff; cursor: pointer;
+    justify-self: start;
+  }
+  button:hover { box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px, -2px); }
+  .fine { font-size: 0.78rem; color: var(--sea); margin-top: 0.25rem; }
+  .hidden-field { display: none; }
+
+  .done { display: none; margin-top: 2.25rem; padding: 1.25rem 1.4rem; border: 2px solid var(--ink); background: var(--paper-2); }
+  .done strong { display: block; font-size: 1.05rem; margin-bottom: 0.35rem; }
+  body.sent form { display: none; }
+  body.sent .done { display: block; }
+
+  footer { border-top: 2px solid var(--ink); }
+  .foot { max-width: 40rem; margin: 0 auto; padding: 1rem 1.25rem; font-size: 0.75rem; color: var(--sea); }
+  .foot a { color: inherit; }
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a></div></nav>
+
+<main>
+  <div class="wrap">
+    <p class="kicker">Peaks in December</p>
+    <h1>What will El Niño bring to where you live?</h1>
+    <p class="lede">The strongest El Niño ever measured is on its way. Tell us where you are and we'll email you a report: what it usually brings there, when, and what to do before it arrives.</p>
+
+    <form name="report-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/report/thanks/">
+      <input type="hidden" name="form-name" value="report-request">
+      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <label>Your location
+        <input type="text" name="location" required autocomplete="street-address" placeholder="Street address, ZIP code, or city">
+        <span class="hint"><b>Specific is better.</b> A street address tells us your flood zone and nearest shelter; a ZIP code tells us your county.</span>
+      </label>
+
+      <label>Your email
+        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+      </label>
+
+      <button type="submit" data-goatcounter-click="report/submit">Email me my report</button>
+      <p class="fine">We use your location only to write your report.</p>
+    </form>
+
+    <div class="done" role="status">
+      <strong>Your report is on its way.</strong>
+      Check your inbox for an email from El Niño Ready.
+    </div>
+  </div>
+</main>
+
+<footer><div class="foot">El Niño Ready · <a href="/about/">About</a></div></footer>
+
+<script>
+  // Local draft only: no backend here, so show the confirmation instead of posting.
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    document.querySelector('form').addEventListener('submit', e => { e.preventDefault(); document.body.classList.add('sent'); });
+  }
+</script>
+</body>
+</html>
