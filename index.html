@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>El Niño Ready — Save lives during the strongest El Niño ever measured</title>
-<meta name="description" content="The strongest El Niño ever measured is forecast to peak in December. A disaster you can see coming is a disaster you can prevent. El Niño Ready is a volunteer effort to make sure warnings reach people, money moves early, and systems hold.">
+<title>El Niño Ready: what will El Niño bring to where you live?</title>
+<meta name="description" content="Tell us where you live and we'll email you what the strongest El Niño ever measured is likely to bring there, and what to do before it arrives.">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta property="og:title" content="El Niño Ready">
 <meta property="og:description" content="Save lives during the strongest El Niño ever measured. A disaster you can see coming is a disaster you can prevent.">
 <meta property="og:type" content="website">
@@ -13,594 +14,109 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
-<!-- GoatCounter: cookieless, open-source page and click counts. The only script on the site.
-     Elements with data-goatcounter-click="..." are counted as events (Register buttons, city picks).
-     Dashboard: https://elninoready.goatcounter.com -->
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script data-goatcounter="https://elninoready.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>/* old homepage sections (/#ideas, /#song, ...) moved to /more/ */ if (location.hash.length > 1) location.replace('/more/' + location.hash);</script>
 <style>
   :root {
-    --ink: #1E232A;      /* AirMiners "Almost Black": text, borders */
+    --ink: #1E232A;
     --paper: #ffffff;
-    --paper-2: #D8DDE2;  /* AirMiners "Light Grey" background */
-    --deep: #2B323D;     /* AirMiners "Navy Grey": dark sections */
-    --deep-2: #1E232A;
-    --sea: #687993;      /* AirMiners grey */
-    --sea-bright: #D8DDE2;  /* labels on dark sections (was amber) */
-    --heat: #FE5B41;     /* AirMiners "Reddish-Orange" */
-    --heat-bright: #FE5B41;
-    --line: rgba(30,35,42,0.85);
-    --line-soft: rgba(30,35,42,0.18);
-    --serif: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --sans: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --paper-2: #D8DDE2;
+    --sea: #687993;
+    --heat: #FE5B41;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
   body {
-    font-family: var(--sans);
-    color: var(--ink);
-    background: var(--paper);
-    line-height: 1.65;
-    font-size: 15px;
-    -webkit-font-smoothing: antialiased;
+    font-family: var(--mono); color: var(--ink); background: var(--paper);
+    line-height: 1.6; font-size: 15px; -webkit-font-smoothing: antialiased;
+    display: flex; flex-direction: column;
   }
-  img { max-width: 100%; }
-  a { color: inherit; }
   ::selection { background: var(--heat); color: #fff; }
-
-  .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
-
-  /* ---------- nav ---------- */
-  nav {
-    position: sticky; top: 0; z-index: 20;
-    background: var(--paper);
-    border-bottom: 2px solid var(--ink);
-  }
-  .nav-inner {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.7rem 1.25rem; max-width: 62rem; margin: 0 auto;
-  }
-  .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; }
+  nav { border-bottom: 2px solid var(--ink); }
+  .nav-inner { max-width: 40rem; margin: 0 auto; padding: 0.8rem 1.25rem; }
+  .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; color: inherit; }
   .brand .nino { color: var(--heat); }
-  .nav-links { display: flex; align-items: center; gap: 1.25rem; }
-  .nav-links a { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 0.3rem 0; border-bottom: 2px solid transparent; }
-  .nav-links a:hover { border-bottom-color: var(--heat); }
-  .nav-links a.active { border-bottom-color: var(--ink); }
-  .nav-links a.nav-cta { padding: 0.55rem 1.1rem; border: 2px solid var(--ink); line-height: 1; }
-  .nav-links a.nav-cta:hover { border-color: var(--ink); }
-  @media (max-width: 480px) { .nav-links { gap: 0.8rem; } .nav-links a.nav-cta { padding: 0.5rem 0.75rem; } .nav-links a.nav-home { display: none; } }
-  @media (max-width: 760px) { .nav-links a.nav-add { display: none; } }
-  @media (max-width: 560px) { .nav-links a.nav-about { display: none; } }  /* phones reach About from the footer */
-  .brand, .nav-links a { white-space: nowrap; }
-  @media (max-width: 420px) { .nav-inner { padding-left: 1rem; padding-right: 1rem; } .brand { font-size: 0.78rem; letter-spacing: 0.02em; } .nav-links { gap: 0.6rem; } .nav-links a { font-size: 0.7rem; letter-spacing: 0.04em; } .nav-links a.nav-cta { padding: 0.45rem 0.55rem; } }
-  .nav-date { font-size: 0.78rem; color: rgba(30,35,42,0.6); display: none; letter-spacing: 0.04em; }
-  @media (min-width: 700px) { .nav-date { display: block; } }
-  .nav-cta {
-    font-size: 0.78rem; font-weight: 700; text-decoration: none; text-transform: uppercase;
-    background: var(--heat); color: #fff; letter-spacing: 0.06em;
-    padding: 0.45rem 0.9rem; border: 2px solid var(--ink);
-    box-shadow: 3px 3px 0 var(--ink);
-    transition: transform 0.1s, box-shadow 0.1s;
-  }
-  .nav-cta:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
 
-  /* ---------- hero ---------- */
-  /* countdown to the forecast peak (NOAA CPC outlook, issued 10 Sep 2026: OND is the peak season) */
-  /* forecast-peak countdown: a quiet line above the headline on phones, a stacked block beside the intro on wide screens */
-  .peak-count { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.75rem; margin: 0 0 1.5rem; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sea-bright); }
-  .peak-count[hidden] { display: none; }
-  .peak-count .pc-label { font-weight: 700; color: var(--sea-bright); }
-  .peak-count .pc-days { font-size: 1.1rem; font-weight: 700; color: var(--heat); letter-spacing: 0.02em; }
-  .peak-count .pc-hms { font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
-  .peak-count a { color: var(--sea-bright); }
-  @media (min-width: 900px) {
-    .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) 14rem; column-gap: 3rem; }
-    .hero h1, .hero .subhead, .hero .hero-signup { grid-column: 1 / -1; }
-    .hero h1 { grid-row: 1; } .hero .subhead { grid-row: 2; } .hero .sub { grid-column: 1; grid-row: 3; } .hero .hero-signup { grid-row: 4; }
-    .peak-count { grid-column: 2; grid-row: 3; align-self: start; flex-direction: column; align-items: flex-start; gap: 0; margin: 0.35rem 0 0; }
-    .peak-count .pc-days { font-size: 3rem; line-height: 1; margin: 0.6rem 0 0.35rem; }
-    .peak-count .pc-hms { font-size: 1.05rem; letter-spacing: 0.06em; }
-    .peak-count .pc-meta { margin-top: 0.9rem; padding-top: 0.75rem; border-top: 1px solid rgba(216,221,226,0.25); align-self: stretch; }
+  main { flex: 1; display: flex; align-items: center; }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 3.5rem 1.25rem 4rem; width: 100%; }
+  .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--heat); }
+  h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.15; margin: 0.6rem 0 1rem; letter-spacing: -0.01em; }
+  .lede { font-size: 1.02rem; color: rgba(30,35,42,0.82); max-width: 34rem; }
+
+  form { margin-top: 2.25rem; display: grid; gap: 1.25rem; }
+  label { display: grid; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  input {
+    font: inherit; font-size: 1rem; text-transform: none; letter-spacing: 0; font-weight: 400;
+    padding: 0.85rem 0.9rem; border: 2px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
+    width: 100%;
   }
-  header.hero {
-    background: var(--deep);
-    color: #fff;
-    padding: 3.25rem 0 4rem;
-    border-bottom: 2px solid var(--ink);
+  input:focus { outline: none; border-color: var(--heat); box-shadow: 4px 4px 0 var(--ink); }
+  .hint { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sea); }
+  .hint b { color: var(--ink); font-weight: 500; }
+  button {
+    font: inherit; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 1rem 1.4rem; border: 2px solid var(--ink); background: var(--heat); color: #fff; cursor: pointer;
+    justify-self: start;
   }
-  .kicker {
-    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--sea-bright); margin-bottom: 1.5rem;
-  }
-  .hero h1 {
-    font-family: var(--sans);
-    font-size: clamp(1.4rem, 3.9vw, 2.6rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.2;
-    letter-spacing: 0.01em;
-    max-width: 30ch;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 em { font-style: normal; color: var(--heat-bright); }
-  .hero .subhead {
-    font-family: var(--sans);
-    font-size: clamp(1.1rem, 2.6vw, 1.7rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.25;
-    letter-spacing: 0.02em;
-    color: #fff;
-    margin: -0.75rem 0 1.5rem;
-  }
-  .hero .sub {
-    font-size: clamp(0.92rem, 1.6vw, 1.05rem);
-    color: #D8DDE2; max-width: 58ch; margin-bottom: 2.25rem;
-  }
-  .hero .sub strong { color: #fff; font-weight: 700; }
-  .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; text-decoration: none; font-weight: 700; font-size: 0.85rem;
-    text-transform: uppercase; letter-spacing: 0.05em;
-    padding: 0.8rem 1.3rem; border: 2px solid #fff;
-    transition: transform 0.1s, box-shadow 0.1s, background 0.15s;
-  }
-  .btn-heat { background: var(--heat); color: #fff; border-color: #fff; box-shadow: 4px 4px 0 rgba(255,255,255,0.35); }
-  .btn-heat:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
-  /* hero email signup — the primary CTA */
-  .hero-signup { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
-  .hero-signup input[type="email"] {
-    flex: 0 1 22rem; min-width: 0;   /* about half the hero's width; the button sits right beside it */
-    font-family: inherit; font-size: 0.95rem;
-    padding: 0.85rem 1rem; border: 2px solid #fff; background: rgba(255,255,255,0.08); color: #fff;
-  }
-  .hero-signup input[type="email"]::placeholder { color: rgba(255,255,255,0.55); }
-  .hero-signup button { flex: 0 0 auto; }
+  button:hover { box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px, -2px); }
+  .fine { font-size: 0.78rem; color: var(--sea); margin-top: 0.25rem; }
   .hidden-field { display: none; }
-  .hero-secondary { margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.75); }
-  .hero-secondary a { color: #fff; }
-  .btn-ghost { border: 2px dashed rgba(255,255,255,0.6); color: #fff; }
-  .btn-ghost:hover { border-style: solid; border-color: #fff; }
 
-  /* ---------- sections ---------- */
-  section { padding: 3.75rem 0; }
-  .eyebrow {
-    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--heat); margin-bottom: 1rem;
-  }
-  h2 {
-    font-family: var(--sans); font-weight: 700; text-transform: uppercase;
-    font-size: clamp(1.25rem, 2.8vw, 1.8rem); line-height: 1.3;
-    letter-spacing: 0.01em; max-width: 34ch; margin-bottom: 1.25rem;
-  }
-  .lede { font-size: 0.98rem; max-width: 68ch; color: rgba(30,35,42,0.85); }
-  .lede + .lede { margin-top: 1rem; }
+  .done { display: none; margin-top: 2.25rem; padding: 1.25rem 1.4rem; border: 2px solid var(--ink); background: var(--paper-2); }
+  .done strong { display: block; font-size: 1.05rem; margin-bottom: 0.35rem; }
+  body.sent form { display: none; }
+  body.sent .done { display: block; }
 
-  /* economist quote band */
-  .quoteband { background: var(--paper); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 3rem 0; text-align: center; }
-  .quoteband blockquote {
-    font-weight: 600; font-size: clamp(1rem, 2.4vw, 1.5rem); line-height: 1.5;
-    max-width: 52ch; margin: 0 auto; color: var(--ink);
-  }
-  .quoteband blockquote em { font-style: normal; color: var(--heat); }
-  .quoteband cite {
-    display: block; margin-top: 1.25rem; font-style: normal;
-    font-size: 0.92rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(30,35,42,0.65);
-  }
-  .quoteband cite a { color: rgba(30,35,42,0.55); }
-  .qb-compare { margin: 1.5rem auto 0; max-width: 64ch; font-size: 0.8rem; color: rgba(30,35,42,0.6); }
-  .qb-compare strong { color: var(--ink); }
-  .qb-compare em { font-style: normal; color: var(--heat); }
-
-  /* stakes cards */
-  .stakes { background: var(--paper-2); border-bottom: 2px solid var(--ink); }
-  .card-grid { display: grid; gap: 0; margin-top: 2.25rem; grid-template-columns: 1fr; border: 2px solid var(--ink); background: var(--ink); }
-  @media (min-width: 720px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
-  .card { background: var(--paper); padding: 1.4rem; border: 0; outline: 1px solid var(--ink); }
-  .card h3 { font-size: 0.95rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-  .card p { font-size: 0.88rem; color: rgba(30,35,42,0.75); }
-  .card .glyph { font-size: 1.4rem; margin-bottom: 0.6rem; display: block; }
-
-  /* 2015 vignette */
-  .vignette { margin-top: 1.25rem; background: var(--deep); color: #fff; padding: 1.75rem; }
-  .vignette h3 {
-    text-transform: uppercase; font-weight: 700; font-size: clamp(0.98rem, 2vw, 1.15rem);
-    line-height: 1.45; max-width: 52ch; margin-bottom: 1.25rem;
-  }
-  .vignette h3 em { font-style: normal; color: var(--heat-bright); }
-  .vignette ul { list-style: none; display: grid; grid-template-columns: 1fr; gap: 0.6rem 2.5rem; }
-  @media (min-width: 760px) { .vignette ul { grid-template-columns: 1fr 1fr; } }
-  .vignette li { font-size: 0.88rem; color: #D8DDE2; padding-left: 1.2rem; position: relative; }
-  .vignette li::before { content: "\25B8"; color: var(--heat-bright); position: absolute; left: 0; }
-  .vignette li strong { color: #fff; }
-  .vig-note { margin-top: 1.4rem; font-size: 0.85rem; color: var(--sea-bright); max-width: 72ch; }
-  .vig-src { margin-top: 0.75rem; font-size: 0.7rem; color: rgba(216,221,226,0.45); }
-  .vig-src a { color: rgba(216,221,226,0.6); }
-
-  /* pull quote */
-  .pull {
-    font-family: var(--sans); font-style: normal; font-weight: 600;
-    font-size: clamp(1rem, 2.2vw, 1.35rem); line-height: 1.5;
-    max-width: 46ch; margin: 2.25rem 0 0;
-    padding-left: 1.25rem; border-left: 4px solid var(--heat);
-    color: rgba(30,35,42,0.9);
-  }
-
-  /* featured event */
-  .featured { background: var(--deep); color: #fff; border-bottom: 2px solid var(--ink); }
-  .featured .eyebrow { color: var(--sea-bright); }
-  .featured h2 { color: #fff; max-width: 40ch; }
-  .event-card {
-    margin-top: 2.25rem; border: 2px solid #fff; padding: 1.75rem; background: transparent;
-    display: grid; gap: 2rem; grid-template-columns: 1fr;
-  }
-  @media (min-width: 800px) { .event-card { grid-template-columns: 1.5fr 1fr; padding: 2rem; } }
-  .event-card h3 {
-    font-family: var(--sans); font-weight: 700; text-transform: uppercase;
-    font-size: clamp(1.05rem, 2.2vw, 1.35rem); line-height: 1.35; margin-bottom: 1rem;
-  }
-  .event-card .desc { color: #D8DDE2; font-size: 0.88rem; }
-  .event-card .desc + .desc { margin-top: 0.85rem; }
-  .event-meta { display: flex; flex-direction: column; gap: 1.1rem; align-self: start; }
-  .meta-item { border-left: 3px solid var(--sea-bright); padding-left: 0.9rem; }
-  .meta-item .label {
-    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-    color: var(--sea-bright); display: block; margin-bottom: 0.15rem;
-  }
-  .meta-item .value { font-size: 0.88rem; color: #fff; }
-  .event-card .btn-heat { justify-self: start; margin-top: 0.5rem; }
-  .host-note { font-size: 0.75rem; color: rgba(216,221,226,0.7); margin-top: 1.25rem; }
-
-  /* home events block (contents generated by build_events.py between the markers) */
-  .home-events { background: var(--deep); color: #fff; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
-  .home-events .eyebrow { color: var(--sea-bright); }
-  .home-events h2 { color: #fff; max-width: 40ch; }
-  .home-events h2 em { font-style: normal; color: var(--heat-bright); }
-  .home-events .lede { color: #D8DDE2; }
-  .he-list { margin-top: 2rem; border-top: 2px solid #fff; }
-  .he-day { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sea-bright); padding: 1.25rem 0 0.25rem; }
-  .he-item { display: grid; gap: 0.35rem 1.5rem; grid-template-columns: 1fr; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.18); align-items: baseline; }
-  @media (min-width: 760px) { .he-item { grid-template-columns: 8rem 1fr auto; } }
-  .he-time { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.04em; text-transform: uppercase; }
-  .he-title { font-weight: 700; font-size: 0.95rem; text-transform: uppercase; line-height: 1.35; }
-  .he-title a { color: #fff; text-decoration: none; }
-  .he-title a:hover { text-decoration: underline; text-decoration-color: var(--heat-bright); }
-  .he-host { display: block; font-weight: 400; font-size: 0.78rem; text-transform: none; color: rgba(216,221,226,0.8); margin-top: 0.15rem; }
-  .he-go { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: #fff; border: 2px solid #fff; padding: 0.35rem 0.75rem; white-space: nowrap; justify-self: start; }
-  @media (min-width: 760px) { .he-go { justify-self: end; } }
-  .he-go:hover { background: var(--heat); border-color: var(--heat); }
-  /* already happened: greyed at the end of each list, no Register button; still counted in the headline */
-  .he-date { display: none; }
-  .he-item.is-past { opacity: 0.5; }
-  .he-item.is-past .he-date { display: inline; }
-  .he-item.is-past .he-go, .he-item.is-past a.perf { display: none; }
-  .he-day.he-happened { color: rgba(216,221,226,0.6); }
-  .he-all { display: inline-block; margin-top: 1.75rem; }
-  .he-sub { margin-top: 3rem; font-size: clamp(1.05rem, 2.2vw, 1.35rem); text-transform: uppercase; font-weight: 700; line-height: 1.3; max-width: 34ch; }
-  .he-sub em { font-style: normal; color: var(--heat-bright); }
-  .he-sub-lede { color: #D8DDE2; margin-top: 0.6rem; }
-  .he-note { font-size: 0.78rem; color: rgba(216,221,226,0.65); margin-top: 1.25rem; max-width: 62ch; }
-
-  /* window / what we can do */
-  .window-list { margin-top: 2rem; display: grid; gap: 0; border-top: 2px solid var(--ink); }
-  .window-item {
-    display: grid; gap: 0.35rem; padding: 1.25rem 0; border-bottom: 1px solid var(--line-soft);
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 720px) { .window-item { grid-template-columns: 14rem 1fr; gap: 2rem; } }
-  .window-item h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
-  .window-item h3::before { content: "[+] "; color: var(--heat); }
-  .window-item p { font-size: 0.9rem; color: rgba(30,35,42,0.75); max-width: 62ch; }
-
-  /* get involved */
-  .involve { background: var(--paper-2); border-top: 2px solid var(--ink); }
-  .involve-grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; margin-top: 1rem; }
-  @media (min-width: 820px) { .involve-grid { grid-template-columns: 1fr 1fr; } }
-  .kickoff-box { background: var(--deep); color: #fff; border: 2px solid var(--ink); padding: 1.75rem; align-self: start; }
-  .kickoff-box .eyebrow { color: var(--sea-bright); }
-  .kickoff-box h3 { font-family: var(--sans); font-weight: 700; text-transform: uppercase; font-size: 1.1rem; line-height: 1.35; margin-bottom: 0.75rem; }
-  .kickoff-box p { color: #D8DDE2; font-size: 0.88rem; }
-  .kickoff-when { margin: 1.25rem 0; padding: 1rem; border: 1px dashed rgba(255,255,255,0.5); font-size: 0.88rem; }
-  .kickoff-when strong { display: block; font-size: 0.98rem; margin-bottom: 0.2rem; }
-
-  form { display: grid; gap: 1rem; }
-  label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; display: grid; gap: 0.4rem; }
-  input, select, textarea {
-    font: inherit; font-size: 0.9rem; padding: 0.7rem 0.85rem;
-    border: 2px solid var(--ink); background: var(--paper); width: 100%;
-    border-radius: 0; -webkit-appearance: none; appearance: none;
-  }
-  select { background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
-  input:focus, select:focus, textarea:focus { outline: 3px solid var(--heat); outline-offset: 0; }
-  textarea { resize: vertical; min-height: 5.5rem; }
-  button.btn { border: 2px solid var(--ink); cursor: pointer; font-family: inherit; background: var(--heat); color: #fff; box-shadow: 4px 4px 0 var(--ink); }
-  button.btn:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 var(--ink); }
-  .form-note { font-size: 0.75rem; color: rgba(30,35,42,0.55); text-transform: none; letter-spacing: 0; }
-
-  .ideas-sec { background: var(--paper-2); border-top: 2px solid var(--ink); }
-
-  /* the El Niño song: badge on an event where it is performed live, the home strip, the video box */
-  a.perf { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.15rem 0.6rem; margin: 0.55rem 0 0.35rem; padding: 0.4rem 0.7rem; background: var(--heat); color: #fff; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); text-decoration: none; text-transform: none; line-height: 1.35; }
-  a.perf b { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
-  a.perf span { font-size: 0.78rem; font-weight: 400; }
-  a.perf:hover { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
-  .home-events a.perf { border-color: #fff; box-shadow: 3px 3px 0 rgba(255,255,255,0.35); }
-  .song-strip { background: var(--heat); border-bottom: 2px solid var(--ink); padding: 0; }
-  .song-strip .ss-grid { display: grid; gap: 1.5rem 2.75rem; align-items: center; grid-template-columns: 1fr; padding: 2.25rem 0 2.5rem; }
-  @media (min-width: 760px) { .song-strip .ss-grid { grid-template-columns: 13.5rem minmax(0, 1fr); } }
-  .song-strip .song-video { margin: 0; max-width: 13.5rem; box-shadow: 6px 6px 0 rgba(30,35,42,0.55); }
-  .song-strip .ss-kicker { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.6rem; }
-  .song-strip .ss-title { display: block; color: #fff; font-weight: 700; text-transform: uppercase; font-size: clamp(1.2rem, 2.9vw, 1.95rem); line-height: 1.25; letter-spacing: 0.01em; max-width: 28ch; }
-  .song-strip .ss-sub { color: #fff; font-size: 0.95rem; max-width: 52ch; margin-top: 0.9rem; }
-  .song-strip .ss-go { display: inline-block; margin-top: 1.4rem; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; text-decoration: none; padding: 0.8rem 1.3rem; background: var(--ink); color: #fff; border: 2px solid #fff; box-shadow: 4px 4px 0 rgba(30,35,42,0.45); white-space: nowrap; transition: transform 0.1s, box-shadow 0.1s; }
-  .song-strip .ss-go:hover { transform: translate(1px,1px); box-shadow: 3px 3px 0 rgba(30,35,42,0.45); }
-  .song-video { position: relative; max-width: 46rem; aspect-ratio: 16 / 9; border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); background: var(--deep); margin-top: 0.5rem; }
-  .song-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .song-video.vertical { aspect-ratio: 9 / 16; max-width: 19rem; }
-  .song-play { display: block; position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: #000; cursor: pointer; font: inherit; -webkit-appearance: none; appearance: none; }
-  .song-play img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
-  .song-play .sp-btn { position: absolute; left: 50%; bottom: 1.1rem; transform: translateX(-50%); white-space: nowrap; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.65rem 1rem; background: var(--heat); color: #fff; border: 2px solid #fff; box-shadow: 3px 3px 0 rgba(0,0,0,0.55); }
-  .song-play:hover .sp-btn { background: var(--ink); }
-  .song-strip .ss-fund { display: block; margin-top: 1.1rem; color: #fff; font-size: 0.82rem; font-weight: 700; }
-  .song-strip [hidden] { display: none; }
-
-  /* footer */
-  footer { background: var(--deep); color: rgba(216,221,226,0.8); padding: 2.5rem 0 3rem; font-size: 0.8rem; border-top: 3px double #fff; }
-  footer .wrap { display: grid; gap: 0.75rem; }
-  footer a { color: #fff; }
-  footer .fine { font-size: 0.72rem; color: rgba(216,221,226,0.5); max-width: 80ch; }
-  footer .wrap > div:first-child::before { content: "// END OF BULLETIN //"; display: block; letter-spacing: 0.2em; font-weight: 700; color: rgba(216,221,226,0.45); margin-bottom: 1rem; font-size: 0.7rem; }
+  footer { border-top: 2px solid var(--ink); }
+  .foot { max-width: 40rem; margin: 0 auto; padding: 1rem 1.25rem; font-size: 0.75rem; color: var(--sea); }
+  .foot a { color: inherit; }
 </style>
 </head>
 <body>
+<nav><div class="nav-inner"><a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a></div></nav>
 
-
-<!-- nav: keep in sync with NAV in build_events.py -->
-<nav>
-  <div class="nav-inner">
-    <a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a>
-    <div class="nav-links">
-      <a href="/" class="active nav-home">Home</a>
-      <a href="/speakers/">Speak</a>
-      <a href="/actions/">Actions</a>
-      <a class="nav-about" href="/about/">About</a>
-      <a class="nav-add" href="/events/#add">Add event</a>
-      <a class="nav-cta" href="/events/">NYCW Events</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero" id="top">
+<main>
   <div class="wrap">
-    <div class="peak-count" id="peak-count">
-      <span class="pc-label">Forecast peak in</span>
-      <span class="pc-days" id="pc-days">61 days</span>
-      <span class="pc-hms" id="pc-hms"></span>
-      <span class="pc-meta">mid-November · <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/roni/outlook/" target="_blank" rel="noopener">NOAA outlook</a></span>
-    </div>
-    <script>
-    (function () {
-      // NOAA CPC's 10 Sep 2026 outlook peaks in Oct-Dec (median RONI +2.67); Nov 15 is the middle of that season.
-      var peak = Date.UTC(2026, 10, 15, 12), days = document.getElementById('pc-days'), hms = document.getElementById('pc-hms');
-      function pad(n) { return (n < 10 ? '0' : '') + n; }
-      function tick() {
-        var t = Math.max(0, Math.floor((peak - Date.now()) / 1000));
-        if (t === 0) { document.getElementById('peak-count').hidden = true; return; }
-        var d = Math.floor(t / 86400), h = Math.floor(t % 86400 / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60;
-        days.textContent = d + (d === 1 ? ' day' : ' days');
-        hms.textContent = pad(h) + ':' + pad(m) + ':' + pad(sec);
-      }
-      tick(); setInterval(tick, 1000);
-    })();
-    </script>
-    <h1>The <em>biggest El&nbsp;Niño in history</em> is forming right now.</h1>
-    <p class="subhead">And we can save lives.</p>
-    <p class="sub">NOAA puts the odds at 75% that this becomes the strongest El&nbsp;Niño ever measured — and it peaks in three months. Hundreds of millions of people will feel it in their power, their water, their livelihoods. <strong>El Niño Ready</strong> is a volunteer effort with <strong>one idea at its core: to save lives through communication.</strong> A disaster you can see coming is a disaster you can prevent. Warnings reach people. Money moves early. Systems hold.</p>
-    <form class="hero-signup" name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+    <p class="kicker">Peaks in December</p>
+    <h1>What will El Niño bring to where you live?</h1>
+    <p class="lede">The strongest El Niño ever measured is on its way. Tell us where you are and we'll email you a report: what it usually brings there, when, and what to do before it arrives.</p>
+
+    <form name="report-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/report/thanks/">
+      <input type="hidden" name="form-name" value="report-request">
       <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
-      <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address" autocomplete="email">
-      <button class="btn btn-heat" type="submit">Sign up for email updates</button>
-    </form>
-  </div>
-</header>
 
-<section class="song-strip" id="song">
-  <div class="wrap">
-    <div class="ss-grid">
-      <div class="song-video vertical"><button type="button" class="song-play" data-yt="xU980boiZXY" data-goatcounter-click="song/play-home" data-goatcounter-title="Song play (home band)" aria-label="Play the El Niño song"><img src="/song/poster.jpg" alt="Baba Brinkman and Rowan performing the El Niño song live" width="405" height="720"><span class="sp-btn">▶ Play the song</span></button></div>
-      <div>
-        <span class="ss-kicker">♪ <span class="ss-week">New at Climate Week · </span>The El Niño song</span>
-        <span class="ss-title">A 12-year-old opera singer and his rapper uncle wrote a song about El Niño.</span>
-        <p class="ss-sub">Rowan is 12 and sings opera. His uncle, Baba Brinkman, is a science rapper. Hear the live version, and help us make the full track: a hip hop anthem about El Niño with a boys chorus singing the hook.</p>
-        <a class="ss-go" href="https://joints.eventrap.com/el-nino-boys-chorus-at-new-york-climate-week" target="_blank" rel="noopener" data-goatcounter-click="song/crowdfund-home" data-goatcounter-title="Song crowdfund (home band)">Help make the full track ↗</a>
-        <a class="ss-fund ss-week" href="#ideas" data-goatcounter-click="song/invite-home" data-goatcounter-title="Song invite (home band)">Rowan is in New York this week only. Invite him to perform at your event →</a>
-      </div>
-    </div>
-  </div>
-  <script>
-  // The player loads from youtube-nocookie.com only when someone presses play: nothing from YouTube before that.
-  document.addEventListener('click', function (ev) {
-    var b = ev.target.closest ? ev.target.closest('.song-play') : null;
-    if (!b) return;
-    var f = document.createElement('iframe');
-    f.src = 'https://www.youtube-nocookie.com/embed/' + b.getAttribute('data-yt') + '?autoplay=1&playsinline=1&rel=0';
-    f.title = 'The El Niño song'; f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
-    b.parentNode.replaceChild(f, b);
-  });
-  // Rowan is in New York for Climate Week only: the 'this week' bits hide themselves once the week is over.
-  if (Date.now() > Date.parse('2026-09-28T00:00:00-04:00')) [].slice.call(document.querySelectorAll('.ss-week')).forEach(function (el) { el.hidden = true; });
-  </script>
-</section>
-
-<section class="ask">
-  <div class="wrap">
-    <p class="lede">We intend to leverage Climate Week to point at the storm already on the horizon: to underscore that it's here and growing in strength, and to alert the world that we can prepare, in the hope of saving lives.</p>
-    <p class="lede"><strong>Our only ask:</strong> have the host of your Climate Week event address the crowd for two minutes, from the main microphone, about El Niño. Include your email above and we'll send you five talking points. That's it.</p>
-  </div>
-</section>
-
-
-<section class="quoteband">
-  <div class="wrap">
-    <blockquote>&ldquo;The models are forecasting something <em>outside the envelope of anything we have ever observed</em>.&rdquo;
-      <cite>&mdash; Zeke Hausfather &middot; climate scientist, Berkeley Earth &middot; <a href="https://www.theclimatebrink.com/p/the-strongest-el-nino-ever" target="_blank" rel="noopener">The Climate Brink</a>, July 2026</cite>
-    </blockquote>
-    </div>
-</section>
-
-<section class="stakes">
-  <div class="wrap">
-        <div class="vignette">
-      <h3>How bad? Here&rsquo;s what the forecasts <em>actually say</em>.</h3>
-      <ul>
-        <li><strong>The Pacific is forecast to hit +3.9 &deg;C or more</strong> &mdash; nearly a full degree beyond anything ever measured. 91 of every 100 model runs break the all-time record.</li>
-        <li><strong>49 million more people won&rsquo;t have enough to eat</strong> by the end of next year &mdash; joining 225 million already going hungry.</li>
-        <li><strong>Central America gets hit hardest:</strong> the number of hungry people there nearly doubles &mdash; the fastest deterioration anywhere on Earth.</li>
-        <li><strong>$17.6 trillion</strong> &mdash; what economists project this costs the world over the five years that follow. Most of it is still preventable.</li>
-        <li><strong>Indonesia is already burning</strong> &mdash; more fires so far this year than any year ever recorded. Last time a super El&nbsp;Ni&ntilde;o dried out the peat, an estimated 100,000 people died from the smoke.</li>
-        <li><strong>Then come the epidemics</strong> &mdash; malaria, dengue, cholera. They have followed the shifted rains of every major El&nbsp;Ni&ntilde;o.</li>
-        <li><strong>And 2027 is forecast to be the hottest year humans have ever lived through</strong> &mdash; by a wide margin.</li>
-      </ul>
-      <p class="vig-src">Sources: <a href="https://www.carbonbrief.org/state-of-the-climate-rapidly-developing-el-nino-raises-chance-of-record-warm-2026" target="_blank" rel="noopener">Hausfather, Carbon Brief</a> &middot; <a href="https://news.un.org/en/story/2026/08/1168079" target="_blank" rel="noopener">WFP/FAO via UN News</a> &middot; <a href="https://www.piie.com/blogs/realtime-economics/2026/el-nino-could-drag-down-global-economy-almost-1-trillion-or-least-7" target="_blank" rel="noopener">Hendrix, PIIE</a> &middot; <a href="https://www.theclimatebrink.com/p/the-strongest-el-nino-ever" target="_blank" rel="noopener">The Climate Brink</a> &middot; <a href="https://news.mongabay.com/2026/07/indonesia-shows-elevated-fire-hotspot-activity-in-2026-as-super-el-nino-threat-looms/" target="_blank" rel="noopener">Mongabay</a> &middot; <a href="https://iopscience.iop.org/article/10.1088/1748-9326/11/9/094023" target="_blank" rel="noopener">Koplitz et&nbsp;al. 2016</a> &middot; <a href="https://news.mongabay.com/2026/08/world-must-look-to-the-past-to-prepare-for-likely-unprecedented-el-nino/" target="_blank" rel="noopener">WHO experts via Mongabay</a></p>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>Together we can save lives.</h2>
-    <p class="lede">Between Climate Week and the El Niño peak there are roughly three months. That's not long enough to stop it — it's exactly long enough to prepare for it, and to prove that a climate event can be met with a plan instead of a shrug.</p>
-    <div class="window-list">
-      <div class="window-item">
-        <h3>Power systems</h3>
-        <p>Harden grids for heat and storms, stage backup power for critical services, and get demand-response plans in place before the stress arrives.</p>
-      </div>
-      <div class="window-item">
-        <h3>Water systems</h3>
-        <p>Pre-position storage and treatment where drought and flood risk is elevated, and get reservoir and well contingency plans out of the drawer.</p>
-      </div>
-      <div class="window-item">
-        <h3>Communication</h3>
-        <p>Forecasts only matter if they reach people in time, in their language, with something actionable attached. Build the channels now.</p>
-      </div>
-      <div class="window-item">
-        <h3>The conversation</h3>
-        <p>Use a live, global climate event to expand who talks about climate — from the people already at the conference to the people living the impacts.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="stakes">
-  <div class="wrap">
-    <div class="card-grid">
-      <div class="card">
-        <span class="glyph">⚡</span>
-        <h3>Power</h3>
-        <p>Heat waves, storms, and drought-strained hydropower push grids past their limits — exactly when people need cooling, pumping, and communication most.</p>
-      </div>
-      <div class="card">
-        <span class="glyph">💧</span>
-        <h3>Water</h3>
-        <p>El Niño redraws the rain map: drought where communities expect rain, floods where they don't. Reservoirs, wells, and crops all sit downstream of that shift.</p>
-      </div>
-      <div class="card">
-        <span class="glyph">🏠</span>
-        <h3>Livelihoods</h3>
-        <p>Fisheries collapse, harvests fail, supply chains snarl. The people hit hardest are the ones who never attend a climate conference.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <h2>New York Climate Week is three months before the peak.</h2>
-    <p class="lede">Every September the climate community gathers in New York. This year the world's largest climate gathering lands three months before the strongest El Niño ever measured reaches its peak.</p>
-    <p class="lede">Imagine Climate Week pointed at the storm: what the science says, what's already happening, and what we can still do about power, water, and communication before the peak.</p>
-    <p class="pull">Imagine coming out the other side of El Niño with something different to say — because of what we did together.</p>
-  </div>
-</section>
-
-<!-- events:start (generated by build_events.py from the sheet; do not hand-edit) -->
-
-<section class="home-events" id="events">
-  <div class="wrap">
-    <h2>Climate Week has more than a thousand events. <em>4</em> are about El Niño.</h2>
-    <div class="he-list">
-      <div class="he-day" data-day="2026-09-23">Wednesday, September 23</div>
-      <div class="he-item" data-ends="2026-09-23T13:00:00-04:00" data-day="2026-09-23"><span class="he-time"><span class="he-date">Wed Sep 23<br></span>12pm to 1pm ET</span><span class="he-title"><a href="/events/el-nino-2026-how-big-could-it-get/">El Niño 2026: How Big Could It Get?</a><span class="he-host">Center for Climate Systems Research, Columbia Climate School · Hogan Hall, Room Hogan A, 566 W 114th St (+ Zoom)</span></span><a class="he-go" href="https://events.columbia.edu/cal/event/eventView.do?b=de&amp;calPath=%2Fpublic%2Fcals%2FMainCal&amp;guid=CAL-00bbdb70-a05bff40-01a0-5e443bd0-00004731events@columbia.edu&amp;recurrenceId=" target="_blank" rel="noopener" data-goatcounter-click="register/el-nino-2026-how-big-could-it-get" data-goatcounter-title="El Niño 2026: How Big Could It Get?">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-23T14:00:00-04:00" data-day="2026-09-23"><span class="he-time"><span class="he-date">Wed Sep 23<br></span>1pm to 2pm ET</span><span class="he-title"><a href="/events/a-postcard-from-the-future-the-heat-toll-of-the-2026-27/">A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do</a><span class="he-host">University of Chicago Institute for Climate &amp; Sustainable Growth, with C2ES · Glasshouse on Bryant Park, 9th Floor, 54 W 40th St</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/a-postcard-from-the-future-the-heat-toll-of-the-202627-super-el-nino-and-what-we-can-still-do" target="_blank" rel="noopener" data-goatcounter-click="register/a-postcard-from-the-future-the-heat-toll-of-the-2026-27" data-goatcounter-title="A Postcard from the Future: The Heat Toll of the 2026-27 Super El Niño and What We Can Still Do">Register ↗</a></div>
-      <div class="he-day" data-day="2026-09-24">Thursday, September 24</div>
-      <div class="he-item" data-ends="2026-09-24T09:30:00-04:00" data-day="2026-09-24"><span class="he-time"><span class="he-date">Thu Sep 24<br></span>8am to 9:30am ET</span><span class="he-title"><a href="/events/frontline-resilience-adapting-smallholder-agriculture-to-el/">Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate</a><span class="he-host">Climate Action for Smallholders Coalition · 200 Park Ave (MetLife Building)</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/frontline-resilience-adapting-smallholder-agriculture-to-el-nino-extreme-climate" target="_blank" rel="noopener" data-goatcounter-click="register/frontline-resilience-adapting-smallholder-agriculture-to-el" data-goatcounter-title="Frontline Resilience: Adapting Smallholder Agriculture to El Niño &amp; Extreme Climate">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-24T15:30:00-04:00" data-day="2026-09-24"><span class="he-time"><span class="he-date">Thu Sep 24<br></span>2pm to 3:30pm ET</span><span class="he-title"><a href="/events/beyond-the-forecast-what-el-nino-reveals-about-science/">Beyond the Forecast: What El Niño Reveals About Science, Society, and Action</a><span class="he-host">Columbia Climate School · The Forum at Columbia University, Auditorium, 601 W 125th St</span></span><a class="he-go" href="https://www.climate.columbia.edu/events/beyond-forecast-el-nino-society-and-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/beyond-the-forecast-what-el-nino-reveals-about-science" data-goatcounter-title="Beyond the Forecast: What El Niño Reveals About Science, Society, and Action">Register ↗</a></div>
-    </div>
-    <h3 class="he-sub"><em>6</em> more have promised El Niño two minutes from the main microphone.</h3>
-    <p class="lede he-sub-lede">Not about El Niño, but the host will give it two minutes from the stage. That is our only ask of every Climate Week event, and <a href="/two-minutes/" style="color:#fff">here is what to say</a>.</p>
-    <div class="he-list">
-      <div class="he-item" data-ends="2026-09-23T17:00:00-04:00" data-day="2026-09-23"><span class="he-time">Wed Sep 23<br><small>8:30am to 5pm ET</small></span><span class="he-title"><a href="/events/10th-nyc-green-school-conference-2026/">10th NYC Green School Conference 2026</a><span class="he-host">Green Mentors · SUNY Global Center, 116 East 55th Street, New York, NY 10022</span><a class="perf" href="/#song" data-goatcounter-click="song/badge-home" data-goatcounter-title="Song badge (home)"><b>♪ The El Niño song, live</b><span>Rowan and Baba Brinkman perform</span></a></span><a class="he-go" href="https://www.nycgreenschoolconference.world/" target="_blank" rel="noopener" data-goatcounter-click="register/10th-nyc-green-school-conference-2026" data-goatcounter-title="10th NYC Green School Conference 2026">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-23T10:00:00-04:00" data-day="2026-09-23"><span class="he-time">Wed Sep 23<br><small>8:30am to 10am ET</small></span><span class="he-title"><a href="/events/build-repeat-live-climate-week-breakfast/">Build, Repeat. Live: Climate Week Breakfast</a><span class="he-host">Paces · Paces office, Williamsburg, Brooklyn</span></span><a class="he-go" href="https://page.paces.com/climate-week-2026-breakfast" target="_blank" rel="noopener" data-goatcounter-click="register/build-repeat-live-climate-week-breakfast" data-goatcounter-title="Build, Repeat. Live: Climate Week Breakfast">Request an invite ↗</a></div>
-      <div class="he-item" data-ends="2026-09-23T13:00:00-04:00" data-day="2026-09-23"><span class="he-time">Wed Sep 23<br><small>11:30am to 1pm ET</small></span><span class="he-title"><a href="/events/in-their-own-hands-youth-and-community-leadership-for/">In Their Own Hands: Youth and Community Leadership for Climate Action</a><span class="he-host">Creats International · 134 W 29th St, 2nd Floor, Manhattan (+ online)</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/in-their-own-hands-youth-and-community-leadership-for-climate-action" target="_blank" rel="noopener" data-goatcounter-click="register/in-their-own-hands-youth-and-community-leadership-for" data-goatcounter-title="In Their Own Hands: Youth and Community Leadership for Climate Action">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-25T12:00:00-04:00" data-day="2026-09-25"><span class="he-time">Fri Sep 25<br><small>10am to 12pm ET</small></span><span class="he-title"><a href="/events/climate-comedy-and-methane-myth-busting/">Climate Comedy &amp; Methane Myth-busting</a><span class="he-host">Methane Mitigation Council · 134 W 29th St, 2nd Floor, Manhattan</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/methane-curious-in-person-qa-with-special-guests-fundraiser" target="_blank" rel="noopener" data-goatcounter-click="register/climate-comedy-and-methane-myth-busting" data-goatcounter-title="Climate Comedy &amp; Methane Myth-busting">Register ↗</a></div>
-      <div class="he-item" data-ends="2026-09-25T11:15:00-04:00" data-day="2026-09-25"><span class="he-time">Fri Sep 25<br><small>10am to 11:15am ET</small></span><span class="he-title"><a href="/events/shaping-corporate-transparency-together/">Shaping Corporate Transparency Together</a><span class="he-host">Impatico · Online</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/shaping-corporate-transparency-together-a-multi-stakeholder-session-on-corporate-sustainability-accountability-impact" target="_blank" rel="noopener" data-goatcounter-click="register/shaping-corporate-transparency-together" data-goatcounter-title="Shaping Corporate Transparency Together">Register ↗</a></div>
-      <div class="he-day he-happened">Already happened</div>
-      <div class="he-item is-past" data-ends="2026-09-18T19:00:00-04:00" data-day="2026-09-18"><span class="he-time">Fri Sep 18<br><small>9am to 7pm ET</small></span><span class="he-title"><a href="/events/nyph-regenerative-metropolis-symposium-2026/">NYPH Regenerative Metropolis Symposium 2026</a><span class="he-host">New York Passive House · 63 Fifth Ave, Manhattan</span></span><a class="he-go" href="https://www.climateweeknyc.org/event-search/nyph-regenerative-metropolis-symposium-2026" target="_blank" rel="noopener" data-goatcounter-click="register/nyph-regenerative-metropolis-symposium-2026" data-goatcounter-title="NYPH Regenerative Metropolis Symposium 2026">Register ↗</a></div>
-    </div>
-    <a class="btn btn-heat he-all" href="/events/">All El Niño events at Climate Week →</a>
-    <p class="he-note">Hosting one, or know one we missed? <a href="#ideas" style="color:#fff">Tell us</a> and it goes on the list. And if your Climate Week event isn't about El Niño, our only ask is two minutes about it from the main microphone.</p>
-    <script>
-    (function () {
-      var now = Date.now();
-      [].slice.call(document.querySelectorAll('.home-events .he-list')).forEach(function (list) {
-        var moved = [].slice.call(list.querySelectorAll('.he-item[data-ends]:not(.is-past)')).filter(function (i) {
-          return Date.parse(i.getAttribute('data-ends')) < now;
-        });
-        if (!moved.length) return;
-        var head = list.querySelector('.he-happened');
-        if (!head) { head = document.createElement('div'); head.className = 'he-day he-happened'; head.textContent = 'Already happened'; list.appendChild(head); }
-        moved.forEach(function (i) { i.classList.add('is-past'); list.appendChild(i); });
-        [].slice.call(list.querySelectorAll('.he-day[data-day]')).forEach(function (d) {
-          if (!list.querySelector('.he-item[data-day="' + d.getAttribute('data-day') + '"]:not(.is-past)')) d.hidden = true;
-        });
-      });
-    })();
-    </script>
-  </div>
-</section>
-<!-- events:end -->
-
-<section class="ideas-sec" id="ideas">
-  <div class="wrap">
-    <h2>Got an idea? Want something to exist during the week?</h2>
-    <p class="lede">Event ideas, requests, offers to help, people we should talk to &mdash; drop it here. It goes straight to the organizers&rsquo; inbox.</p>
-    <form name="ideas" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks-idea.html" style="margin-top:1.75rem; max-width:38rem;">
-      <input type="hidden" name="form-name" value="ideas">
-      <p class="hidden-field"><label>Don&rsquo;t fill this out: <input name="bot-field"></label></p>
-      <label>Your idea or request
-        <textarea name="idea" required placeholder="An event, a speaker, a tool, a request&hellip;"></textarea>
+      <label>Your location
+        <input type="text" name="location" required autocomplete="street-address" placeholder="Street address, ZIP code, or city">
+        <span class="hint"><b>Specific is better.</b> A street address tells us your flood zone and nearest shelter; a ZIP code tells us your county.</span>
       </label>
-      <label>Email (if you want a reply)
-        <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+
+      <label>Your email
+        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
       </label>
-      <button class="btn" type="submit">Send it</button>
+
+      <button type="submit" data-goatcounter-click="report/submit-home">Email me my report</button>
+      <p class="fine">We use your location only to write your report.</p>
     </form>
+
+    <div class="done" role="status">
+      <strong>Your report is on its way.</strong>
+      Check your inbox for an email from El Niño Ready.
+    </div>
   </div>
-</section>
+</main>
 
-<footer>
-  <div class="wrap">
-    <div>🌊 <strong style="color:#fff">El Niño Ready</strong> · Save lives during the strongest El Niño ever measured</div>
-    <div>An open, volunteer-organized initiative. Questions or ideas: drop them in the ideas form above, or reply to any email from us.</div>
-    <div><a href="/about/">About El Niño Ready</a></div>
-    <p class="fine">El Niño Ready is an independent, grassroots, volunteer effort. It is not affiliated with or endorsed by Climate Week NYC, The Climate Group, or Columbia University.</p>
-  </div>
-</footer>
+<footer><div class="foot">El Niño Ready · <a href="/more/">More: events, the song, get involved</a> · <a href="/about/">About</a></div></footer>
 
-
+<script>
+  // Local draft only: no backend here, so show the confirmation instead of posting.
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    document.querySelector('form').addEventListener('submit', e => { e.preventDefault(); document.body.classList.add('sent'); });
+  }
+</script>
 </body>
 </html>
