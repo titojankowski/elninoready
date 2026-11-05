@@ -149,9 +149,10 @@
   .embed .stage { flex: 1; width: 100%; max-width: none; height: auto; min-height: 0; border-left: 0; border-right: 0; }
   .embed .foot { max-width: none; padding: 0.5rem 1rem; }
   @media (max-width: 820px) {
-    .embed .stage { grid-template-rows: minmax(0, 42fr) minmax(0, 58fr); }
-    .embed .map-wrap { height: auto; }
-    .embed aside { overflow-y: auto; }
+    /* The search is the way in, so on a phone it comes before the map. */
+    .embed .stage { grid-template-rows: minmax(0, 58fr) minmax(0, 42fr); }
+    .embed .map-wrap { height: auto; border-bottom: 0; border-top: 2px solid var(--ink); }
+    .embed aside { order: -1; overflow-y: auto; }
   }
 </style>
 </head>
