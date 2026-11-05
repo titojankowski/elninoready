@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Niño Ready: what will El Niño bring to where you live?</title>
-<meta name="description" content="Tell us where you live and we'll email you what the strongest El Niño ever measured is likely to bring there, and what to do before it arrives.">
+<meta name="description" content="Search for your place to read what the strongest El Niño ever measured is likely to bring there, and what to do before it arrives. If we don't have a report yet, you can request one.">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <meta property="og:title" content="El Niño Ready">
 <meta property="og:description" content="Save lives during the strongest El Niño ever measured. A disaster you can see coming is a disaster you can prevent.">
@@ -45,41 +45,15 @@
   .brand .nino { color: var(--heat); }
 
   main { flex: 1; display: flex; align-items: center; }
-  .wrap { max-width: 40rem; margin: 0 auto; padding: 3.5rem 1.25rem 4rem; width: 100%; }
+  .wrap { max-width: 40rem; margin: 0 auto; padding: 2rem 1.25rem 2rem; width: 100%; }
   .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--heat); }
   h1 { font-size: clamp(1.7rem, 5vw, 2.4rem); line-height: 1.15; margin: 0.6rem 0 1rem; letter-spacing: -0.01em; }
   .lede { font-size: 1.02rem; color: rgba(30,35,42,0.82); max-width: 34rem; }
 
-  form { margin-top: 2.25rem; display: grid; gap: 1.25rem; }
-  label { display: grid; gap: 0.4rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-  input {
-    font: inherit; font-size: 1rem; text-transform: none; letter-spacing: 0; font-weight: 400;
-    padding: 0.85rem 0.9rem; border: 2px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
-    width: 100%;
-  }
-  input:focus { outline: none; border-color: var(--heat); box-shadow: 4px 4px 0 var(--ink); }
-  .hint { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sea); }
-  .hint b { color: var(--ink); font-weight: 500; }
-  button {
-    font: inherit; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 1rem 1.4rem; border: 2px solid var(--ink); background: var(--heat); color: #fff; cursor: pointer;
-    justify-self: start;
-  }
-  button:hover { box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px, -2px); }
-  .fine { font-size: 0.78rem; color: var(--sea); margin-top: 0.25rem; }
-  .hidden-field { display: none; }
 
-  .done { display: none; margin-top: 2.25rem; padding: 1.25rem 1.4rem; border: 2px solid var(--ink); background: var(--paper-2); }
-  .done strong { display: block; font-size: 1.05rem; margin-bottom: 0.35rem; }
-  body.sent form { display: none; }
-  body.sent .done { display: block; }
 
   .map-sec { border-top: 2px solid var(--ink); }
-  .map-head { padding: 2rem 1rem 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.5rem 1.5rem; }
-  .map-head h2 { font-size: clamp(1.2rem, 3.5vw, 1.6rem); line-height: 1.2; letter-spacing: -0.01em; }
-  .map-head a { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
-  .map-head a:hover { color: var(--heat); }
-  .map-frame { display: block; width: 100%; height: 760px; border: 0; border-top: 2px solid var(--ink); }
+  .map-frame { display: block; width: 100%; height: 760px; border: 0; }
   @media (max-width: 820px) { .map-frame { height: 820px; } }
 
   footer { border-top: 2px solid var(--ink); }
@@ -94,52 +68,16 @@
   <div class="wrap">
     <p class="kicker">Peaks in December</p>
     <h1>What will El Niño bring to where you live?</h1>
-    <p class="lede">The strongest El Niño ever measured is on its way. Tell us where you are and we'll email you a report: what it usually brings there, when, and what to do before it arrives.</p>
+    <p class="lede">The strongest El Niño ever measured is on its way. Search for your place to read what it usually brings there, when, and what to do before it arrives. If we don't have a report yet, you can request one.</p>
 
-    <form name="report-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/report/thanks/">
-      <input type="hidden" name="form-name" value="report-request">
-      <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
-
-      <label>Your location
-        <input type="text" name="location" required autocomplete="street-address" placeholder="Street address, ZIP code, or city">
-        <span class="hint"><b>Specific is better.</b> A street address tells us your flood zone and nearest shelter; a ZIP code tells us your county.</span>
-      </label>
-
-      <label>Your email
-        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
-      </label>
-
-      <label>Your role (optional)
-        <input type="text" name="role" maxlength="80" autocomplete="off" placeholder="Resident, farmer, shopkeeper, or nurse">
-        <span class="hint">Your report will include steps for this role. If you leave it blank, we write it for a resident.</span>
-      </label>
-
-      <button type="submit" data-goatcounter-click="report/submit-home">Email me my report</button>
-      <p class="fine">We use your location and role only to write your report. Reports are only published by area, without your address or email.</p>
-    </form>
-
-    <div class="done" role="status">
-      <strong>Your report is on its way.</strong>
-      Check your inbox for an email from El Niño Ready.
-    </div>
   </div>
 </main>
 
-<section class="map-sec" aria-labelledby="map-title">
-  <div class="map-head">
-    <h2 id="map-title">Every report so far, on one map</h2>
-    <a href="/reports/" data-goatcounter-click="reports/full-map">Open the full map</a>
-  </div>
-  <iframe class="map-frame" src="/reports/?embed=1" title="Map of El Niño Ready reports" loading="lazy"></iframe>
+<section class="map-sec">
+  <iframe class="map-frame" src="/reports/?embed=1" title="Search the map of El Niño Ready reports, or request a new one"></iframe>
 </section>
 
-<footer><div class="foot">El Niño Ready · <a href="/more/">More: events, the song, get involved</a> · <a href="/about/">About</a></div></footer>
+<footer><div class="foot">El Niño Ready · <a href="/report/">Request a report</a> · <a href="/more/">More: events, the song, get involved</a> · <a href="/about/">About</a></div></footer>
 
-<script>
-  // Local draft only: no backend here, so show the confirmation instead of posting.
-  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-    document.querySelector('form').addEventListener('submit', e => { e.preventDefault(); document.body.classList.add('sent'); });
-  }
-</script>
 </body>
 </html>
