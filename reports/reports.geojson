@@ -1549,6 +1549,38 @@
    "geometry": {
     "type": "Point",
     "coordinates": [
+     -81.27,
+     -4.58
+    ]
+   },
+   "properties": {
+    "id": "peru--talara-piura",
+    "label": "Talara, Piura",
+    "country": "Peru",
+    "date": "2026-11-04",
+    "pdfs": [
+     {
+      "lang": "en",
+      "size": 1640065,
+      "kind": "briefing",
+      "url": "pdf/peru/talara-piura.pdf",
+      "file": "talara-piura.pdf"
+     },
+     {
+      "lang": "es",
+      "size": 1726916,
+      "kind": "briefing",
+      "url": "pdf/peru/talara-piura-es.pdf",
+      "file": "talara-piura-es.pdf"
+     }
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
      121.24,
      14.17
     ]
