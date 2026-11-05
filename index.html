@@ -101,8 +101,13 @@
         <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
       </label>
 
+      <label>Your role (optional)
+        <input type="text" name="role" maxlength="80" autocomplete="off" placeholder="Resident, farmer, shopkeeper, or nurse">
+        <span class="hint">Your report will include steps for this role. If you leave it blank, we write them for a resident.</span>
+      </label>
+
       <button type="submit" data-goatcounter-click="report/submit-home">Email me my report</button>
-      <p class="fine">We use your location only to write your report.</p>
+      <p class="fine">We use your location and role only to write your report. Reports are only published by area, without your address or email.</p>
     </form>
 
     <div class="done" role="status">
