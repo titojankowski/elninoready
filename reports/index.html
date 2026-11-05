@@ -65,7 +65,25 @@
     border: 2px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
   }
   .search input:focus { outline: none; border-color: var(--heat); box-shadow: 3px 3px 0 var(--ink); }
-  .empty { padding: 1rem; color: var(--sea); }
+  .empty { padding: 1rem 1rem 0; font-weight: 700; }
+
+  .req { padding: 0.35rem 1rem 1.2rem; display: grid; gap: 0.9rem; }
+  .req > p:first-of-type { color: var(--sea); }
+  .req label { display: grid; gap: 0.3rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+  .req input {
+    font: inherit; font-size: 0.95rem; font-weight: 400; letter-spacing: 0; text-transform: none; width: 100%; padding: 0.6rem 0.7rem;
+    border: 2px solid var(--ink); border-radius: 0; background: #fff; color: var(--ink);
+  }
+  .req input:focus { outline: none; border-color: var(--heat); box-shadow: 3px 3px 0 var(--ink); }
+  .req .hint { font-size: 0.74rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--sea); }
+  .req .hint b { color: var(--ink); font-weight: 500; }
+  .req button {
+    justify-self: start; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.75rem 1rem; border: 2px solid var(--ink); background: var(--heat); color: #fff;
+  }
+  .req button:hover { box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px, -1px); }
+  .req .fine { margin-top: 0; }
+  .hidden-field { display: none; }
 
   .country { border-bottom: 1px solid var(--paper-2); }
   .country-h {
@@ -153,6 +171,24 @@
         <input id="q" type="search" placeholder="e.g. Kumasi, Mauritius, ZIP 94086" autocomplete="off">
       </div>
       <div id="list"></div>
+      <form class="req" id="req" name="report-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/report/thanks/" hidden>
+        <input type="hidden" name="form-name" value="report-request">
+        <p class="hidden-field"><label>Don't fill this out: <input name="bot-field"></label></p>
+        <p>Request a report for this place and we'll email it to you.</p>
+        <label>Your location
+          <input type="text" id="req-location" name="location" required autocomplete="street-address" placeholder="Street address, ZIP code, or city">
+          <span class="hint"><b>Specific is better.</b> A street address tells us your flood zone and nearest shelter; a ZIP code tells us your county.</span>
+        </label>
+        <label>Your email
+          <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label>Your role (optional)
+          <input type="text" name="role" maxlength="80" autocomplete="off" placeholder="Resident, farmer, or nurse">
+          <span class="hint">Your report will include steps for this role. If you leave it blank, we write them for a resident.</span>
+        </label>
+        <button type="submit" data-goatcounter-click="report/submit-map">Email me my report</button>
+        <p class="fine">We use your location and role only to write your report. Reports are only published by area, without your address or email.</p>
+      </form>
     </div>
     <div id="detail-view" class="detail" hidden></div>
   </aside>
@@ -274,10 +310,23 @@ function renderList(q = "") {
     }
     listEl.append(box);
   }
-  if (!listEl.children.length) listEl.append(el("p", { className: "empty", textContent: "No report matches that yet." }));
+  // No match: offer a request, with what they searched for as the location. It stays
+  // in the page, never in the URL, because it may be someone's home address.
+  const none = !listEl.children.length;
+  if (none) listEl.append(el("p", { className: "empty", textContent: "No report matches that yet." }));
+  reqForm.hidden = !none;
+  if (none && !reqEdited) reqLocation.value = q.trim();
 }
+const reqForm = document.getElementById("req");
+const reqLocation = document.getElementById("req-location");
+let reqEdited = false;
+reqLocation.addEventListener("input", () => { reqEdited = true; });
 document.getElementById("q").addEventListener("input", e => renderList(e.target.value));
 renderList();
+// Local preview has no form backend; Netlify handles the POST on the live site.
+if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+  reqForm.addEventListener("submit", e => { e.preventDefault(); console.log("local preview: not posted", [...new FormData(reqForm).keys()]); });
+}
 
 // Detail
 const listView = document.getElementById("list-view");
