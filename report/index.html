@@ -29,7 +29,9 @@
   }
   ::selection { background: var(--heat); color: #fff; }
   nav { border-bottom: 2px solid var(--ink); }
-  .nav-inner { max-width: 40rem; margin: 0 auto; padding: 0.8rem 1.25rem; }
+  .nav-inner { max-width: 40rem; margin: 0 auto; padding: 0.8rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .nav-link { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+  .nav-link:hover { color: var(--heat); }
   .brand { font-weight: 700; letter-spacing: 0.04em; font-size: 0.9rem; text-decoration: none; color: inherit; }
   .brand .nino { color: var(--heat); }
 
@@ -69,7 +71,7 @@
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a></div></nav>
+<nav><div class="nav-inner"><a class="brand" href="/">EL <span class="nino">NIÑO</span> READY</a><a class="nav-link" href="/reports/" data-goatcounter-click="reports/nav">Reports map</a></div></nav>
 
 <main>
   <div class="wrap">
